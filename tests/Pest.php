@@ -11,7 +11,15 @@
 |
 */
 
+use App\Models\User;
+
 uses(Tests\TestCase::class)->in('Feature');
+
+const LOGIN_URL            = '/login';
+const CONFIRM_PASSWORD_URL = '/confirm-password';
+const FORGOT_PASSWORD_URL  = '/forgot-password';
+const RESET_PASSWORD_URL   = '/reset-password';
+const REGISTER_URL         = '/register';
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +47,21 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * @param null $user
+ */
+function signIn($user = null): void
 {
-    // ..
+    $user = $user ?: createUser();
+    test()->actingAs($user);
+}
+
+/**
+ * @param array $params
+ *
+ * @return User
+ */
+function createUser(array $params = []): User
+{
+    return User::factory()->create($params);
 }

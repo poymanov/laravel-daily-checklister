@@ -13,6 +13,12 @@
         "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.4.6"
+    },
+    "dependencies": {
+        "@coreui/coreui": "^3.4.0",
+        "@coreui/icons": "^2.0.1",
+        "@popperjs/core": "^2.10.1",
+        "perfect-scrollbar": "^1.5.2"
     }
 }

@@ -16,4 +16,8 @@ mix.setPublicPath('public/assets')
     .js('resources/js/app.js', 'js')
     .postCss('resources/css/app.css', 'css', [
 
-    ]);
+    ])
+    .copy('node_modules/@coreui/icons/sprites/free.svg', 'public/assets/icons/free.svg')
+    .copy('node_modules/@coreui/icons/sprites/brand.svg', 'public/assets/icons/brand.svg')
+    .copy('resources/icons/coreui.svg', 'public/assets/icons/coreui.svg');
+

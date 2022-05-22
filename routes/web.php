@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ChecklistGroupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group(['middleware' => ['auth']], function () {
+    Route::view('/', 'dashboard')->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::group(['middleware' => ['role:admin'], 'as' => 'admin.'], function () {
+        Route::resource('admin/checklist-group', ChecklistGroupController::class)->only('create', 'store');
+    });
+});
 
 require __DIR__ . '/auth.php';

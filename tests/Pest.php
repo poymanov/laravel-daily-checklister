@@ -11,15 +11,20 @@
 |
 */
 
+use App\Enums\RoleEnum;
+use App\Models\ChecklistGroup;
 use App\Models\User;
 
 uses(Tests\TestCase::class)->in('Feature');
 
-const LOGIN_URL            = '/login';
-const CONFIRM_PASSWORD_URL = '/confirm-password';
-const FORGOT_PASSWORD_URL  = '/forgot-password';
-const RESET_PASSWORD_URL   = '/reset-password';
-const REGISTER_URL         = '/register';
+const LOGIN_URL                        = '/login';
+const CONFIRM_PASSWORD_URL             = '/confirm-password';
+const FORGOT_PASSWORD_URL              = '/forgot-password';
+const RESET_PASSWORD_URL               = '/reset-password';
+const REGISTER_URL                     = '/register';
+const ADMIN_CHECKLIST_GROUP_CREATE_URL = '/admin/checklist-group/create';
+const ADMIN_CHECKLIST_GROUP_URL        = '/admin/checklist-group';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,11 +62,32 @@ function signIn($user = null): void
 }
 
 /**
- * @param array $params
+ * Создание сущности {@see User}
+ *
+ * @param array $params  Параметры нового объекта
+ * @param bool  $isAdmin Является ли пользователь администратором
  *
  * @return User
  */
-function createUser(array $params = []): User
+function createUser(array $params = [], bool $isAdmin = false): User
 {
-    return User::factory()->create($params);
+    $user = User::factory()->create($params);
+
+    if ($isAdmin) {
+        $user->assignRole(RoleEnum::ADMIN->value);
+    }
+
+    return $user;
+}
+
+/**
+ * Создание сущности {@see ChecklistGroup}
+ *
+ * @param array $params Параметры нового объекта
+ *
+ * @return ChecklistGroup
+ */
+function createChecklistGroup(array $params = []): ChecklistGroup
+{
+    return ChecklistGroup::factory()->create($params);
 }

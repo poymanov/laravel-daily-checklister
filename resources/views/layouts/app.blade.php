@@ -17,11 +17,11 @@
 <x-sidebar/>
 <div class="c-wrapper c-fixed-components">
     <x-header />
-    {{ $breadcrumbs }}
     <div class="c-body">
         <main class="c-main">
             <div class="container-fluid">
                 <div class="fade-in">
+                    <x-alert/>
                     {{ $slot }}
                 </div>
             </div>

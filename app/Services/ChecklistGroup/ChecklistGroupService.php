@@ -18,4 +18,12 @@ class ChecklistGroupService implements ChecklistGroupServiceContract
     {
         $this->checklistGroupRepository->create($name);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(int $id, string $name): void
+    {
+        $this->checklistGroupRepository->update($id, $name);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Services\ChecklistGroup\Contracts;
 
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupCreateFailedException;
+use App\Services\ChecklistGroup\Exceptions\ChecklistGroupDeleteFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupUpdateFailedException;
 
@@ -29,4 +30,13 @@ interface ChecklistGroupServiceContract
      * @throws ChecklistGroupUpdateFailedException
      */
     public function update(int $id, string $name): void;
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     * @throws ChecklistGroupDeleteFailedException
+     * @throws ChecklistGroupNotFoundException
+     */
+    public function delete(int $id): void;
 }

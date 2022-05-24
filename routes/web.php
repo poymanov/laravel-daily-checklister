@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('/', 'dashboard')->name('dashboard');
 
     Route::group(['middleware' => ['role:admin'], 'as' => 'admin.'], function () {
-        Route::resource('admin/checklist-group', ChecklistGroupController::class)->only('create', 'store', 'edit', 'update');
+        Route::resource('admin/checklist-group', ChecklistGroupController::class)->except('show', 'index');
     });
 });
 

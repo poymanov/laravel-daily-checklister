@@ -2,6 +2,7 @@
 
 namespace App\Services\ChecklistGroup\Contracts;
 
+use App\Services\ChecklistGroup\Dtos\ChecklistGroupDto;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupCreateFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupDeleteFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
@@ -39,4 +40,9 @@ interface ChecklistGroupServiceContract
      * @throws ChecklistGroupNotFoundException
      */
     public function delete(int $id): void;
+
+    /**
+     * @return ChecklistGroupDto[]
+     */
+    public function findAll(): array;
 }

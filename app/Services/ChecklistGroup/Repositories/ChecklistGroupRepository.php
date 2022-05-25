@@ -4,10 +4,12 @@ namespace App\Services\ChecklistGroup\Repositories;
 
 use App\Models\ChecklistGroup;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupRepositoryContract;
+use App\Services\ChecklistGroup\Dtos\ChecklistGroupDto;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupCreateFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupDeleteFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupUpdateFailedException;
+use App\Services\ChecklistGroup\Factories\ChecklistGroupDtoFactory;
 
 class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
 {
@@ -47,6 +49,14 @@ class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
         if (!$checklistGroup->delete()) {
             throw new ChecklistGroupDeleteFailedException($checklistGroup->id);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
+    {
+        return ChecklistGroupDtoFactory::createFromModelsList(ChecklistGroup::select('id', 'name')->get());
     }
 
     /**

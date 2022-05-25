@@ -4,6 +4,7 @@ namespace App\Services\ChecklistGroup;
 
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupRepositoryContract;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupServiceContract;
+use App\Services\ChecklistGroup\Dtos\ChecklistGroupDto;
 
 class ChecklistGroupService implements ChecklistGroupServiceContract
 {
@@ -33,5 +34,13 @@ class ChecklistGroupService implements ChecklistGroupServiceContract
     public function delete(int $id): void
     {
         $this->checklistGroupRepository->delete($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
+    {
+        return $this->checklistGroupRepository->findAll();
     }
 }

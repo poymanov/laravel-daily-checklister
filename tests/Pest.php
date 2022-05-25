@@ -17,6 +17,7 @@ use App\Models\User;
 
 uses(Tests\TestCase::class)->in('Feature');
 
+const HOME_URL                         = '/';
 const LOGIN_URL                        = '/login';
 const CONFIRM_PASSWORD_URL             = '/confirm-password';
 const FORGOT_PASSWORD_URL              = '/forgot-password';

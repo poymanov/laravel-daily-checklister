@@ -10,9 +10,22 @@
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{ route('dashboard') }}">
-                <x-svg-icon path="/assets/icons/free.svg#cil-speedometer" class="c-sidebar-nav-icon"/> Dashboard
+                <x-svg-icon path="/assets/icons/free.svg#cil-speedometer" class="c-sidebar-nav-icon"/>
+                Dashboard
             </a>
         </li>
+        @role('admin')
+        <li class="c-sidebar-nav-title">{{ __('Manage Checklists') }}</li>
+        @foreach ($checklistGroups as $checklistGroup)
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
+                <a class="c-sidebar-nav-link"
+                   href="{{ route('admin.checklist-group.edit', $checklistGroup->id) }}">
+                    <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
+                    {{ $checklistGroup->name }}
+                </a>
+            </li>
+        @endforeach
+        @endrole
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
 </div>

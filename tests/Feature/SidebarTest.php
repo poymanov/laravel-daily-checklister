@@ -11,6 +11,7 @@ test('not admin', function () {
     signIn();
     $response = $this->get(HOME_URL);
     $response->assertDontSee('Manage Checklists');
+    $response->assertDontSee('New checklist group');
     $response->assertDontSee($checklistGroup->name);
 });
 
@@ -21,5 +22,6 @@ test('admin', function () {
     signIn(createUser([], true));
     $response = $this->get(HOME_URL);
     $response->assertSee('Manage Checklists');
+    $response->assertSee('New checklist group');
     $response->assertSee($checklistGroup->name);
 });

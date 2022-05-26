@@ -15,7 +15,7 @@
             </a>
         </li>
         @role('admin')
-        <li class="c-sidebar-nav-title">{{ __('Manage Checklists') }}</li>
+        <li class="c-sidebar-nav-title">Manage Checklists</li>
         @foreach ($checklistGroups as $checklistGroup)
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
                 <a class="c-sidebar-nav-link"
@@ -25,6 +25,11 @@
                 </a>
             </li>
         @endforeach
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.checklist-group.create') }}">
+                <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
+                New checklist group</a>
+        </li>
         @endrole
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

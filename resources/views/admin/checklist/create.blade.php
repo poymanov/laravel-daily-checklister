@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="card">
-        <div class="card-header">New Checklist Group</div>
-        <form action="{{ route('admin.checklist-groups.store') }}" method="post">
+        <div class="card-header">New Checklist in {{ $checklistGroup->name }}</div>
+        <form action="{{ route('admin.checklist-groups.checklists.store', $checklistGroup) }}" method="post">
             <div class="card-body">
                 <x-validation-errors class="mb-4" :errors="$errors"/>
                 @csrf

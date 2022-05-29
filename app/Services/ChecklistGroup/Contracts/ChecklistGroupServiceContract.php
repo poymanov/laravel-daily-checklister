@@ -45,4 +45,12 @@ interface ChecklistGroupServiceContract
      * @return ChecklistGroupDto[]
      */
     public function findAll(): array;
+
+    /**
+     * @param int $id
+     *
+     * @return ChecklistGroupDto
+     * @throws ChecklistGroupNotFoundException
+     */
+    public function findOneById(int $id): ChecklistGroupDto;
 }

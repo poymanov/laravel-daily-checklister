@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ChecklistController;
 use App\Http\Controllers\Admin\ChecklistGroupController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::view('/', 'dashboard')->name('dashboard');
 
-    Route::group(['middleware' => ['role:admin'], 'as' => 'admin.'], function () {
-        Route::resource('admin/checklist-group', ChecklistGroupController::class)->except('show', 'index');
+    Route::group(['middleware' => ['role:admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
+        Route::resource('checklist-groups', ChecklistGroupController::class)->except('show', 'index');
+        Route::resource('checklist-groups.checklists', ChecklistController::class)->except('edit', 'update', 'destroy', 'show', 'index');
     });
 });
 

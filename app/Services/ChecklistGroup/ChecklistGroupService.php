@@ -43,4 +43,12 @@ class ChecklistGroupService implements ChecklistGroupServiceContract
     {
         return $this->checklistGroupRepository->findAll();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneById(int $id): ChecklistGroupDto
+    {
+        return $this->checklistGroupRepository->findOneById($id);
+    }
 }

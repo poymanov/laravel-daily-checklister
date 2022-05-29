@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ChecklisterGroup;
+namespace App\Http\Requests\ChecklistGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

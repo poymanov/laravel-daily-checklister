@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Checklist\ChecklistService;
+use App\Services\Checklist\Contracts\ChecklistRepositoryContract;
+use App\Services\Checklist\Contracts\ChecklistServiceContract;
+use App\Services\Checklist\Repositories\ChecklistRepository;
 use App\Services\ChecklistGroup\ChecklistGroupService;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupRepositoryContract;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupServiceContract;
@@ -36,5 +40,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ChecklistGroupRepositoryContract::class, ChecklistGroupRepository::class);
         $this->app->bind(ChecklistGroupServiceContract::class, ChecklistGroupService::class);
+
+        $this->app->bind(ChecklistRepositoryContract::class, ChecklistRepository::class);
+        $this->app->bind(ChecklistServiceContract::class, ChecklistService::class);
     }
 }

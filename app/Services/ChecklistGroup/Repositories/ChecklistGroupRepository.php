@@ -10,6 +10,7 @@ use App\Services\ChecklistGroup\Exceptions\ChecklistGroupDeleteFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupUpdateFailedException;
 use App\Services\ChecklistGroup\Factories\ChecklistGroupDtoFactory;
+use Database\Factories\ChecklistGroupFactory;
 
 class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
 {
@@ -57,6 +58,17 @@ class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
     public function findAll(): array
     {
         return ChecklistGroupDtoFactory::createFromModelsList(ChecklistGroup::select('id', 'name')->get());
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return ChecklistGroupDto
+     * @throws ChecklistGroupNotFoundException
+     */
+    public function findOneById(int $id): ChecklistGroupDto
+    {
+        return ChecklistGroupDtoFactory::createFromModel($this->findModelById($id));
     }
 
     /**

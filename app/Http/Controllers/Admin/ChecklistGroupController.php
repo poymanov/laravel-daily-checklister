@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ChecklisterGroup\StoreRequest;
-use App\Http\Requests\ChecklisterGroup\UpdateRequest;
+use App\Http\Requests\ChecklistGroup\StoreRequest;
+use App\Http\Requests\ChecklistGroup\UpdateRequest;
 use App\Models\ChecklistGroup;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupServiceContract;
 use Throwable;

@@ -12,6 +12,7 @@
 */
 
 use App\Enums\RoleEnum;
+use App\Models\Checklist;
 use App\Models\ChecklistGroup;
 use App\Models\User;
 
@@ -23,8 +24,8 @@ const CONFIRM_PASSWORD_URL             = '/confirm-password';
 const FORGOT_PASSWORD_URL              = '/forgot-password';
 const RESET_PASSWORD_URL               = '/reset-password';
 const REGISTER_URL                     = '/register';
-const ADMIN_CHECKLIST_GROUP_CREATE_URL = '/admin/checklist-group/create';
-const ADMIN_CHECKLIST_GROUP_URL        = '/admin/checklist-group';
+const ADMIN_CHECKLIST_GROUP_CREATE_URL = '/admin/checklist-groups/create';
+const ADMIN_CHECKLIST_GROUP_URL        = '/admin/checklist-groups';
 
 /*
 |--------------------------------------------------------------------------
@@ -75,4 +76,16 @@ function createUser(array $params = [], bool $isAdmin = false): User
 function createChecklistGroup(array $params = []): ChecklistGroup
 {
     return ChecklistGroup::factory()->create($params);
+}
+
+/**
+ * Создание сущности {@see Checklist}
+ *
+ * @param array $params Параметры нового объекта
+ *
+ * @return Checklist
+ */
+function createChecklist(array $params = []): Checklist
+{
+    return Checklist::factory()->create($params);
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="card" onsubmit="return confirm('Are you sure?');">
         <div class="card-body">
-            <form method="post" action="{{ route('admin.checklist-group.destroy', $checklistGroup) }}">
+            <form method="post" action="{{ route('admin.checklist-groups.destroy', $checklistGroup) }}">
                 @csrf
                 @method('delete')
                 <button class="btn btn-sm btn-danger" type="submit">Delete</button>
@@ -10,7 +10,7 @@
     </div>
     <div class="card">
         <div class="card-header">Edit Checklist Group</div>
-        <form action="{{ route('admin.checklist-group.update', $checklistGroup) }}" method="post">
+        <form action="{{ route('admin.checklist-groups.update', $checklistGroup) }}" method="post">
             @csrf
             @method('put')
             <div class="card-body">

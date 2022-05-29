@@ -19,14 +19,14 @@
         @foreach ($checklistGroups as $checklistGroup)
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
                 <a class="c-sidebar-nav-link"
-                   href="{{ route('admin.checklist-group.edit', $checklistGroup->id) }}">
+                   href="{{ route('admin.checklist-groups.edit', $checklistGroup->id) }}">
                     <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
                     {{ $checklistGroup->name }}
                 </a>
             </li>
         @endforeach
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-link" href="{{ route('admin.checklist-group.create') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.checklist-groups.create') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
                 New checklist group</a>
         </li>

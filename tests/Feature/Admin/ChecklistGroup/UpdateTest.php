@@ -21,7 +21,7 @@ test('user', function () {
     $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id))->assertForbidden();
 });
 
-/** Попытка создания без данных */
+/** Попытка изменения без данных */
 test('empty', function () {
     $checklistGroup = createChecklistGroup();
 

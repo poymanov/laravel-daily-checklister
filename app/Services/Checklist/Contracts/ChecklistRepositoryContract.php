@@ -3,6 +3,8 @@
 namespace App\Services\Checklist\Contracts;
 
 use App\Services\Checklist\Exceptions\ChecklistCreateFailedException;
+use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
+use App\Services\Checklist\Exceptions\ChecklistUpdateFailedException;
 
 interface ChecklistRepositoryContract
 {
@@ -14,4 +16,14 @@ interface ChecklistRepositoryContract
      * @throws ChecklistCreateFailedException
      */
     public function create(int $checklistGroupId, string $name): void;
+
+    /**
+     * @param int    $id
+     * @param string $name
+     *
+     * @return void
+     * @throws ChecklistNotFoundException
+     * @throws ChecklistUpdateFailedException
+     */
+    public function update(int $id, string $name): void;
 }

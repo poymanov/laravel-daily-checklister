@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role:admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
         Route::resource('checklist-groups', ChecklistGroupController::class)->except('show', 'index');
-        Route::resource('checklist-groups.checklists', ChecklistController::class)->except('edit', 'update', 'destroy', 'show', 'index');
+        Route::resource('checklist-groups.checklists', ChecklistController::class)->except('destroy', 'show', 'index');
     });
 });
 

@@ -8,45 +8,53 @@ uses(RefreshDatabase::class);
 
 /** Попытка изменения гостем */
 test('guest', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id))->assertRedirect(LOGIN_URL);
+    $this
+        ->put(routeBuilderHelper()->checklistGroup->update($checklistGroup->id))
+        ->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка изменения пользователем без прав администратора */
 test('user', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id))->assertForbidden();
+    authHelper()->signIn();
+    $this
+        ->put(routeBuilderHelper()->checklistGroup->update($checklistGroup->id))
+        ->assertForbidden();
 });
 
 /** Попытка изменения без данных */
 test('empty', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id))->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this
+        ->put(routeBuilderHelper()->checklistGroup->update($checklistGroup->id))
+        ->assertSessionHasErrors(['name']);
 });
 
 /** Попытка изменения группы с неуникальным названием */
 test('not unique name', function () {
     $name = faker()->word();
-    createChecklistGroup(['name' => $name]);
-    $checklistGroup = createChecklistGroup();
+    modelBuilderHelper()->checklistGroup->create(['name' => $name]);
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id), ['name' => $name])->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this
+        ->put(routeBuilderHelper()->checklistGroup->update($checklistGroup->id), ['name' => $name])
+        ->assertSessionHasErrors(['name']);
 });
 
 /** Успешное изменение */
 test('success', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
     $name           = faker()->word();
 
-    signIn(createUser([], true));
+    authHelper()->signInAsAdmin();
 
-    $response = $this->put(makeChecklistGroupUpdateUrl($checklistGroup->id), ['name' => $name]);
+    $response = $this->put(routeBuilderHelper()->checklistGroup->update($checklistGroup->id), ['name' => $name]);
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Checklist group was updated');
 
@@ -57,15 +65,3 @@ test('success', function () {
         'name' => $name,
     ]);
 });
-
-/**
- * Создание url
- *
- * @param int $id
- *
- * @return string
- */
-function makeChecklistGroupUpdateUrl(int $id): string
-{
-    return ADMIN_CHECKLIST_GROUP_URL . '/' . $id;
-}

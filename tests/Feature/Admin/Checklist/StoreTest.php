@@ -10,51 +10,52 @@ uses(RefreshDatabase::class);
 
 /** Попытка создания гостем */
 test('guest', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    $this->post(makeChecklistStoreUrl($checklistGroup->id))->assertRedirect(LOGIN_URL);
+    $this->post(routeBuilderHelper()->checklist->store($checklistGroup->id))->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка создания пользователем без прав администратора */
 test('user', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $this->post(makeChecklistStoreUrl($checklistGroup->id))->assertForbidden();
+    authHelper()->signIn();
+    $this->post(routeBuilderHelper()->checklist->store($checklistGroup->id))->assertForbidden();
 });
 
 /** Попытка создания для несуществующей группы */
 test('not existed group', function () {
-    signIn(createUser([], true));
-    $this->post(makeChecklistStoreUrl(999))->assertNotFound();
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->checklist->store(999))->assertNotFound();
 });
 
 /** Попытка создания без данных */
 test('empty', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $this->post(makeChecklistStoreUrl($checklistGroup->id))->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->checklist->store($checklistGroup->id))->assertSessionHasErrors(['name']);
 });
 
 /** Попытка создания с неуникальным названием */
 test('not unique name', function () {
-    $checklistGroup = createChecklistGroup();
-    $checklist = createChecklist(['checklist_group_id' => $checklistGroup->id]);
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
-    signIn(createUser([], true));
-    $this->post(makeChecklistStoreUrl($checklistGroup->id), ['name' => $checklist->name])->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->checklist->store($checklistGroup->id), ['name' => $checklist->name])->assertSessionHasErrors(['name']);
 });
 
 /** Успешное создание */
 test('success', function () {
-    $group = createChecklistGroup();
+    $group = modelBuilderHelper()->checklistGroup->create();
+    ;
 
     $name = faker()->word();
 
-    signIn(createUser([], true));
+    authHelper()->signInAsAdmin();
 
-    $response = $this->post(makeChecklistStoreUrl($group->id), ['name' => $name]);
+    $response = $this->post(routeBuilderHelper()->checklist->store($group->id), ['name' => $name]);
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Checklist was created');
 
@@ -65,13 +66,3 @@ test('success', function () {
         'checklist_group_id' => $group->id,
     ]);
 });
-
-/**
- * @param int $checklistGroupId
- *
- * @return string
- */
-function makeChecklistStoreUrl(int $checklistGroupId): string
-{
-    return ADMIN_CHECKLIST_GROUP_URL . '/' . $checklistGroupId . '/checklists';
-}

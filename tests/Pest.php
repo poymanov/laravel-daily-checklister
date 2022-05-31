@@ -11,21 +11,11 @@
 |
 */
 
-use App\Enums\RoleEnum;
-use App\Models\Checklist;
-use App\Models\ChecklistGroup;
-use App\Models\User;
+use Tests\Helpers\AuthHelper;
+use Tests\Helpers\ModelBuilderHelper;
+use Tests\Helpers\RouteBuilderHelper;
 
 uses(Tests\TestCase::class)->in('Feature');
-
-const HOME_URL                         = '/';
-const LOGIN_URL                        = '/login';
-const CONFIRM_PASSWORD_URL             = '/confirm-password';
-const FORGOT_PASSWORD_URL              = '/forgot-password';
-const RESET_PASSWORD_URL               = '/reset-password';
-const REGISTER_URL                     = '/register';
-const ADMIN_CHECKLIST_GROUP_CREATE_URL = '/admin/checklist-groups/create';
-const ADMIN_CHECKLIST_GROUP_URL        = '/admin/checklist-groups';
 
 /*
 |--------------------------------------------------------------------------
@@ -39,53 +29,25 @@ const ADMIN_CHECKLIST_GROUP_URL        = '/admin/checklist-groups';
 */
 
 /**
- * @param null $user
+ * @return AuthHelper
  */
-function signIn($user = null): void
+function authHelper(): AuthHelper
 {
-    $user = $user ?: createUser();
-    test()->actingAs($user);
+    return AuthHelper::getInstance(modelBuilderHelper());
 }
 
 /**
- * Создание сущности {@see User}
- *
- * @param array $params  Параметры нового объекта
- * @param bool  $isAdmin Является ли пользователь администратором
- *
- * @return User
+ * @return ModelBuilderHelper
  */
-function createUser(array $params = [], bool $isAdmin = false): User
+function modelBuilderHelper(): ModelBuilderHelper
 {
-    $user = User::factory()->create($params);
-
-    if ($isAdmin) {
-        $user->assignRole(RoleEnum::ADMIN->value);
-    }
-
-    return $user;
+    return ModelBuilderHelper::getInstance();
 }
 
 /**
- * Создание сущности {@see ChecklistGroup}
- *
- * @param array $params Параметры нового объекта
- *
- * @return ChecklistGroup
+ * @return RouteBuilderHelper
  */
-function createChecklistGroup(array $params = []): ChecklistGroup
+function routeBuilderHelper(): RouteBuilderHelper
 {
-    return ChecklistGroup::factory()->create($params);
-}
-
-/**
- * Создание сущности {@see Checklist}
- *
- * @param array $params Параметры нового объекта
- *
- * @return Checklist
- */
-function createChecklist(array $params = []): Checklist
-{
-    return Checklist::factory()->create($params);
+    return RouteBuilderHelper::getInstance();
 }

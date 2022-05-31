@@ -8,29 +8,29 @@ uses(RefreshDatabase::class);
 
 /** Попытка создания гостем */
 test('guest', function () {
-    $this->post(ADMIN_CHECKLIST_GROUP_URL)->assertRedirect(LOGIN_URL);
+    $this->post(routeBuilderHelper()->checklistGroup->common())->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка создания пользователем без прав администратора */
 test('user', function () {
-    signIn();
-    $this->post(ADMIN_CHECKLIST_GROUP_URL)->assertForbidden();
+    authHelper()->signIn();
+    $this->post(routeBuilderHelper()->checklistGroup->common())->assertForbidden();
 });
 
 /** Попытка создания без данных */
 test('empty', function () {
-    signIn(createUser([], true));
-    $this->post(ADMIN_CHECKLIST_GROUP_URL)->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->checklistGroup->common())->assertSessionHasErrors(['name']);
 });
 
 
 /** Попытка создания группы с неуникальным названием */
 test('not unique name', function () {
     $name = faker()->word();
-    createChecklistGroup(['name' => $name]);
+    modelBuilderHelper()->checklistGroup->create(['name' => $name]);
 
-    signIn(createUser([], true));
-    $this->post(ADMIN_CHECKLIST_GROUP_URL, ['name' => $name])->assertSessionHasErrors(['name']);
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->checklistGroup->common(), ['name' => $name])->assertSessionHasErrors(['name']);
 });
 
 
@@ -38,13 +38,13 @@ test('not unique name', function () {
 test('success', function () {
     $name = faker()->word();
 
-    signIn(createUser([], true));
+    authHelper()->signInAsAdmin();
 
-    $response = $this->post(ADMIN_CHECKLIST_GROUP_URL, ['name' => $name]);
+    $response = $this->post(routeBuilderHelper()->checklistGroup->common(), ['name' => $name]);
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Checklist group was created');
 
-    $response->assertRedirect('/');
+    $response->assertRedirect(routeBuilderHelper()->common->home());
 
     $this->assertDatabaseHas('checklist_groups', [
         'name' => $name,

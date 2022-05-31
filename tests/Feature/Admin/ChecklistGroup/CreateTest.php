@@ -6,19 +6,24 @@ uses(RefreshDatabase::class);
 
 /** Попытка посещения гостем */
 test('guest', function () {
-    $this->get(ADMIN_CHECKLIST_GROUP_CREATE_URL)->assertRedirect(LOGIN_URL);
+    $this
+        ->get(routeBuilderHelper()->checklistGroup->create())
+        ->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
-    signIn();
-    $this->get(ADMIN_CHECKLIST_GROUP_CREATE_URL)->assertForbidden();
+    authHelper()->signIn();
+
+    $this
+        ->get(routeBuilderHelper()->checklistGroup->create())
+        ->assertForbidden();
 });
 
 /** Успешное отображение формы создания */
 test('success', function () {
-    signIn(createUser([], true));
-    $response = $this->get(ADMIN_CHECKLIST_GROUP_CREATE_URL);
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->checklistGroup->create());
     $response->assertOk();
 
     $response->assertSee('New Checklist Group');

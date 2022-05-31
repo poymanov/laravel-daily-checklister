@@ -6,10 +6,10 @@ uses(RefreshDatabase::class);
 
 /** Пользователь без прав администратора не видит пунктов управления группами чеклистов */
 test('not admin', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $response = $this->get(HOME_URL);
+    authHelper()->signIn();
+    $response = $this->get(routeBuilderHelper()->common->home());
     $response->assertDontSee('Manage Checklists');
     $response->assertDontSee('New checklist group');
     $response->assertDontSee($checklistGroup->name);
@@ -17,10 +17,10 @@ test('not admin', function () {
 
 /** Успешное посещение авторизованным пользователем */
 test('admin', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $response = $this->get(HOME_URL);
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->common->home());
     $response->assertSee('Manage Checklists');
     $response->assertSee('New checklist group');
     $response->assertSee($checklistGroup->name);

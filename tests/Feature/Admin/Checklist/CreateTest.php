@@ -8,46 +8,36 @@ uses(RefreshDatabase::class);
 
 /** Попытка посещения гостем */
 test('guest', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    $this->get(makeCreateChecklistUrl($checklistGroup->id))->assertRedirect(LOGIN_URL);
+    $this->get(routeBuilderHelper()->checklist->create($checklistGroup->id))->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $this->get(makeCreateChecklistUrl($checklistGroup->id))->assertForbidden();
+    authHelper()->signIn();
+    $this->get(routeBuilderHelper()->checklist->create($checklistGroup->id))->assertForbidden();
 });
 
 /** Попытка создания чеклиста для несуществующей группы */
 test('not existed group', function () {
-    signIn(createUser([], true));
-    $this->get(makeCreateChecklistUrl(999))->assertNotFound();
+    authHelper()->signInAsAdmin();
+    $this->get(routeBuilderHelper()->checklist->create(999))->assertNotFound();
 });
 
 
 /** Успешное отображение формы создания */
 test('success', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $response = $this->get(makeCreateChecklistUrl($checklistGroup->id));
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->checklist->create($checklistGroup->id));
 
     $response->assertOk();
     $response->assertSee('New Checklist in ' . $checklistGroup->name);
     $response->assertSee('Name');
     $response->assertSee('Save');
 });
-
-/**
- * @param int $checklistGroupId
- *
- * @return string
- */
-function makeCreateChecklistUrl(int $checklistGroupId): string
-{
-    return ADMIN_CHECKLIST_GROUP_URL . '/' . $checklistGroupId . '/checklists/create';
-}

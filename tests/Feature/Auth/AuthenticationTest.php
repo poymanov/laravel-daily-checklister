@@ -6,15 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('login screen can be rendered', function () {
-    $response = $this->get(LOGIN_URL);
-
-    $response->assertStatus(200);
+    $this->get(routeBuilderHelper()->auth->login())->assertOk();
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
-    $response = $this->post(LOGIN_URL, [
+    $response = $this->post(routeBuilderHelper()->auth->login(), [
         'email'    => $user->email,
         'password' => 'password',
     ]);
@@ -24,9 +22,9 @@ test('users can authenticate using the login screen', function () {
 });
 
 test('users can not authenticate with invalid password', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
-    $this->post(LOGIN_URL, [
+    $this->post(routeBuilderHelper()->auth->login(), [
         'email'    => $user->email,
         'password' => 'wrong-password',
     ]);

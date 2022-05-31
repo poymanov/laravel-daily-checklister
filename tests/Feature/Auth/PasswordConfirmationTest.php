@@ -5,17 +5,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('confirm password screen can be rendered', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
-    $response = $this->actingAs($user)->get(CONFIRM_PASSWORD_URL);
-
-    $response->assertStatus(200);
+    $this->actingAs($user)->get(routeBuilderHelper()->auth->confirmPassword())->assertOk();
 });
 
 test('password can be confirmed', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
-    $response = $this->actingAs($user)->post(CONFIRM_PASSWORD_URL, [
+    $response = $this->actingAs($user)->post(routeBuilderHelper()->auth->confirmPassword(), [
         'password' => 'password',
     ]);
 
@@ -24,9 +22,9 @@ test('password can be confirmed', function () {
 });
 
 test('password is not confirmed with invalid password', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
-    $response = $this->actingAs($user)->post(CONFIRM_PASSWORD_URL, [
+    $response = $this->actingAs($user)->post(routeBuilderHelper()->auth->confirmPassword(), [
         'password' => 'wrong-password',
     ]);
 

@@ -8,26 +8,31 @@ uses(RefreshDatabase::class);
 
 /** Попытка посещения гостем */
 test('guest', function () {
-    $checklist = createChecklist();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
-    $this->get(makeEditChecklistUrl($checklist->group->id, $checklist->id))->assertRedirect(LOGIN_URL);
+    $this
+        ->get(routeBuilderHelper()->checklist->edit($checklist->group->id, $checklist->id))
+        ->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
-    $checklist = createChecklist();
+    $checklist = modelBuilderHelper()->checklist->create();
 
-    signIn();
-    $this->get(makeEditChecklistUrl($checklist->group->id, $checklist->id))->assertForbidden();
+    authHelper()->signIn();
+    $this
+        ->get(routeBuilderHelper()->checklist->edit($checklist->group->id, $checklist->id))
+        ->assertForbidden();
 });
 
 
 /** Успешное отображение формы редактирования */
 test('success', function () {
-    $checklist = createChecklist();
+    $checklist = modelBuilderHelper()->checklist->create();
 
-    signIn(createUser([], true));
-    $response = $this->get(makeEditChecklistUrl($checklist->group->id, $checklist->id));
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->checklist->edit($checklist->group->id, $checklist->id));
     $response->assertOk();
 
     $response->assertSee('Edit Checklist');
@@ -35,14 +40,3 @@ test('success', function () {
     $response->assertSee($checklist->name);
     $response->assertSee('Save');
 });
-
-/**
- * @param int $checklistGroupId
- * @param int $checklistId
- *
- * @return string
- */
-function makeEditChecklistUrl(int $checklistGroupId, int $checklistId): string
-{
-    return '/admin/checklist-groups/' . $checklistGroupId . '/checklists/' . $checklistId . '/edit';
-}

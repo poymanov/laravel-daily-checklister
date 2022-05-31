@@ -6,40 +6,28 @@ uses(RefreshDatabase::class);
 
 /** Попытка посещения гостем */
 test('guest', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    $this->get(makeChecklistGroupEditUrl($checklistGroup->id))->assertRedirect(LOGIN_URL);
+    $this->get(routeBuilderHelper()->checklistGroup->edit($checklistGroup->id))->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $this->get(makeChecklistGroupEditUrl($checklistGroup->id))->assertForbidden();
+    authHelper()->signIn();
+    $this->get(routeBuilderHelper()->checklistGroup->edit($checklistGroup->id))->assertForbidden();
 });
 
 /** Успешное отображение формы редактирования */
 test('success', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $response = $this->get(makeChecklistGroupEditUrl($checklistGroup->id));
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->checklistGroup->edit($checklistGroup->id));
     $response->assertOk();
 
     $response->assertSee('Edit Checklist Group');
     $response->assertSee('Name');
     $response->assertSee('Save');
 });
-
-/**
- * Создание url
- *
- * @param int $id
- *
- * @return string
- */
-function makeChecklistGroupEditUrl(int $id): string
-{
-    return ADMIN_CHECKLIST_GROUP_URL . '/' . $id . '/edit';
-}

@@ -6,10 +6,10 @@ uses(RefreshDatabase::class);
 
 /** Отображение кнопки удаления на странице редактирования */
 test('button', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $response = $this->get(makeChecklistGroupDeleteUrl($checklistGroup->id) . '/edit');
+    authHelper()->signInAsAdmin();
+    $response = $this->get(routeBuilderHelper()->checklistGroup->edit($checklistGroup->id));
     $response->assertOk();
 
     $response->assertSee('Delete');
@@ -17,34 +17,35 @@ test('button', function () {
 
 /** Попытка изменения гостем */
 test('guest', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    $response = $this->delete(makeChecklistGroupDeleteUrl($checklistGroup->id));
-    $response->assertRedirect(LOGIN_URL);
+    $this
+        ->delete(routeBuilderHelper()->checklistGroup->delete($checklistGroup->id))
+        ->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка изменения пользователем без прав администратора */
 test('user', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn();
-    $response = $this->delete(makeChecklistGroupDeleteUrl($checklistGroup->id));
+    authHelper()->signIn();
+    $response = $this->delete(routeBuilderHelper()->checklistGroup->delete($checklistGroup->id));
     $response->assertForbidden();
 });
 
 /** Попытка удаления несуществующего элемента */
 test('not existed', function () {
-    signIn(createUser([], true));
-    $response = $this->delete(makeChecklistGroupDeleteUrl(999));
+    authHelper()->signInAsAdmin();
+    $response = $this->delete(routeBuilderHelper()->checklistGroup->delete(999));
     $response->assertNotFound();
 });
 
 /** Успешное удаление */
 test('success', function () {
-    $checklistGroup = createChecklistGroup();
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    signIn(createUser([], true));
-    $response = $this->delete(makeChecklistGroupDeleteUrl($checklistGroup->id));
+    authHelper()->signInAsAdmin();
+    $response = $this->delete(routeBuilderHelper()->checklistGroup->delete($checklistGroup->id));
 
     $response->assertSessionHas('alert.success', 'Checklist group was deleted');
 
@@ -55,15 +56,3 @@ test('success', function () {
         'deleted_at' => null,
     ]);
 });
-
-/**
- * Создание url
- *
- * @param int $id
- *
- * @return string
- */
-function makeChecklistGroupDeleteUrl(int $id): string
-{
-    return ADMIN_CHECKLIST_GROUP_URL . '/' . $id;
-}

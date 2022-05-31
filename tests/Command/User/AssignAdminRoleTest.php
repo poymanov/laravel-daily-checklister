@@ -26,7 +26,7 @@ test('user not existed', function () {
 
 /** Успешное назначение роли */
 test('success', function () {
-    $user = createUser();
+    $user = modelBuilderHelper()->user->create();
 
     $this->artisan('users:assign-admin-role ' . $user->email)
         ->expectsOutput('Success')

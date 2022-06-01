@@ -5,6 +5,7 @@ namespace App\Services\Checklist\Repositories;
 use App\Models\Checklist;
 use App\Services\Checklist\Contracts\ChecklistRepositoryContract;
 use App\Services\Checklist\Exceptions\ChecklistCreateFailedException;
+use App\Services\Checklist\Exceptions\ChecklistDeleteFailedException;
 use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
 use App\Services\Checklist\Exceptions\ChecklistUpdateFailedException;
 
@@ -29,16 +30,42 @@ class ChecklistRepository implements ChecklistRepositoryContract
      */
     public function update(int $id, string $name): void
     {
+        $checklist = $this->findModelById($id);
+        $checklist->name = $name;
+
+        if (!$checklist->save()) {
+            throw new ChecklistUpdateFailedException($id);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $checklist = $this->findModelById($id);
+
+        if (!$checklist->delete()) {
+            throw new ChecklistDeleteFailedException($id);
+        }
+    }
+
+    /**
+     * Получение модели по ID
+     *
+     * @param int $id
+     *
+     * @return Checklist
+     * @throws ChecklistNotFoundException
+     */
+    private function findModelById(int $id): Checklist
+    {
         $checklist = Checklist::find($id);
 
         if (!$checklist) {
             throw new ChecklistNotFoundException($id);
         }
 
-        $checklist->name = $name;
-
-        if (!$checklist->save()) {
-            throw new ChecklistUpdateFailedException($id);
-        }
+        return $checklist;
     }
 }

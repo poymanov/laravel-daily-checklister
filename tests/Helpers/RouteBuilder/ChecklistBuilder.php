@@ -66,4 +66,15 @@ class ChecklistBuilder
     {
         return $this->checklistGroupBuilder->view($checklistGroupId) . '/checklists/' . $checklistId;
     }
+
+    /**
+     * @param int $checklistGroupId
+     * @param int $checklistId
+     *
+     * @return string
+     */
+    public function delete(int $checklistGroupId, int $checklistId): string
+    {
+        return $this->checklistGroupBuilder->view($checklistGroupId) . '/checklists/' . $checklistId;
+    }
 }

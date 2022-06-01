@@ -27,6 +27,22 @@ test('user', function () {
     $this->put(routeBuilderHelper()->checklist->update($checklistGroup->id, $checklist->id))->assertForbidden();
 });
 
+/** Попытка изменения с несуществующей группой */
+test('not existed group', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    authHelper()->signInAsAdmin();
+    $this->put(routeBuilderHelper()->checklist->update(999, $checklist->id))->assertNotFound();
+});
+
+/** Попытка изменения с несуществующего объекта */
+test('not existed', function () {
+    $group = modelBuilderHelper()->checklistGroup->create();
+
+    authHelper()->signInAsAdmin();
+    $this->put(routeBuilderHelper()->checklist->update($group->id, 999))->assertNotFound();
+});
+
 /** Попытка изменения без данных */
 test('empty', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();

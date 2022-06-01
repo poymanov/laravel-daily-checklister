@@ -71,4 +71,21 @@ class ChecklistController extends Controller
             return redirect()->back()->with('alert.error', $e->getMessage());
         }
     }
+
+    /**
+     * @param ChecklistGroup $checklistGroup
+     * @param Checklist      $checklist
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(ChecklistGroup $checklistGroup, Checklist $checklist)
+    {
+        try {
+            $this->checklistService->delete($checklist->id);
+
+            return redirect()->route('dashboard')->with('alert.success', 'Checklist was deleted');
+        } catch (Throwable $e) {
+            return redirect()->back()->with('alert.error', $e->getMessage());
+        }
+    }
 }

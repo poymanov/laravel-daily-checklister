@@ -26,6 +26,21 @@ test('user', function () {
         ->assertForbidden();
 });
 
+/** Попытка посещения с несуществующей группой */
+test('not existed group', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    authHelper()->signInAsAdmin();
+    $this->get(routeBuilderHelper()->checklist->edit(999, $checklist->id))->assertNotFound();
+});
+
+/** Попытка посещения несуществующего объекта */
+test('not existed', function () {
+    $group = modelBuilderHelper()->checklistGroup->create();
+
+    authHelper()->signInAsAdmin();
+    $this->get(routeBuilderHelper()->checklist->edit($group->id, 999))->assertNotFound();
+});
 
 /** Успешное отображение формы редактирования */
 test('success', function () {

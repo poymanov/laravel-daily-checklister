@@ -7,4 +7,6 @@ class ChecklistGroupDto
     public int $id;
 
     public string $name;
+
+    public array $checklists;
 }

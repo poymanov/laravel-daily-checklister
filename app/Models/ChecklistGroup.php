@@ -13,4 +13,12 @@ class ChecklistGroup extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function checklists()
+    {
+        return $this->hasMany(Checklist::class);
+    }
 }

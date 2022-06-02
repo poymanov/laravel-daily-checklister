@@ -3,6 +3,7 @@
 namespace App\Services\ChecklistGroup\Factories;
 
 use App\Models\ChecklistGroup;
+use App\Services\Checklist\Factories\ChecklistDtoFactory;
 use App\Services\ChecklistGroup\Dtos\ChecklistGroupDto;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -31,9 +32,10 @@ class ChecklistGroupDtoFactory
      */
     public static function createFromModel(ChecklistGroup $checklistGroup): ChecklistGroupDto
     {
-        $dto       = new ChecklistGroupDto();
-        $dto->id   = $checklistGroup->id;
-        $dto->name = $checklistGroup->name;
+        $dto             = new ChecklistGroupDto();
+        $dto->id         = $checklistGroup->id;
+        $dto->name       = $checklistGroup->name;
+        $dto->checklists = ChecklistDtoFactory::createFromModelsList($checklistGroup->checklists);
 
         return $dto;
     }

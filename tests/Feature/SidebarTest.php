@@ -18,10 +18,12 @@ test('not admin', function () {
 /** Успешное посещение авторизованным пользователем */
 test('admin', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
     authHelper()->signInAsAdmin();
     $response = $this->get(routeBuilderHelper()->common->home());
     $response->assertSee('Manage Checklists');
     $response->assertSee('New checklist group');
     $response->assertSee($checklistGroup->name);
+    $response->assertSee($checklist->name);
 });

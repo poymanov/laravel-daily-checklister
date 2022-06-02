@@ -57,7 +57,7 @@ class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
      */
     public function findAll(): array
     {
-        return ChecklistGroupDtoFactory::createFromModelsList(ChecklistGroup::select('id', 'name')->get());
+        return ChecklistGroupDtoFactory::createFromModelsList(ChecklistGroup::select('id', 'name')->with('checklists')->get());
     }
 
     /**

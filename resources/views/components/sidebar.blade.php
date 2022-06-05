@@ -32,6 +32,12 @@
                                 {{ $checklist->name }}</a>
                         </li>
                     @endforeach
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" style="padding: 1rem .5rem .5rem 76px"
+                           href="{{ route('admin.checklist-groups.checklists.create', $checklistGroup->id) }}">
+                            <x-svg-icon path="/assets/icons/free.svg#cil-note-add" class="c-sidebar-nav-icon"/>
+                            Add checklist</a>
+                    </li>
                 </ul>
             </li>
         @endforeach

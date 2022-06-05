@@ -26,4 +26,5 @@ test('admin', function () {
     $response->assertSee('New checklist group');
     $response->assertSee($checklistGroup->name);
     $response->assertSee($checklist->name);
+    $response->assertSee('Add checklist');
 });

@@ -6,3 +6,5 @@
 * [Регистрация](04-registration/README.md)
 * [Аутентификация](05-auth/README.md)
 * [Сброс пароля](06-forgot/README.md)
+* [Администраторы](07-admin/README.md)
+* [Группы чеклистов](08-checklist-group/README.md)

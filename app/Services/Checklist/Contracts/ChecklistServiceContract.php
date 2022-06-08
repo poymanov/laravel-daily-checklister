@@ -2,6 +2,7 @@
 
 namespace App\Services\Checklist\Contracts;
 
+use App\Services\Checklist\Dtos\ChecklistDto;
 use App\Services\Checklist\Exceptions\ChecklistCreateFailedException;
 use App\Services\Checklist\Exceptions\ChecklistDeleteFailedException;
 use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
@@ -38,4 +39,12 @@ interface ChecklistServiceContract
      * @throws ChecklistNotFoundException
      */
     public function delete(int $id): void;
+
+    /**
+     * @param int $id
+     *
+     * @return ChecklistDto
+     * @throws ChecklistNotFoundException
+     */
+    public function findOneById(int $id): ChecklistDto;
 }

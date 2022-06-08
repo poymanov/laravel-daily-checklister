@@ -25,15 +25,16 @@ class ChecklistDtoFactory
     }
 
     /**
-     * @param Checklist $checklistGroup
+     * @param Checklist $checklist
      *
      * @return ChecklistDto
      */
-    public static function createFromModel(Checklist $checklistGroup): ChecklistDto
+    public static function createFromModel(Checklist $checklist): ChecklistDto
     {
-        $dto       = new ChecklistDto();
-        $dto->id   = $checklistGroup->id;
-        $dto->name = $checklistGroup->name;
+        $dto                   = new ChecklistDto();
+        $dto->id               = $checklist->id;
+        $dto->name             = $checklist->name;
+        $dto->checklistGroupId = $checklist->checklist_group_id;
 
         return $dto;
     }

@@ -7,4 +7,6 @@ class ChecklistDto
     public int $id;
 
     public string $name;
+
+    public int $checklistGroupId;
 }

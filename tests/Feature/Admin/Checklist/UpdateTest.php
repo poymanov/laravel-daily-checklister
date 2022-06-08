@@ -35,7 +35,7 @@ test('not existed group', function () {
     $this->put(routeBuilderHelper()->checklist->update(999, $checklist->id))->assertNotFound();
 });
 
-/** Попытка изменения с несуществующего объекта */
+/** Попытка изменения несуществующего объекта */
 test('not existed', function () {
     $group = modelBuilderHelper()->checklistGroup->create();
 
@@ -57,7 +57,6 @@ test('not unique name', function () {
     $checklistGroup  = modelBuilderHelper()->checklistGroup->create();
     $checklistFirst  = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
     $checklistSecond = modelBuilderHelper()->checklist->create();
-    ;
 
     authHelper()->signInAsAdmin();
     $this->put(routeBuilderHelper()->checklist->update($checklistGroup->id, $checklistFirst->id), ['name' => $checklistSecond->name])
@@ -77,7 +76,7 @@ test('success', function () {
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Checklist was updated');
 
-    $response->assertRedirect('/');
+    $response->assertRedirect(routeBuilderHelper()->checklist->view($checklistGroup->id, $checklist->id));
 
     $this->assertDatabaseHas('checklists', [
         'id'                 => $checklist->id,

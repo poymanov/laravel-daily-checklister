@@ -4,10 +4,12 @@ namespace App\Services\Checklist\Repositories;
 
 use App\Models\Checklist;
 use App\Services\Checklist\Contracts\ChecklistRepositoryContract;
+use App\Services\Checklist\Dtos\ChecklistDto;
 use App\Services\Checklist\Exceptions\ChecklistCreateFailedException;
 use App\Services\Checklist\Exceptions\ChecklistDeleteFailedException;
 use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
 use App\Services\Checklist\Exceptions\ChecklistUpdateFailedException;
+use App\Services\Checklist\Factories\ChecklistDtoFactory;
 
 class ChecklistRepository implements ChecklistRepositoryContract
 {
@@ -30,7 +32,7 @@ class ChecklistRepository implements ChecklistRepositoryContract
      */
     public function update(int $id, string $name): void
     {
-        $checklist = $this->findModelById($id);
+        $checklist       = $this->findModelById($id);
         $checklist->name = $name;
 
         if (!$checklist->save()) {
@@ -48,6 +50,14 @@ class ChecklistRepository implements ChecklistRepositoryContract
         if (!$checklist->delete()) {
             throw new ChecklistDeleteFailedException($id);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneById(int $id): ChecklistDto
+    {
+        return ChecklistDtoFactory::createFromModel($this->findModelById($id));
     }
 
     /**

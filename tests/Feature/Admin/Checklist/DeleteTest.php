@@ -6,22 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-/** Отображение кнопки удаления на странице редактирования */
-test('button', function () {
-    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
-    $checklist = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
-
-    authHelper()->signInAsAdmin();
-    $response = $this->get(routeBuilderHelper()->checklist->edit($checklistGroup->id, $checklist->id));
-    $response->assertOk();
-
-    $response->assertSee('Delete');
-});
-
 /** Попытка удаления гостем */
 test('guest', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
-    $checklist = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
     $this
         ->delete(routeBuilderHelper()->checklist->delete($checklist->group->id, $checklist->id))
@@ -31,7 +19,7 @@ test('guest', function () {
 /** Попытка удаления пользователем без прав администратора */
 test('user', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
-    $checklist = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
     authHelper()->signIn();
     $this->delete(routeBuilderHelper()->checklist->delete($checklist->group->id, $checklist->id))->assertForbidden();
@@ -56,7 +44,7 @@ test('not existed', function () {
 /** Успешное удаление */
 test('success', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
-    $checklist = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
     authHelper()->signInAsAdmin();
     $response = $this->delete(routeBuilderHelper()->checklist->delete($checklistGroup->id, $checklist->id));

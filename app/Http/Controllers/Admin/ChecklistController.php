@@ -66,7 +66,9 @@ class ChecklistController extends Controller
         try {
             $this->checklistService->update($checklist->id, $request->get('name'));
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist was updated');
+            return redirect()
+                ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklistGroup, 'checklist' => $checklist])
+                ->with('alert.success', 'Checklist was updated');
         } catch (Throwable $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         }
@@ -86,6 +88,23 @@ class ChecklistController extends Controller
             return redirect()->route('dashboard')->with('alert.success', 'Checklist was deleted');
         } catch (Throwable $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param ChecklistGroup $checklistGroup
+     * @param Checklist      $checklist
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function show(ChecklistGroup $checklistGroup, Checklist $checklist)
+    {
+        try {
+            $checklistDto = $this->checklistService->findOneById($checklist->id);
+
+            return view('admin.checklist.show', ['checklist' => $checklistDto]);
+        } catch (Throwable $e) {
+            return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
         }
     }
 }

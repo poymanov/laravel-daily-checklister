@@ -27,7 +27,7 @@
                     @foreach ($checklistGroup->checklists as $checklist)
                         <li class="c-sidebar-nav-item">
                             <a class="c-sidebar-nav-link" style="padding: .5rem .5rem .5rem 76px"
-                               href="{{ route('admin.checklist-groups.checklists.edit', [$checklistGroup->id, $checklist->id]) }}">
+                               href="{{ route('admin.checklist-groups.checklists.show', [$checklistGroup->id, $checklist->id]) }}">
                                 <x-svg-icon path="/assets/icons/free.svg#cil-list" class="c-sidebar-nav-icon"/>
                                 {{ $checklist->name }}</a>
                         </li>

@@ -4,7 +4,7 @@ namespace App\Services\Checklist;
 
 use App\Services\Checklist\Contracts\ChecklistRepositoryContract;
 use App\Services\Checklist\Contracts\ChecklistServiceContract;
-use App\Services\Checklist\Exceptions\ChecklistDeleteFailedException;
+use App\Services\Checklist\Dtos\ChecklistDto;
 use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupServiceContract;
 
@@ -39,5 +39,13 @@ class ChecklistService implements ChecklistServiceContract
     public function delete(int $id): void
     {
         $this->checklistRepository->delete($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneById(int $id): ChecklistDto
+    {
+        return $this->checklistRepository->findOneById($id);
     }
 }

@@ -57,4 +57,6 @@ test('success', function () {
     $response->assertSee($checklist->name);
     $response->assertSee('Edit');
     $response->assertSee('Delete');
+    $response->assertSee('Tasks');
+    $response->assertSee('Create Task');
 });

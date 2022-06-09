@@ -10,6 +10,10 @@ use App\Services\ChecklistGroup\ChecklistGroupService;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupRepositoryContract;
 use App\Services\ChecklistGroup\Contracts\ChecklistGroupServiceContract;
 use App\Services\ChecklistGroup\Repositories\ChecklistGroupRepository;
+use App\Services\Task\Contracts\TaskRepositoryContract;
+use App\Services\Task\Contracts\TaskServiceContract;
+use App\Services\Task\Repositories\TaskRepository;
+use App\Services\Task\TaskService;
 use App\Services\User\Contracts\UserRepositoryContract;
 use App\Services\User\Contracts\UserServiceContract;
 use App\Services\User\Repositories\UserRepository;
@@ -43,5 +47,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ChecklistRepositoryContract::class, ChecklistRepository::class);
         $this->app->bind(ChecklistServiceContract::class, ChecklistService::class);
+
+        $this->app->bind(TaskRepositoryContract::class, TaskRepository::class);
+        $this->app->bind(TaskServiceContract::class, TaskService::class);
     }
 }

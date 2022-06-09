@@ -6,6 +6,7 @@ use Tests\Helpers\RouteBuilder\AuthBuilder;
 use Tests\Helpers\RouteBuilder\ChecklistBuilder;
 use Tests\Helpers\RouteBuilder\ChecklistGroupBuilder;
 use Tests\Helpers\RouteBuilder\CommonBuilder;
+use Tests\Helpers\RouteBuilder\TaskBuilder;
 
 class RouteBuilderHelper
 {
@@ -15,6 +16,7 @@ class RouteBuilderHelper
     public AuthBuilder $auth;
     public ChecklistGroupBuilder $checklistGroup;
     public ChecklistBuilder $checklist;
+    public TaskBuilder $task;
 
     private function __construct()
     {
@@ -22,6 +24,7 @@ class RouteBuilderHelper
         $this->auth           = new AuthBuilder();
         $this->checklistGroup = new ChecklistGroupBuilder();
         $this->checklist      = new ChecklistBuilder($this->checklistGroup);
+        $this->task           = new TaskBuilder();
     }
 
     public static function getInstance(): RouteBuilderHelper

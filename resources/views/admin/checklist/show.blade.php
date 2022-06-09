@@ -18,6 +18,12 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">Tasks</div>
+                <div class="card-body">
+                    <a href="{{ route('admin.checklists.tasks.create', $checklist->id) }}" class="btn btn-sm btn-primary">Create Task</a>
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>

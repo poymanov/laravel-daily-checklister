@@ -13,7 +13,6 @@ test('guest', function () {
     $this->get(routeBuilderHelper()->checklist->create($checklistGroup->id))->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
-
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
@@ -27,7 +26,6 @@ test('not existed group', function () {
     authHelper()->signInAsAdmin();
     $this->get(routeBuilderHelper()->checklist->create(999))->assertNotFound();
 });
-
 
 /** Успешное отображение формы создания */
 test('success', function () {

@@ -4,6 +4,7 @@ namespace Tests\Helpers;
 
 use Tests\Helpers\ModelBuilder\ChecklistBuilder;
 use Tests\Helpers\ModelBuilder\ChecklistGroupBuilder;
+use Tests\Helpers\ModelBuilder\TaskBuilder;
 use Tests\Helpers\ModelBuilder\UserBuilder;
 
 class ModelBuilderHelper
@@ -13,12 +14,14 @@ class ModelBuilderHelper
     public UserBuilder $user;
     public ChecklistGroupBuilder $checklistGroup;
     public ChecklistBuilder $checklist;
+    public TaskBuilder $task;
 
     private function __construct()
     {
         $this->user           = new UserBuilder();
         $this->checklistGroup = new ChecklistGroupBuilder();
         $this->checklist      = new ChecklistBuilder();
+        $this->task           = new TaskBuilder();
     }
 
     /**

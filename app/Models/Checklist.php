@@ -21,4 +21,12 @@ class Checklist extends Model
     {
         return $this->belongsTo(ChecklistGroup::class, 'checklist_group_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

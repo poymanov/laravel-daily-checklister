@@ -4,6 +4,7 @@ namespace App\Services\Checklist\Factories;
 
 use App\Models\Checklist;
 use App\Services\Checklist\Dtos\ChecklistDto;
+use App\Services\Task\Factories\TaskDtoFactory;
 use Illuminate\Database\Eloquent\Collection;
 
 class ChecklistDtoFactory
@@ -35,6 +36,7 @@ class ChecklistDtoFactory
         $dto->id               = $checklist->id;
         $dto->name             = $checklist->name;
         $dto->checklistGroupId = $checklist->checklist_group_id;
+        $dto->tasks            = TaskDtoFactory::createFromModelsList($checklist->tasks);
 
         return $dto;
     }

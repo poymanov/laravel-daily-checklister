@@ -76,6 +76,8 @@ class ChecklistRepository implements ChecklistRepositoryContract
             throw new ChecklistNotFoundException($id);
         }
 
+        $checklist->with('tasks');
+
         return $checklist;
     }
 }

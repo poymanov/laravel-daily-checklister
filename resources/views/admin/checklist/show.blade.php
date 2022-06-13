@@ -21,7 +21,17 @@
             <div class="card">
                 <div class="card-header">Tasks</div>
                 <div class="card-body">
-                    <a href="{{ route('admin.checklists.tasks.create', $checklist->id) }}" class="btn btn-sm btn-primary">Create Task</a>
+                    <div>
+                        <a href="{{ route('admin.checklists.tasks.create', $checklist->id) }}" class="btn btn-sm btn-primary">Create Task</a>
+                    </div>
+
+                    @if($checklist->tasks)
+                        <ul class="list-group mt-4">
+                            @foreach($checklist->tasks as $task)
+                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{ $task->name }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>

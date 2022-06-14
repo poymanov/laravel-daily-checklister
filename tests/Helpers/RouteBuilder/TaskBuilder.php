@@ -23,4 +23,26 @@ class TaskBuilder
     {
         return '/admin/checklists/' . $checklistId . '/tasks';
     }
+
+    /**
+     * @param int $checklistId
+     * @param int $taskId
+     *
+     * @return string
+     */
+    public function edit(int $checklistId, int $taskId): string
+    {
+        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId . '/edit';
+    }
+
+    /**
+     * @param int $checklistId
+     * @param int $taskId
+     *
+     * @return string
+     */
+    public function update(int $checklistId, int $taskId): string
+    {
+        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId;
+    }
 }

@@ -28,7 +28,7 @@
                     @if($checklist->tasks)
                         <ul class="list-group mt-4">
                             @foreach($checklist->tasks as $task)
-                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{ $task->name }}</li>
+                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{ $task->name }}<a href="{{ route('admin.checklists.tasks.edit', ['checklist' => $checklist->id, 'task' => $task->id]) }}"><x-svg-icon path="/assets/icons/free.svg#cil-pencil" class="c-icon"/></a></li>
                             @endforeach
                         </ul>
                     @endif

@@ -45,4 +45,15 @@ class TaskBuilder
     {
         return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId;
     }
+
+    /**
+     * @param int $checklistId
+     * @param int $taskId
+     *
+     * @return string
+     */
+    public function delete(int $checklistId, int $taskId): string
+    {
+        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId;
+    }
 }

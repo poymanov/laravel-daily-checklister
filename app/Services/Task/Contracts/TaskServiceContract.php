@@ -6,6 +6,7 @@ use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
 use App\Services\Task\Dtos\TaskCreateDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
 use App\Services\Task\Exceptions\TaskCreateFailedException;
+use App\Services\Task\Exceptions\TaskDeleteFailedException;
 use App\Services\Task\Exceptions\TaskNotFoundException;
 use App\Services\Task\Exceptions\TaskUpdateFailedException;
 
@@ -32,4 +33,13 @@ interface TaskServiceContract
      * @throws TaskUpdateFailedException
      */
     public function update(int $id, string $name, string $description): void;
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     * @throws TaskDeleteFailedException
+     * @throws TaskNotFoundException
+     */
+    public function delete(int $id): void;
 }

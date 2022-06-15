@@ -7,6 +7,7 @@ use App\Services\Task\Contracts\TaskRepositoryContract;
 use App\Services\Task\Dtos\TaskCreateDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
 use App\Services\Task\Exceptions\TaskCreateFailedException;
+use App\Services\Task\Exceptions\TaskDeleteFailedException;
 use App\Services\Task\Exceptions\TaskNotFoundException;
 use App\Services\Task\Exceptions\TaskUpdateFailedException;
 
@@ -32,11 +33,7 @@ class TaskRepository implements TaskRepositoryContract
      */
     public function update(int $id, TaskUpdateDto $taskUpdateDto): void
     {
-        $task = Task::find($id);
-
-        if (!$task) {
-            throw new TaskNotFoundException($id);
-        }
+        $task = $this->findModelById($id);
 
         $task->name        = $taskUpdateDto->name;
         $task->description = $taskUpdateDto->description;
@@ -44,5 +41,36 @@ class TaskRepository implements TaskRepositoryContract
         if (!$task->save()) {
             throw new TaskUpdateFailedException($id);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $task = $this->findModelById($id);
+
+        if (!$task->delete()) {
+            throw new TaskDeleteFailedException($id);
+        }
+    }
+
+    /**
+     * Получение модели по ID
+     *
+     * @param int $id
+     *
+     * @return Task
+     * @throws TaskNotFoundException
+     */
+    private function findModelById(int $id): Task
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            throw new TaskNotFoundException($id);
+        }
+
+        return $task;
     }
 }

@@ -28,7 +28,20 @@
                     @if($checklist->tasks)
                         <ul class="list-group mt-4">
                             @foreach($checklist->tasks as $task)
-                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{ $task->name }}<a href="{{ route('admin.checklists.tasks.edit', ['checklist' => $checklist->id, 'task' => $task->id]) }}"><x-svg-icon path="/assets/icons/free.svg#cil-pencil" class="c-icon"/></a></li>
+                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center d-flex">
+                                    <div class="mr-auto">
+                                        {{ $task->name }}
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <a href="{{ route('admin.checklists.tasks.edit', ['checklist' => $checklist->id, 'task' => $task->id]) }}" class="mr-1"><x-svg-icon path="/assets/icons/free.svg#cil-pencil" class="c-icon"/></a>
+
+                                        <form method="post" action="{{ route('admin.checklists.tasks.destroy', ['checklist' => $checklist->id, 'task' => $task->id]) }}" onsubmit="return confirm('Are you sure?');">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-link p-0"><x-svg-icon path="/assets/icons/free.svg#cil-trash" class="c-icon"/></button>
+                                        </form>
+                                    </div>
+                                </li>
                             @endforeach
                         </ul>
                     @endif

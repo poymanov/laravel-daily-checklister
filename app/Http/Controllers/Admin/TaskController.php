@@ -82,4 +82,23 @@ class TaskController extends Controller
             return redirect()->back()->with('alert.error', $e->getMessage());
         }
     }
+
+    /**
+     * @param Checklist $checklist
+     * @param Task      $task
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Checklist $checklist, Task $task)
+    {
+        try {
+            $this->taskService->delete($task->id);
+
+            return redirect()
+                ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
+                ->with('alert.success', 'Task was deleted');
+        } catch (Throwable $e) {
+            return redirect()->back()->with('alert.error', $e->getMessage());
+        }
+    }
 }

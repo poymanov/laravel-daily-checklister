@@ -42,4 +42,12 @@ class TaskService implements TaskServiceContract
 
         $this->taskRepository->update($id, $dto);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $this->taskRepository->delete($id);
+    }
 }

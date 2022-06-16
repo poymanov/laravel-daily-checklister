@@ -21,6 +21,7 @@ class TaskFactory extends Factory
             'name'         => $this->faker->words(3, true) . '-' . $this->faker->date . '-' . $this->faker->time,
             'description'  => $this->faker->text,
             'checklist_id' => Checklist::factory(),
+            'order'        => $this->faker->randomDigit(),
         ];
     }
 }

@@ -47,4 +47,14 @@ interface ChecklistServiceContract
      * @throws ChecklistNotFoundException
      */
     public function findOneById(int $id): ChecklistDto;
+
+    /**
+     * Получение порядкового номера для следующей задачи в чеклисте
+     *
+     * @param int $id
+     *
+     * @return int
+     * @throws ChecklistNotFoundException
+     */
+    public function getNextTaskOrder(int $id): int;
 }

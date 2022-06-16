@@ -9,4 +9,6 @@ class TaskCreateDto
     public string $name;
 
     public string $description;
+
+    public int $order;
 }

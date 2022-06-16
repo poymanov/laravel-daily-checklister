@@ -22,11 +22,13 @@ class TaskService implements TaskServiceContract
     public function create(int $checklistId, string $name, string $description): void
     {
         $this->checklistService->findOneById($checklistId);
+        $order = $this->checklistService->getNextTaskOrder($checklistId);
 
         $dto              = new TaskCreateDto();
         $dto->checklistId = $checklistId;
         $dto->name        = $name;
         $dto->description = $description;
+        $dto->order       = $order;
 
         $this->taskRepository->create($dto);
     }

@@ -84,5 +84,28 @@ test('success', function () {
         'name'         => $name,
         'description'  => $description,
         'checklist_id' => $checklist->id,
+        'order'        => 1,
+    ]);
+});
+
+/** Успешное создание задачи с правильным порядком сортировки */
+test('success next order position', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);
+    modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
+
+    $name        = faker()->words(3, true);
+    $description = faker()->realTextBetween(256, 300);
+
+    authHelper()->signInAsAdmin();
+
+    $this->post(routeBuilderHelper()->task->store($checklist->id), ['name' => $name, 'description' => $description]);
+
+    $this->assertDatabaseHas('tasks', [
+        'name'         => $name,
+        'description'  => $description,
+        'checklist_id' => $checklist->id,
+        'order'        => 3,
     ]);
 });

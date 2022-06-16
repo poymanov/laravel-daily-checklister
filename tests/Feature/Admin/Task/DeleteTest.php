@@ -8,8 +8,8 @@ uses(RefreshDatabase::class);
 
 /** Попытка удаления гостем */
 test('guest', function () {
-    $checklist      = modelBuilderHelper()->checklist->create();
-    $task           = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $checklist = modelBuilderHelper()->checklist->create();
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     $this
         ->delete(routeBuilderHelper()->task->delete($checklist->id, $task->id))
@@ -18,8 +18,8 @@ test('guest', function () {
 
 /** Попытка удаления пользователем без прав администратора */
 test('user', function () {
-    $checklist      = modelBuilderHelper()->checklist->create();
-    $task           = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $checklist = modelBuilderHelper()->checklist->create();
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     authHelper()->signIn();
 
@@ -30,7 +30,7 @@ test('user', function () {
 
 /** Попытка удаления задачи для несуществующего чеклиста */
 test('not existed checklist', function () {
-    $task           = modelBuilderHelper()->task->create();
+    $task = modelBuilderHelper()->task->create();
 
     authHelper()->signInAsAdmin();
 
@@ -39,7 +39,7 @@ test('not existed checklist', function () {
 
 /** Попытка удаления несуществующей задачи */
 test('not existed', function () {
-    $checklist      = modelBuilderHelper()->checklist->create();
+    $checklist = modelBuilderHelper()->checklist->create();
 
     authHelper()->signInAsAdmin();
 
@@ -63,5 +63,29 @@ test('success', function () {
         'id'           => $task->id,
         'checklist_id' => $checklist->id,
         'deleted_at'   => null,
+    ]);
+});
+
+/** Изменение порядка задач чеклиста после удаления одной из задач */
+test('reorder', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    $taskFirst  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);
+    $taskSecond = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
+    $taskThird  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 3]);
+
+    authHelper()->signInAsAdmin();
+    $response = $this->delete(routeBuilderHelper()->task->delete($checklist->id, $taskSecond->id));
+
+    $this->assertDatabaseHas('tasks', [
+        'id'           => $taskFirst->id,
+        'checklist_id' => $checklist->id,
+        'order'        => 1,
+    ]);
+
+    $this->assertDatabaseHas('tasks', [
+        'id'           => $taskThird->id,
+        'checklist_id' => $checklist->id,
+        'order'        => 2,
     ]);
 });

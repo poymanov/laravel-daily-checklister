@@ -22,6 +22,7 @@ class TaskRepository implements TaskRepositoryContract
         $task->name         = $taskCreateDto->name;
         $task->description  = $taskCreateDto->description;
         $task->checklist_id = $taskCreateDto->checklistId;
+        $task->order        = $taskCreateDto->order;
 
         if (!$task->save()) {
             throw new TaskCreateFailedException();
@@ -53,6 +54,9 @@ class TaskRepository implements TaskRepositoryContract
         if (!$task->delete()) {
             throw new TaskDeleteFailedException($id);
         }
+
+        $checklist = $task->checklist;
+        $checklist->tasks()->where('order', '>', $task->order)->decrement('order');
     }
 
     /**

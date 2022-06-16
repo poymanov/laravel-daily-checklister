@@ -13,4 +13,12 @@ class Task extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function checklist()
+    {
+        return $this->belongsTo(Checklist::class);
+    }
 }

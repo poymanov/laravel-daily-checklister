@@ -61,6 +61,19 @@ class ChecklistRepository implements ChecklistRepositoryContract
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getNextTaskOrder(int $id): int
+    {
+        $checklist = $this->findModelById($id);
+
+        $order = (int) $checklist->tasks()->max('order');
+        $order++;
+
+        return $order;
+    }
+
+    /**
      * Получение модели по ID
      *
      * @param int $id

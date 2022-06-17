@@ -57,4 +57,14 @@ interface ChecklistServiceContract
      * @throws ChecklistNotFoundException
      */
     public function getNextTaskOrder(int $id): int;
+
+    /**
+     * Получение последнего значения сортировки задач
+     *
+     * @param int $id
+     *
+     * @return int
+     * @throws ChecklistNotFoundException
+     */
+    public function getTasksLastOrder(int $id): int;
 }

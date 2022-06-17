@@ -5,11 +5,16 @@ namespace App\Services\Task\Repositories;
 use App\Models\Task;
 use App\Services\Task\Contracts\TaskRepositoryContract;
 use App\Services\Task\Dtos\TaskCreateDto;
+use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
+use App\Services\Task\Enums\ChangeOrderDirectionEnum;
 use App\Services\Task\Exceptions\TaskCreateFailedException;
 use App\Services\Task\Exceptions\TaskDeleteFailedException;
 use App\Services\Task\Exceptions\TaskNotFoundException;
 use App\Services\Task\Exceptions\TaskUpdateFailedException;
+use App\Services\Task\Factories\TaskDtoFactory;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class TaskRepository implements TaskRepositoryContract
 {
@@ -57,6 +62,48 @@ class TaskRepository implements TaskRepositoryContract
 
         $checklist = $task->checklist;
         $checklist->tasks()->where('order', '>', $task->order)->decrement('order');
+    }
+
+    /**
+     * Получение задач по ID чеклиста
+     *
+     * @param int $checklistId
+     *
+     * @return TaskDto[]
+     */
+    public function findAllByChecklistId(int $checklistId): array
+    {
+        $tasks = Task::whereChecklistId($checklistId)->orderBy('order')->get();
+
+        return TaskDtoFactory::createFromModelsList($tasks);
+    }
+
+    /**
+     * Изменение порядка задачи
+     *
+     * @param int                      $id
+     * @param ChangeOrderDirectionEnum $direction
+     *
+     * @return void
+     * @throws TaskNotFoundException
+     * @throws Throwable
+     */
+    public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
+    {
+        try {
+            $task = $this->findModelById($id);
+        } catch (Throwable) {
+            return;
+        }
+
+        $newOrder = $direction == ChangeOrderDirectionEnum::PREV ? $task->order - 1 : $task->order + 1;
+
+        DB::transaction(function () use ($task, $newOrder) {
+            Task::where('order', $newOrder)->update(['order' => $task->order]);
+
+            $task->order = $newOrder;
+            $task->save();
+        });
     }
 
     /**

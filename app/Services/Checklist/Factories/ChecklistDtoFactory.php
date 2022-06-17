@@ -36,7 +36,7 @@ class ChecklistDtoFactory
         $dto->id               = $checklist->id;
         $dto->name             = $checklist->name;
         $dto->checklistGroupId = $checklist->checklist_group_id;
-        $dto->tasks            = TaskDtoFactory::createFromModelsList($checklist->tasks);
+        $dto->tasks            = TaskDtoFactory::createFromModelsList($checklist->tasks()->orderBy('order')->get());
 
         return $dto;
     }

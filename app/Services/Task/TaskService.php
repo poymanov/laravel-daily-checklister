@@ -7,6 +7,7 @@ use App\Services\Task\Contracts\TaskRepositoryContract;
 use App\Services\Task\Contracts\TaskServiceContract;
 use App\Services\Task\Dtos\TaskCreateDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
+use App\Services\Task\Enums\ChangeOrderDirectionEnum;
 
 class TaskService implements TaskServiceContract
 {
@@ -51,5 +52,21 @@ class TaskService implements TaskServiceContract
     public function delete(int $id): void
     {
         $this->taskRepository->delete($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAllByChecklistId(int $checklistId): array
+    {
+        return $this->taskRepository->findAllByChecklistId($checklistId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
+    {
+        $this->taskRepository->changeOrder($id, $direction);
     }
 }

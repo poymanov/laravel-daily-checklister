@@ -12,6 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js', 'assets') }}" defer></script>
+
+    @livewireStyles
 </head>
 <body class="c-app">
 <x-sidebar/>
@@ -32,5 +34,6 @@
         </footer>
     </div>
 </div>
+@livewireScripts
 </body>
 </html>

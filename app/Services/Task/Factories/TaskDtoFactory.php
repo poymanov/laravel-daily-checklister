@@ -31,9 +31,10 @@ class TaskDtoFactory
      */
     public static function createFromModel(Task $task): TaskDto
     {
-        $dto       = new TaskDto();
-        $dto->id   = $task->id;
-        $dto->name = $task->name;
+        $dto        = new TaskDto();
+        $dto->id    = $task->id;
+        $dto->name  = $task->name;
+        $dto->order = $task->order;
 
         return $dto;
     }

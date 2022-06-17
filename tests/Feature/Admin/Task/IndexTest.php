@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\Checklist\Tasks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -16,6 +17,7 @@ test('success', function () {
     authHelper()->signInAsAdmin();
     $response = $this->get(routeBuilderHelper()->checklist->view($checklistGroup->id, $checklist->id));
     $response->assertOk();
+    $response->assertSeeLivewire(Tasks::class);
 
     $response->assertSee('Tasks');
     $response->assertSee('Create Task');

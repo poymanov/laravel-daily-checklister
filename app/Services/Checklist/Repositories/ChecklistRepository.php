@@ -74,6 +74,21 @@ class ChecklistRepository implements ChecklistRepositoryContract
     }
 
     /**
+     * Получение последнего значения сортировки задач
+     *
+     * @param int $id
+     *
+     * @return int
+     * @throws ChecklistNotFoundException
+     */
+    public function getTasksLastOrder(int $id): int
+    {
+        $checklist = $this->findModelById($id);
+
+        return (int) $checklist->tasks()->max('order');
+    }
+
+    /**
      * Получение модели по ID
      *
      * @param int $id

@@ -32,7 +32,17 @@ backend-permissions:
 backend-composer-install:
 	docker-compose run --rm php-cli composer install
 
-backend-init: backend-permissions backend-composer-install backend-copy-env backend-generate-key wait-db backend-migrations backend-create-storage
+backend-db-create-multiple-databases:
+	docker-compose exec db sh /docker-entrypoint-initdb.d/create-multiple-databases.sh
+
+backend-init: backend-permissions \
+	backend-composer-install \
+	backend-copy-env \
+	backend-generate-key \
+	backend-db-create-multiple-databases \
+	wait-db \
+	backend-migrations \
+	backend-create-storage
 
 backend-copy-env:
 	cp .env.example .env

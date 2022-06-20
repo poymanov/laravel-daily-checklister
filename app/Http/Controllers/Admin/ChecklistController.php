@@ -8,6 +8,12 @@ use App\Http\Requests\Checklist\UpdateRequest;
 use App\Models\Checklist;
 use App\Models\ChecklistGroup;
 use App\Services\Checklist\Contracts\ChecklistServiceContract;
+use App\Services\Checklist\Exceptions\ChecklistCreateFailedException;
+use App\Services\Checklist\Exceptions\ChecklistDeleteFailedException;
+use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
+use App\Services\Checklist\Exceptions\ChecklistUpdateFailedException;
+use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class ChecklistController extends Controller
@@ -38,8 +44,12 @@ class ChecklistController extends Controller
             $this->checklistService->create($checklistGroup->id, $request->get('name'));
 
             return redirect()->route('dashboard')->with('alert.success', 'Checklist was created');
-        } catch (Throwable $e) {
+        } catch (ChecklistCreateFailedException | ChecklistGroupNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -69,8 +79,12 @@ class ChecklistController extends Controller
             return redirect()
                 ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklistGroup, 'checklist' => $checklist])
                 ->with('alert.success', 'Checklist was updated');
-        } catch (Throwable $e) {
+        } catch (ChecklistNotFoundException | ChecklistUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -86,8 +100,12 @@ class ChecklistController extends Controller
             $this->checklistService->delete($checklist->id);
 
             return redirect()->route('dashboard')->with('alert.success', 'Checklist was deleted');
-        } catch (Throwable $e) {
+        } catch (ChecklistDeleteFailedException | ChecklistNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -103,8 +121,12 @@ class ChecklistController extends Controller
             $checklistDto = $this->checklistService->findOneById($checklist->id);
 
             return view('admin.checklist.show', ['checklist' => $checklistDto]);
-        } catch (Throwable $e) {
+        } catch (ChecklistNotFoundException $e) {
             return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 }

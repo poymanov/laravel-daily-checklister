@@ -8,7 +8,13 @@ use App\Http\Requests\Task\UpdateRequest;
 use App\Models\Checklist;
 use App\Models\Task;
 use App\Services\Checklist\Contracts\ChecklistServiceContract;
+use App\Services\Checklist\Exceptions\ChecklistNotFoundException;
 use App\Services\Task\Contracts\TaskServiceContract;
+use App\Services\Task\Exceptions\TaskCreateFailedException;
+use App\Services\Task\Exceptions\TaskDeleteFailedException;
+use App\Services\Task\Exceptions\TaskNotFoundException;
+use App\Services\Task\Exceptions\TaskUpdateFailedException;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class TaskController extends Controller
@@ -47,8 +53,12 @@ class TaskController extends Controller
                     ['checklist_group' => $checklist->checklist_group_id, 'checklist' => $checklist->id]
                 )
                 ->with('alert.success', 'Task was created');
-        } catch (Throwable $e) {
+        } catch (TaskCreateFailedException | ChecklistNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -78,8 +88,12 @@ class TaskController extends Controller
             return redirect()
                 ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
                 ->with('alert.success', 'Task was updated');
-        } catch (Throwable $e) {
+        } catch (TaskNotFoundException | TaskUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -97,8 +111,12 @@ class TaskController extends Controller
             return redirect()
                 ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
                 ->with('alert.success', 'Task was deleted');
-        } catch (Throwable $e) {
+        } catch (TaskDeleteFailedException | TaskNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
         }
     }
 }

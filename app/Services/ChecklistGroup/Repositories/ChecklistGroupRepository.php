@@ -32,7 +32,7 @@ class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
      */
     public function update(int $id, string $name): void
     {
-        $checklistGroup = $this->findModelById($id);
+        $checklistGroup       = $this->findModelById($id);
         $checklistGroup->name = $name;
 
         if (!$checklistGroup->save()) {

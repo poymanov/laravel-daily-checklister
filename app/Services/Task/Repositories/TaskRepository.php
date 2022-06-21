@@ -14,6 +14,7 @@ use App\Services\Task\Exceptions\TaskNotFoundException;
 use App\Services\Task\Exceptions\TaskUpdateFailedException;
 use App\Services\Task\Factories\TaskDtoFactory;
 use Illuminate\Support\Facades\DB;
+use Mews\Purifier\Facades\Purifier;
 use Throwable;
 
 class TaskRepository implements TaskRepositoryContract
@@ -25,7 +26,7 @@ class TaskRepository implements TaskRepositoryContract
     {
         $task               = new Task();
         $task->name         = $taskCreateDto->name;
-        $task->description  = $taskCreateDto->description;
+        $task->description  = $this->purifyText($taskCreateDto->description);
         $task->checklist_id = $taskCreateDto->checklistId;
         $task->order        = $taskCreateDto->order;
 
@@ -42,7 +43,7 @@ class TaskRepository implements TaskRepositoryContract
         $task = $this->findModelById($id);
 
         $task->name        = $taskUpdateDto->name;
-        $task->description = $taskUpdateDto->description;
+        $task->description = $this->purifyText($taskUpdateDto->description);
 
         if (!$task->save()) {
             throw new TaskUpdateFailedException($id);
@@ -123,5 +124,17 @@ class TaskRepository implements TaskRepositoryContract
         }
 
         return $task;
+    }
+
+    /**
+     * Удаление небезопасных символов из строки
+     *
+     * @param string $text
+     *
+     * @return string
+     */
+    private function purifyText(string $text): string
+    {
+        return Purifier::clean($text);
     }
 }

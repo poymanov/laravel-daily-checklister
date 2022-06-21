@@ -10,8 +10,8 @@
                     <input class="form-control" id="name" type="text" name="name" value="{{ old('name') }}">
                 </div>
                 <div class="form-group mb-0">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" type="text" name="description">{{ old('description') }}</textarea>
+                    <label for="task-description">Description</label>
+                    <textarea class="form-control" id="task-description" type="text" name="description">{{ old('description') }}</textarea>
                 </div>
             </div>
             <div class="card-footer">

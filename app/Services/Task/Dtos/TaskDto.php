@@ -9,4 +9,6 @@ class TaskDto
     public string $name;
 
     public int $order;
+
+    public string $description;
 }

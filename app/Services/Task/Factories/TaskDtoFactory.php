@@ -5,6 +5,7 @@ namespace App\Services\Task\Factories;
 use App\Models\Task;
 use App\Services\Task\Dtos\TaskDto;
 use Illuminate\Database\Eloquent\Collection;
+use Mews\Purifier\Facades\Purifier;
 
 class TaskDtoFactory
 {
@@ -31,10 +32,11 @@ class TaskDtoFactory
      */
     public static function createFromModel(Task $task): TaskDto
     {
-        $dto        = new TaskDto();
-        $dto->id    = $task->id;
-        $dto->name  = $task->name;
-        $dto->order = $task->order;
+        $dto              = new TaskDto();
+        $dto->id          = $task->id;
+        $dto->name        = $task->name;
+        $dto->order       = $task->order;
+        $dto->description = Purifier::clean($task->description);
 
         return $dto;
     }

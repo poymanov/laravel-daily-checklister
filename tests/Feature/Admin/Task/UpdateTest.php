@@ -111,3 +111,22 @@ test('success', function () {
         'description' => $description,
     ]);
 });
+
+/** Успешное изменение задачи с безопасным описанием */
+test('success with safe description', function () {
+    $checklist      = modelBuilderHelper()->checklist->create();
+    $task           = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+
+    $name              = faker()->words(3, true);
+    $safeDescription   = faker()->realTextBetween(256, 300);
+    $unsafeDescription = '<script>alert("test");</script>' . $safeDescription;
+
+    authHelper()->signInAsAdmin();
+
+    $this->put(routeBuilderHelper()->task->update($checklist->id, $task->id), ['name' => $name, 'description' => $unsafeDescription]);
+
+    $this->assertDatabaseHas('tasks', [
+        'id'          => $task->id,
+        'description' => $safeDescription,
+    ]);
+});

@@ -109,3 +109,21 @@ test('success next order position', function () {
         'order'        => 3,
     ]);
 });
+
+/** Успешное создание задачи с безопасным описанием */
+test('success with safe description', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    $name              = faker()->words(3, true);
+    $safeDescription   = faker()->realTextBetween(256, 300);
+    $unsafeDescription = '<script>alert("test");</script>' . $safeDescription;
+
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->task->store($checklist->id), ['name' => $name, 'description' => $unsafeDescription]);
+
+    $this->assertDatabaseHas('tasks', [
+        'name'         => $name,
+        'description'  => $safeDescription,
+        'checklist_id' => $checklist->id,
+    ]);
+});

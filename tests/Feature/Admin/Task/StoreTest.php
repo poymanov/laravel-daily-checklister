@@ -70,7 +70,7 @@ test('success', function () {
     $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 
     $name        = faker()->words(3, true);
-    $description = faker()->realTextBetween(256, 300);
+    $description = faker()->realTextBetween();
 
     authHelper()->signInAsAdmin();
 
@@ -96,7 +96,7 @@ test('success next order position', function () {
     modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
 
     $name        = faker()->words(3, true);
-    $description = faker()->realTextBetween(256, 300);
+    $description = faker()->realTextBetween();
 
     authHelper()->signInAsAdmin();
 
@@ -115,7 +115,7 @@ test('success with safe description', function () {
     $checklist = modelBuilderHelper()->checklist->create();
 
     $name              = faker()->words(3, true);
-    $safeDescription   = faker()->realTextBetween(256, 300);
+    $safeDescription   = faker()->realTextBetween();
     $unsafeDescription = '<script>alert("test");</script>' . $safeDescription;
 
     authHelper()->signInAsAdmin();

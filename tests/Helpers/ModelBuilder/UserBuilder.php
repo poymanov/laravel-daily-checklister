@@ -16,7 +16,7 @@ class UserBuilder
      */
     public function create(array $params = []): User
     {
-        return User::factory()->create($params);
+        return User::factory()->createOneQuietly($params);
     }
 
     /**
@@ -28,7 +28,7 @@ class UserBuilder
      */
     public function createAdmin(array $params = []): User
     {
-        $user = User::factory()->create($params);
+        $user = User::factory()->createOneQuietly($params);
         $user->assignRole(RoleEnum::ADMIN->value);
 
         return $user;

@@ -8,6 +8,7 @@ use App\Services\Task\Contracts\TaskServiceContract;
 use App\Services\Task\Dtos\TaskCreateDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
+use Mews\Purifier\Facades\Purifier;
 
 class TaskService implements TaskServiceContract
 {
@@ -28,7 +29,7 @@ class TaskService implements TaskServiceContract
         $dto              = new TaskCreateDto();
         $dto->checklistId = $checklistId;
         $dto->name        = $name;
-        $dto->description = $description;
+        $dto->description = Purifier::clean($description);
         $dto->order       = $order;
 
         $this->taskRepository->create($dto);
@@ -41,7 +42,7 @@ class TaskService implements TaskServiceContract
     {
         $dto              = new TaskUpdateDto();
         $dto->name        = $name;
-        $dto->description = $description;
+        $dto->description = Purifier::clean($description);
 
         $this->taskRepository->update($id, $dto);
     }

@@ -46,6 +46,12 @@
                 <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
                 New checklist group</a>
         </li>
+        <li class="c-sidebar-nav-title">Manage Pages</li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.pages.create') }}">
+                <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
+                New page</a>
+        </li>
         @endrole
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

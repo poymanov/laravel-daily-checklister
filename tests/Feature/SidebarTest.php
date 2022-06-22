@@ -13,6 +13,8 @@ test('not admin', function () {
     $response->assertDontSee('Manage Checklists');
     $response->assertDontSee('New checklist group');
     $response->assertDontSee($checklistGroup->name);
+    $response->assertDontSee('Manage Pages');
+    $response->assertDontSee('New page');
 });
 
 /** Успешное посещение авторизованным пользователем */
@@ -27,4 +29,6 @@ test('admin', function () {
     $response->assertSee($checklistGroup->name);
     $response->assertSee($checklist->name);
     $response->assertSee('Add checklist');
+    $response->assertSee('Manage Pages');
+    $response->assertSee('New page');
 });

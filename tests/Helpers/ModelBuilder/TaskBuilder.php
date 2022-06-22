@@ -15,6 +15,6 @@ class TaskBuilder
      */
     public function create(array $params = []): Task
     {
-        return Task::factory()->create($params);
+        return Task::factory()->createOneQuietly($params);
     }
 }

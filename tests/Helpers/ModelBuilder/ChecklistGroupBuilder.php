@@ -15,6 +15,6 @@ class ChecklistGroupBuilder
      */
     public function create(array $params = []): ChecklistGroup
     {
-        return ChecklistGroup::factory()->create($params);
+        return ChecklistGroup::factory()->createOneQuietly($params);
     }
 }

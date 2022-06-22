@@ -49,7 +49,6 @@ test('not unique name', function () {
 /** Успешное создание */
 test('success', function () {
     $group = modelBuilderHelper()->checklistGroup->create();
-    ;
 
     $name = faker()->word();
 

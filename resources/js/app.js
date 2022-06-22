@@ -6,6 +6,7 @@ require('@coreui/coreui');
 ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
 
 createEditor('#task-description');
+createEditor('#page-content');
 
 function createEditor(selector) {
     if (!document.querySelector(selector)) {

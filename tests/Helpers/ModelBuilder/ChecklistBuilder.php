@@ -15,6 +15,6 @@ class ChecklistBuilder
      */
     public function create(array $params = []): Checklist
     {
-        return Checklist::factory()->create($params);
+        return Checklist::factory()->createOneQuietly($params);
     }
 }

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ChecklistGroupSeeder::class);
         $this->call(ChecklistSeeder::class);
         $this->call(TaskSeeder::class);
+        $this->call(PageSeeder::class);
     }
 }

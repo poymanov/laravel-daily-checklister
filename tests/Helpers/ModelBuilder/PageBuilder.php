@@ -17,4 +17,16 @@ class PageBuilder
     {
         return Page::factory()->makeOne($params);
     }
+
+    /**
+     * Создание сущности {@see Page}
+     *
+     * @param array $params Параметры нового объекта
+     *
+     * @return Page
+     */
+    public function create(array $params = []): Page
+    {
+        return Page::factory()->create($params);
+    }
 }

@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('checklist-groups', ChecklistGroupController::class)->except('show', 'index');
         Route::resource('checklist-groups.checklists', ChecklistController::class)->except('index');
         Route::resource('checklists.tasks', TaskController::class)->except('index');
-        Route::resource('pages', PageController::class)->only('create', 'store');
+        Route::resource('pages', PageController::class)->only('create', 'store', 'show');
     });
 });
 

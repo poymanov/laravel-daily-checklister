@@ -21,6 +21,16 @@ class PageBuilder
     }
 
     /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function view(int $id): string
+    {
+        return $this->common() . '/' . $id;
+    }
+
+    /**
      * @return string
      */
     private function common(): string

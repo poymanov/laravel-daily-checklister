@@ -47,6 +47,18 @@
                 New checklist group</a>
         </li>
         <li class="c-sidebar-nav-title">Manage Pages</li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
+            <ul class="c-sidebar-nav-dropdown-items">
+                @foreach ($pages as $page)
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" style="padding: .5rem .5rem .5rem 76px"
+                           href="{{ route('admin.pages.show', $page->id) }}">
+                            <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
+                            {{ $page->title }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
             <a class="c-sidebar-nav-link" href="{{ route('admin.pages.create') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>

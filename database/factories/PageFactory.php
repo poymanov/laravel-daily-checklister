@@ -17,7 +17,7 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            'title'   => $this->faker->words(3, true) . '-' . $this->faker->date . '-' . $this->faker->time,
+            'title'   => $this->faker->word . '-' . $this->faker->date,
             'content' => $this->faker->text,
         ];
     }

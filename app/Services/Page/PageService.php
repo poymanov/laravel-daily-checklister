@@ -5,6 +5,7 @@ namespace App\Services\Page;
 use App\Services\Page\Contracts\PageRepositoryContract;
 use App\Services\Page\Contracts\PageServiceContract;
 use App\Services\Page\Dtos\PageCreateDto;
+use App\Services\Page\Dtos\PageDto;
 use Mews\Purifier\Facades\Purifier;
 
 class PageService implements PageServiceContract
@@ -15,11 +16,7 @@ class PageService implements PageServiceContract
     }
 
     /**
-     * @param string $title
-     * @param string $content
-     *
-     * @return void
-     * @throws Exceptions\PageCreateFailedException
+     * @inheritDoc
      */
     public function create(string $title, string $content): void
     {
@@ -28,5 +25,21 @@ class PageService implements PageServiceContract
         $pageCreateDto->content = Purifier::clean($content);
 
         $this->pageRepository->create($pageCreateDto);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
+    {
+        return $this->pageRepository->findAll();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneById(int $id): PageDto
+    {
+        return $this->pageRepository->findOneById($id);
     }
 }

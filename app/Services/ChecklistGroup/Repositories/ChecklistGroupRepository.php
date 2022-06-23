@@ -61,10 +61,7 @@ class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
     }
 
     /**
-     * @param int $id
-     *
-     * @return ChecklistGroupDto
-     * @throws ChecklistGroupNotFoundException
+     * @inheritDoc
      */
     public function findOneById(int $id): ChecklistGroupDto
     {

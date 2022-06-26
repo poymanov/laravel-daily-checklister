@@ -5,6 +5,7 @@ namespace App\Services\Page\Contracts;
 use App\Services\Page\Dtos\PageDto;
 use App\Services\Page\Exceptions\PageCreateFailedException;
 use App\Services\Page\Exceptions\PageNotFoundException;
+use App\Services\Page\Exceptions\PageUpdateFailedException;
 
 interface PageServiceContract
 {
@@ -16,6 +17,17 @@ interface PageServiceContract
      * @throws PageCreateFailedException
      */
     public function create(string $title, string $content): void;
+
+    /**
+     * @param int    $id
+     * @param string $title
+     * @param string $content
+     *
+     * @return void
+     * @throws PageNotFoundException
+     * @throws PageUpdateFailedException
+     */
+    public function update(int $id, string $title, string $content): void;
 
     /**
      * @return PageDto[]

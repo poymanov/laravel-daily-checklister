@@ -31,6 +31,26 @@ class PageBuilder
     }
 
     /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function edit(int $id): string
+    {
+        return $this->common() . '/' . $id . '/edit';
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function update(int $id): string
+    {
+        return $this->common() . '/' . $id;
+    }
+
+    /**
      * @return string
      */
     private function common(): string

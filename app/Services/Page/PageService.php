@@ -6,6 +6,7 @@ use App\Services\Page\Contracts\PageRepositoryContract;
 use App\Services\Page\Contracts\PageServiceContract;
 use App\Services\Page\Dtos\PageCreateDto;
 use App\Services\Page\Dtos\PageDto;
+use App\Services\Page\Dtos\PageUpdateDto;
 use Mews\Purifier\Facades\Purifier;
 
 class PageService implements PageServiceContract
@@ -25,6 +26,18 @@ class PageService implements PageServiceContract
         $pageCreateDto->content = Purifier::clean($content);
 
         $this->pageRepository->create($pageCreateDto);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(int $id, string $title, string $content): void
+    {
+        $pageUpdateDto          = new PageUpdateDto();
+        $pageUpdateDto->title   = $title;
+        $pageUpdateDto->content = Purifier::clean($content);
+
+        $this->pageRepository->update($id, $pageUpdateDto);
     }
 
     /**

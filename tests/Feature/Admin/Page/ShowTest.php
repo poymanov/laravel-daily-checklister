@@ -39,4 +39,6 @@ test('success', function () {
 
     $response->assertSee($page->title);
     $response->assertSee($page->content);
+
+    $response->assertSee('Edit');
 });

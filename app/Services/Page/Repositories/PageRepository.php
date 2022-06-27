@@ -3,12 +3,12 @@
 namespace App\Services\Page\Repositories;
 
 use App\Models\Page;
-use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\Page\Contracts\PageRepositoryContract;
 use App\Services\Page\Dtos\PageCreateDto;
 use App\Services\Page\Dtos\PageDto;
 use App\Services\Page\Dtos\PageUpdateDto;
 use App\Services\Page\Exceptions\PageCreateFailedException;
+use App\Services\Page\Exceptions\PageDeleteFailedException;
 use App\Services\Page\Exceptions\PageNotFoundException;
 use App\Services\Page\Exceptions\PageUpdateFailedException;
 use App\Services\Page\Factories\PageDtoFactory;
@@ -39,17 +39,25 @@ class PageRepository implements PageRepositoryContract
      */
     public function update(int $id, PageUpdateDto $pageUpdateDto): void
     {
-        $page = Page::find($id);
-
-        if (!$page) {
-            throw new PageNotFoundException($id);
-        }
+        $page = $this->findModelById($id);
 
         $page->title   = $pageUpdateDto->title;
         $page->content = $pageUpdateDto->content;
 
         if (!$page->save()) {
             throw new PageUpdateFailedException($id);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $page = $this->findModelById($id);
+
+        if (!$page->delete()) {
+            throw new PageDeleteFailedException($id);
         }
     }
 

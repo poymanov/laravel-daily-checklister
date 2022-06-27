@@ -43,6 +43,14 @@ class PageService implements PageServiceContract
     /**
      * @inheritDoc
      */
+    public function delete(int $id): void
+    {
+        $this->pageRepository->delete($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function findAll(): array
     {
         return $this->pageRepository->findAll();

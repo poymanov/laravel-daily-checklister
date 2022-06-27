@@ -41,4 +41,5 @@ test('success', function () {
     $response->assertSee($page->content);
 
     $response->assertSee('Edit');
+    $response->assertSee('Delete');
 });

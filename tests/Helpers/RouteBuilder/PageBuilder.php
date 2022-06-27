@@ -51,6 +51,16 @@ class PageBuilder
     }
 
     /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function delete(int $id): string
+    {
+        return $this->common() . '/' . $id;
+    }
+
+    /**
      * @return string
      */
     private function common(): string

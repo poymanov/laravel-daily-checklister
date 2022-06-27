@@ -8,6 +8,13 @@
                         <div class="mr-2">
                             <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         </div>
+                        <div>
+                            <form method="post" action="{{ route('admin.pages.destroy', $page->id) }}" onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

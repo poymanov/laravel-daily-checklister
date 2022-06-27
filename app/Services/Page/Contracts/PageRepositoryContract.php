@@ -8,6 +8,7 @@ use App\Services\Page\Dtos\PageCreateDto;
 use App\Services\Page\Dtos\PageDto;
 use App\Services\Page\Dtos\PageUpdateDto;
 use App\Services\Page\Exceptions\PageCreateFailedException;
+use App\Services\Page\Exceptions\PageDeleteFailedException;
 use App\Services\Page\Exceptions\PageNotFoundException;
 use App\Services\Page\Exceptions\PageUpdateFailedException;
 
@@ -30,6 +31,15 @@ interface PageRepositoryContract
      * @throws PageUpdateFailedException
      */
     public function update(int $id, PageUpdateDto $pageUpdateDto): void;
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     * @throws PageDeleteFailedException
+     * @throws PageNotFoundException
+     */
+    public function delete(int $id): void;
 
     /**
      * @return PageDto[]

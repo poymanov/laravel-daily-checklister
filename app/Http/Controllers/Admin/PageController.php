@@ -8,6 +8,7 @@ use App\Http\Requests\Page\UpdateRequest;
 use App\Models\Page;
 use App\Services\Page\Contracts\PageServiceContract;
 use App\Services\Page\Exceptions\PageCreateFailedException;
+use App\Services\Page\Exceptions\PageDeleteFailedException;
 use App\Services\Page\Exceptions\PageNotFoundException;
 use App\Services\Page\Exceptions\PageUpdateFailedException;
 use Illuminate\Support\Facades\Log;
@@ -100,6 +101,26 @@ class PageController extends Controller
 
             return view('admin.page.show', ['page' => $pageDto]);
         } catch (PageNotFoundException $e) {
+            return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+        }
+    }
+
+    /**
+     * @param Page $page
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Page $page)
+    {
+        try {
+            $this->pageService->delete($page->id);
+
+            return redirect()->route('dashboard')->with('alert.success', 'Page was deleted');
+        } catch (PageNotFoundException | PageDeleteFailedException $e) {
             return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);

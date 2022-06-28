@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\PageTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class PageFactory extends Factory
         return [
             'title'   => $this->faker->word . '-' . $this->faker->date,
             'content' => $this->faker->text,
+            'type'    => $this->faker->randomElement(PageTypeEnum::cases())->value,
         ];
     }
 }

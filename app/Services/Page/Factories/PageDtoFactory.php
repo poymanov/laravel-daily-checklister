@@ -2,6 +2,7 @@
 
 namespace App\Services\Page\Factories;
 
+use App\Enums\PageTypeEnum;
 use App\Models\Page;
 use App\Services\Page\Dtos\PageDto;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,6 +37,7 @@ class PageDtoFactory
         $dto->id      = $page->id;
         $dto->title   = $page->title;
         $dto->content = Purifier::clean($page->content);
+        $dto->type    = PageTypeEnum::from($page->type);
 
         return $dto;
     }

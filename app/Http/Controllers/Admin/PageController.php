@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PageTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\StoreRequest;
 use App\Http\Requests\Page\UpdateRequest;
@@ -11,6 +12,7 @@ use App\Services\Page\Exceptions\PageCreateFailedException;
 use App\Services\Page\Exceptions\PageDeleteFailedException;
 use App\Services\Page\Exceptions\PageNotFoundException;
 use App\Services\Page\Exceptions\PageUpdateFailedException;
+use App\Services\Page\Helpers\PageTypeHelper;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -25,7 +27,9 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.page.create');
+        $pagesList = PageTypeHelper::getWithTitles();
+
+        return view('admin.page.create', compact('pagesList'));
     }
 
     /**
@@ -36,7 +40,7 @@ class PageController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $this->pageService->create($request->get('title'), $request->get('content'));
+            $this->pageService->create($request->get('title'), $request->get('content'), $request->get('type'));
 
             return redirect()->route('dashboard')->with('alert.success', 'Page was created');
         } catch (PageCreateFailedException $e) {
@@ -58,7 +62,9 @@ class PageController extends Controller
         try {
             $pageDto = $this->pageService->findOneById($page->id);
 
-            return view('admin.page.edit', ['page' => $pageDto]);
+            $pagesList = PageTypeHelper::getWithTitles();
+
+            return view('admin.page.edit', ['page' => $pageDto, 'pagesList' => $pagesList]);
         } catch (PageNotFoundException $e) {
             return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
@@ -77,7 +83,7 @@ class PageController extends Controller
     public function update(UpdateRequest $request, Page $page)
     {
         try {
-            $this->pageService->update($page->id, $request->get('title'), $request->get('content'));
+            $this->pageService->update($page->id, $request->get('title'), $request->get('content'), $request->get('type'));
 
             return redirect()->route('admin.pages.show', $page)->with('alert.success', 'Page was updated');
         } catch (PageNotFoundException | PageUpdateFailedException $e) {

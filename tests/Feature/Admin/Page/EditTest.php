@@ -41,7 +41,9 @@ test('success', function () {
     $response->assertSee('Edit Page');
     $response->assertSee('Title');
     $response->assertSee('Content');
+    $response->assertSee('Type');
     $response->assertSee($page->title);
     $response->assertSee($page->content);
+    $response->assertSee($page->type);
     $response->assertSee('Save');
 });

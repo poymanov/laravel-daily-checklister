@@ -28,5 +28,6 @@ test('success', function () {
     $response->assertSee('New Page');
     $response->assertSee('Title');
     $response->assertSee('Content');
+    $response->assertSee('Type');
     $response->assertSee('Save');
 });

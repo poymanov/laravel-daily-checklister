@@ -10,6 +10,15 @@
                     <label for="title">Title</label>
                     <input class="form-control" id="title" type="text" name="title" value="{{ old('title', $page->title) }}">
                 </div>
+                <div class="form-group mb-2">
+                    <label for="type">Type</label>
+                    <select class="form-control" name="type" id="type">
+                        <option></option>
+                        @foreach($pagesList as $id => $value)
+                            <option value="{{ $id }}" @if($id == $page->type->value) selected @endif>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-group mb-0">
                     <label for="page-content">Content</label>
                     <textarea class="form-control" id="page-content" name="content">{{ old('content', $page->content) }}</textarea>

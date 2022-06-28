@@ -23,6 +23,7 @@ class PageRepository implements PageRepositoryContract
         $page          = new Page();
         $page->title   = $pageCreateDto->title;
         $page->content = $pageCreateDto->content;
+        $page->type    = $pageCreateDto->type->value;
 
         if (!$page->save()) {
             throw new PageCreateFailedException();
@@ -43,6 +44,7 @@ class PageRepository implements PageRepositoryContract
 
         $page->title   = $pageUpdateDto->title;
         $page->content = $pageUpdateDto->content;
+        $page->type    = $pageUpdateDto->type->value;
 
         if (!$page->save()) {
             throw new PageUpdateFailedException($id);
@@ -66,7 +68,7 @@ class PageRepository implements PageRepositoryContract
      */
     public function findAll(): array
     {
-        return PageDtoFactory::createFromModelsList(Page::select('id', 'title', 'content')->get());
+        return PageDtoFactory::createFromModelsList(Page::select('id', 'title', 'content', 'type')->get());
     }
 
     /**

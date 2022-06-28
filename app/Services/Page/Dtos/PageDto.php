@@ -2,6 +2,8 @@
 
 namespace App\Services\Page\Dtos;
 
+use App\Enums\PageTypeEnum;
+
 class PageDto
 {
     public int $id;
@@ -9,4 +11,6 @@ class PageDto
     public string $title;
 
     public string $content;
+
+    public PageTypeEnum $type;
 }

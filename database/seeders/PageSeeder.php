@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PageTypeEnum;
 use App\Models\Page;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,7 @@ class PageSeeder extends Seeder
      */
     public function run()
     {
-        Page::factory(10)->create();
+        Page::factory(['type' => PageTypeEnum::WELCOME->value])->create();
+        Page::factory(['type' => PageTypeEnum::GET_CONSULTATION->value])->create();
     }
 }

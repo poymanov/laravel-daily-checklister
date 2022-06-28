@@ -15,6 +15,6 @@ class ChecklistGroupSeeder extends Seeder
      */
     public function run()
     {
-        ChecklistGroup::factory(10)->create();
+        ChecklistGroup::factory(2)->create();
     }
 }

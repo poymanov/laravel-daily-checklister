@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Page;
 
+use App\Enums\PageTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -26,6 +28,7 @@ class UpdateRequest extends FormRequest
         return [
             'title'   => 'required|min:3|max:255',
             'content' => 'required|min:3',
+            'type'    => ['required', Rule::unique('pages')->ignore($this->page), Rule::in([PageTypeEnum::WELCOME->value, PageTypeEnum::GET_CONSULTATION->value])],
         ];
     }
 }

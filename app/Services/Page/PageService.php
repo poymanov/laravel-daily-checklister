@@ -2,6 +2,7 @@
 
 namespace App\Services\Page;
 
+use App\Enums\PageTypeEnum;
 use App\Services\Page\Contracts\PageRepositoryContract;
 use App\Services\Page\Contracts\PageServiceContract;
 use App\Services\Page\Dtos\PageCreateDto;
@@ -19,11 +20,12 @@ class PageService implements PageServiceContract
     /**
      * @inheritDoc
      */
-    public function create(string $title, string $content): void
+    public function create(string $title, string $content, string $type): void
     {
         $pageCreateDto          = new PageCreateDto();
         $pageCreateDto->title   = $title;
         $pageCreateDto->content = Purifier::clean($content);
+        $pageCreateDto->type    = PageTypeEnum::from($type);
 
         $this->pageRepository->create($pageCreateDto);
     }
@@ -31,11 +33,12 @@ class PageService implements PageServiceContract
     /**
      * @inheritDoc
      */
-    public function update(int $id, string $title, string $content): void
+    public function update(int $id, string $title, string $content, string $type): void
     {
         $pageUpdateDto          = new PageUpdateDto();
         $pageUpdateDto->title   = $title;
         $pageUpdateDto->content = Purifier::clean($content);
+        $pageUpdateDto->type    = PageTypeEnum::from($type);
 
         $this->pageRepository->update($id, $pageUpdateDto);
     }

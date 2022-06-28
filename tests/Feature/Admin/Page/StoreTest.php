@@ -24,7 +24,7 @@ test('user', function () {
 test('empty', function () {
     authHelper()->signInAsAdmin();
 
-    $this->post(routeBuilderHelper()->page->store())->assertSessionHasErrors(['title', 'content']);
+    $this->post(routeBuilderHelper()->page->store())->assertSessionHasErrors(['title', 'content', 'type']);
 });
 
 /** Попытка создания со слишком коротким заголовком */
@@ -45,6 +45,20 @@ test('too short description', function () {
     $this->post(routeBuilderHelper()->page->store(), ['content' => 'te'])->assertSessionHasErrors(['content']);
 });
 
+/** Попытка создания с уже существующим типом */
+test('not unique type', function () {
+    $page = modelBuilderHelper()->page->create();
+
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->page->store(), ['type' => $page->type])->assertSessionHasErrors(['type']);
+});
+
+/** Попытка создания с неправильным типом */
+test('wrong type', function () {
+    authHelper()->signInAsAdmin();
+    $this->post(routeBuilderHelper()->page->store(), ['type' => 'test'])->assertSessionHasErrors(['type']);
+});
+
 /** Успешное создание страницы */
 test('success', function () {
 
@@ -52,7 +66,7 @@ test('success', function () {
 
     authHelper()->signInAsAdmin();
 
-    $response = $this->post(routeBuilderHelper()->page->store(), $page->only('title', 'content'));
+    $response = $this->post(routeBuilderHelper()->page->store(), $page->only('title', 'content', 'type'));
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Page was created');
 
@@ -61,6 +75,7 @@ test('success', function () {
     $this->assertDatabaseHas('pages', [
         'title'   => $page->title,
         'content' => $page->content,
+        'type'    => $page->type,
     ]);
 });
 
@@ -73,7 +88,7 @@ test('success with safe description', function () {
 
     authHelper()->signInAsAdmin();
 
-    $this->post(routeBuilderHelper()->page->store(), $page->only('title', 'content'));
+    $this->post(routeBuilderHelper()->page->store(), $page->only('title', 'content', 'type'));
 
     $this->assertDatabaseHas('pages', [
         'title'   => $page->title,

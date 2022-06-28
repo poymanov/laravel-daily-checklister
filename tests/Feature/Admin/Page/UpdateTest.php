@@ -37,7 +37,7 @@ test('empty', function () {
 
     authHelper()->signInAsAdmin();
 
-    $this->put(routeBuilderHelper()->page->update($page->id))->assertSessionHasErrors(['title', 'content']);
+    $this->put(routeBuilderHelper()->page->update($page->id))->assertSessionHasErrors(['title', 'content', 'type']);
 });
 
 /** Попытка изменения со слишком коротким заголовком */
@@ -68,15 +68,33 @@ test('too short description', function () {
     $this->put(routeBuilderHelper()->page->update($page->id), ['content' => 'te'])->assertSessionHasErrors(['content']);
 });
 
-/** Успешное изменение страницы */
-test('success', function () {
-    $pageData = modelBuilderHelper()->page->make();
+/** Попытка изменения с уже существующим типом */
+test('not unique type', function () {
+    $page        = modelBuilderHelper()->page->create(['type' => 'welcome']);
+    $pageExisted = modelBuilderHelper()->page->create(['type' => 'get-consultation']);
 
+    authHelper()->signInAsAdmin();
+    $this->put(routeBuilderHelper()->page->update($page->id), ['type' => $pageExisted->type])->assertSessionHasErrors(['type']);
+});
+
+
+/** Попытка создания с неправильным типом */
+test('wrong type', function () {
     $page = modelBuilderHelper()->page->create();
 
     authHelper()->signInAsAdmin();
+    $this->put(routeBuilderHelper()->page->update($page->id), ['type' => 'test'])->assertSessionHasErrors(['type']);
+});
 
-    $response = $this->put(routeBuilderHelper()->page->update($page->id), $pageData->only('title', 'content'));
+/** Успешное изменение страницы */
+test('success', function () {
+    $pageData = modelBuilderHelper()->page->make(['type' => 'get-consultation']);
+
+    $page = modelBuilderHelper()->page->create(['type' => 'welcome']);
+
+    authHelper()->signInAsAdmin();
+
+    $response = $this->put(routeBuilderHelper()->page->update($page->id), $pageData->only('title', 'content', 'type'));
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Page was updated');
 
@@ -86,6 +104,7 @@ test('success', function () {
         'id'      => $page->id,
         'title'   => $pageData->title,
         'content' => $pageData->content,
+        'type'    => $pageData->type,
     ]);
 });
 
@@ -94,12 +113,12 @@ test('success with safe description', function () {
     $safeContent   = faker()->realText();
     $unsafeContent = '<script>alert("test");</script>' . $safeContent;
 
-    $updatePage = modelBuilderHelper()->page->make(['content' => $unsafeContent]);
+    $updatePage = modelBuilderHelper()->page->make(['content' => $unsafeContent, 'type' => 'welcome']);
 
-    $page = modelBuilderHelper()->page->create();
+    $page = modelBuilderHelper()->page->create(['type' => 'get-consultation']);
 
     authHelper()->signInAsAdmin();
-    $this->put(routeBuilderHelper()->page->update($page->id), $updatePage->only('title', 'content'));
+    $this->put(routeBuilderHelper()->page->update($page->id), $updatePage->only('title', 'content', 'type'));
 
     $this->assertDatabaseHas('pages', [
         'id'      => $page->id,

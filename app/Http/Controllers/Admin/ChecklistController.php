@@ -43,13 +43,13 @@ class ChecklistController extends Controller
         try {
             $this->checklistService->create($checklistGroup->id, $request->get('name'));
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist was created');
+            return redirect()->route('welcome')->with('alert.success', 'Checklist was created');
         } catch (ChecklistCreateFailedException | ChecklistGroupNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -84,7 +84,7 @@ class ChecklistController extends Controller
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -99,13 +99,13 @@ class ChecklistController extends Controller
         try {
             $this->checklistService->delete($checklist->id);
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist was deleted');
+            return redirect()->route('welcome')->with('alert.success', 'Checklist was deleted');
         } catch (ChecklistDeleteFailedException | ChecklistNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -122,11 +122,11 @@ class ChecklistController extends Controller
 
             return view('admin.checklist.show', ['checklist' => $checklistDto]);
         } catch (ChecklistNotFoundException $e) {
-            return redirect()->route('dashboard')->with('alert.error', $e->getMessage());
+            return redirect()->route('welcome')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 }

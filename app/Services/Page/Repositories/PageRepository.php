@@ -80,6 +80,14 @@ class PageRepository implements PageRepositoryContract
     }
 
     /**
+     * @inheritDoc
+     */
+    public function findOneByType(string $type): PageDto
+    {
+        return PageDtoFactory::createFromModel($this->findModelByType($type));
+    }
+
+    /**
      * Получение модели по ID
      *
      * @param int $id
@@ -93,6 +101,25 @@ class PageRepository implements PageRepositoryContract
 
         if (!$page) {
             throw new PageNotFoundException($id);
+        }
+
+        return $page;
+    }
+
+    /**
+     * Получение модели по типу
+     *
+     * @param string $type
+     *
+     * @return Page
+     * @throws PageNotFoundException
+     */
+    private function findModelByType(string $type): Page
+    {
+        $page = Page::whereType($type)->first();
+
+        if (!$page) {
+            throw new PageNotFoundException(null, $type);
         }
 
         return $page;

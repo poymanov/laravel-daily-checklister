@@ -2,8 +2,6 @@
 
 namespace App\Services\Page\Contracts;
 
-use App\Models\Page;
-use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\Page\Dtos\PageCreateDto;
 use App\Services\Page\Dtos\PageDto;
 use App\Services\Page\Dtos\PageUpdateDto;
@@ -53,4 +51,12 @@ interface PageRepositoryContract
      * @throws PageNotFoundException
      */
     public function findOneById(int $id): PageDto;
+
+    /**
+     * @param string $type
+     *
+     * @return PageDto
+     * @throws PageNotFoundException
+     */
+    public function findOneByType(string $type): PageDto;
 }

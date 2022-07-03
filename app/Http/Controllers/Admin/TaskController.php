@@ -58,7 +58,7 @@ class TaskController extends Controller
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -93,7 +93,7 @@ class TaskController extends Controller
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -116,7 +116,7 @@ class TaskController extends Controller
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 }

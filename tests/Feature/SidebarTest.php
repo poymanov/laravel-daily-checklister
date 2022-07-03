@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PageTypeEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -8,7 +9,7 @@ uses(RefreshDatabase::class);
 test('not admin', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
     $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
-    $page           = modelBuilderHelper()->page->create();
+    $page           = modelBuilderHelper()->page->create(['type' => PageTypeEnum::GET_CONSULTATION->value]);
 
     authHelper()->signIn();
     $response = $this->get(routeBuilderHelper()->common->home());

@@ -54,4 +54,12 @@ interface PageServiceContract
      * @throws PageNotFoundException
      */
     public function findOneById(int $id): PageDto;
+
+    /**
+     * @param PageTypeEnum $type
+     *
+     * @return PageDto
+     * @throws PageNotFoundException
+     */
+    public function findOneByType(PageTypeEnum $type): PageDto;
 }

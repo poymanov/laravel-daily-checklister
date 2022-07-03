@@ -9,9 +9,9 @@
     </div>
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('dashboard') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('welcome') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-speedometer" class="c-sidebar-nav-icon"/>
-                Dashboard
+                Home
             </a>
         </li>
         @role('admin')

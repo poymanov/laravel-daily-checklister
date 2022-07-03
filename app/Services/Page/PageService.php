@@ -66,4 +66,12 @@ class PageService implements PageServiceContract
     {
         return $this->pageRepository->findOneById($id);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneByType(PageTypeEnum $type): PageDto
+    {
+        return $this->pageRepository->findOneByType($type->value);
+    }
 }

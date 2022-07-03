@@ -7,11 +7,21 @@ use Exception;
 class PageNotFoundException extends Exception
 {
     /**
-     * @param int $id
+     * @param int|null    $id
+     * @param string|null $type
      */
-    public function __construct(int $id)
+    public function __construct(int $id = null, string $type = null)
     {
-        $message = 'Page not found: ' . $id;
+        $messageTemplate = 'Page not found';
+
+        if ($id) {
+            $message = $messageTemplate . ':' . $id;
+        } else if ($type) {
+            $message = $messageTemplate . ':' . $type;
+        } else {
+            $message = $messageTemplate;
+        }
+
 
         parent::__construct($message);
     }

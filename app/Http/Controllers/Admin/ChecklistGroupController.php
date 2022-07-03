@@ -38,13 +38,13 @@ class ChecklistGroupController extends Controller
         try {
             $this->checklistGroupService->create($request->get('name'));
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist group was created');
+            return redirect()->route('welcome')->with('alert.success', 'Checklist group was created');
         } catch (ChecklistGroupCreateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -69,13 +69,13 @@ class ChecklistGroupController extends Controller
         try {
             $this->checklistGroupService->update($checklistGroup->id, $request->get('name'));
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist group was updated');
+            return redirect()->route('welcome')->with('alert.success', 'Checklist group was updated');
         } catch (ChecklistGroupNotFoundException | ChecklistGroupUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -89,13 +89,13 @@ class ChecklistGroupController extends Controller
         try {
             $this->checklistGroupService->delete($checklistGroup->id);
 
-            return redirect()->route('dashboard')->with('alert.success', 'Checklist group was deleted');
+            return redirect()->route('welcome')->with('alert.success', 'Checklist group was deleted');
         } catch (ChecklistGroupDeleteFailedException | ChecklistGroupNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('dashboard')->with('alert.error', 'Something went wrong');
+            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
         }
     }
 }

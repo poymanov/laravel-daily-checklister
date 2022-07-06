@@ -42,13 +42,13 @@ class PageController extends Controller
         try {
             $this->pageService->create($request->get('title'), $request->get('content'), $request->get('type'));
 
-            return redirect()->route('welcome')->with('alert.success', 'Page was created');
+            return redirect()->route('page.welcome')->with('alert.success', 'Page was created');
         } catch (PageCreateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -66,11 +66,11 @@ class PageController extends Controller
 
             return view('admin.page.edit', ['page' => $pageDto, 'pagesList' => $pagesList]);
         } catch (PageNotFoundException $e) {
-            return redirect()->route('welcome')->with('alert.error', $e->getMessage());
+            return redirect()->route('page.welcome')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -91,7 +91,7 @@ class PageController extends Controller
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -107,11 +107,11 @@ class PageController extends Controller
 
             return view('admin.page.show', ['page' => $pageDto]);
         } catch (PageNotFoundException $e) {
-            return redirect()->route('welcome')->with('alert.error', $e->getMessage());
+            return redirect()->route('page.welcome')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 
@@ -125,13 +125,13 @@ class PageController extends Controller
         try {
             $this->pageService->delete($page->id);
 
-            return redirect()->route('welcome')->with('alert.success', 'Page was deleted');
+            return redirect()->route('page.welcome')->with('alert.success', 'Page was deleted');
         } catch (PageNotFoundException | PageDeleteFailedException $e) {
-            return redirect()->route('welcome')->with('alert.error', $e->getMessage());
+            return redirect()->route('page.welcome')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 }

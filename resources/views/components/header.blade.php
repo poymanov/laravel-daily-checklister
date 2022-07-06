@@ -11,6 +11,11 @@
         <x-svg-icon path="/assets/icons/free.svg#cil-menu" class="c-icon c-icon-lg"/>
     </button>
     <ul class="c-header-nav ml-auto mr-4">
+        <li>
+            <a href="{{ route('page.consultation') }}">
+                <x-svg-icon path="/assets/icons/free.svg#cil-speech" class="c-icon mr-2"/>
+            </a>
+        </li>
         <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <div class="c-avatar">Profile</div>
             </a>

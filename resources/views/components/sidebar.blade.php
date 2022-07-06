@@ -9,7 +9,7 @@
     </div>
     <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('welcome') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('page.welcome') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-speedometer" class="c-sidebar-nav-icon"/>
                 Home
             </a>

@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', [PageController::class, 'welcome'])->name('welcome');
+    Route::group(['as' => 'page.'], function () {
+        Route::get('/', [PageController::class, 'welcome'])->name('welcome');
+        Route::get('/get-consultation', [PageController::class, 'consultation'])->name('consultation');
+    });
 
     Route::group(['middleware' => ['role:admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
         Route::resource('checklist-groups', ChecklistGroupController::class)->except('show', 'index');

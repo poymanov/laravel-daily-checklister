@@ -28,7 +28,25 @@ class PageController
         } catch (Throwable $e) {
             Log::error($e);
 
-            return redirect()->route('welcome')->with('alert.error', 'Something went wrong');
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function consultation()
+    {
+        try {
+            $page = $this->pageService->findOneByType(PageTypeEnum::GET_CONSULTATION);
+
+            return view('page.consultation.page', compact('page'));
+        } catch (PageNotFoundException) {
+            return view('page.consultation.default');
+        } catch (Throwable $e) {
+            Log::error($e);
+
+            return redirect()->route('page.welcome')->with('alert.error', 'Something went wrong');
         }
     }
 }

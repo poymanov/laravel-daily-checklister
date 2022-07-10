@@ -10,3 +10,4 @@
 * [Группы чеклистов](08-checklist-group/README.md)
 * [Чеклисты](09-checklists/README.md)
 * [Задачи](10-tasks/README.md)
+* [Страницы](11-pages/README.md)

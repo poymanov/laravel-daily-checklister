@@ -27,11 +27,17 @@
                         </div>
                         <input class="form-control" type="password" placeholder="Password" name="password">
                     </div>
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><x-svg-icon path="/assets/icons/free.svg#cil-lock-locked" class="c-icon"/></span>
                         </div>
                         <input class="form-control" type="password" name="password_confirmation" placeholder="Repeat password">
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><x-svg-icon path="/assets/icons/free.svg#cil-external-link" class="c-icon"/></span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="Website" name="website" value="{{ old('website') }}" required>
                     </div>
                     <button class="btn btn-block btn-success" type="submit">Create Account</button>
                 </form>

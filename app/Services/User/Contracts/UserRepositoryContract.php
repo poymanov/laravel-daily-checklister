@@ -4,6 +4,7 @@ namespace App\Services\User\Contracts;
 
 use App\Enums\RoleEnum;
 use App\Services\User\Exceptions\UserNotFoundException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryContract
 {
@@ -17,4 +18,13 @@ interface UserRepositoryContract
      * @throws UserNotFoundException
      */
     public function assignRoleByEmail(string $email, RoleEnum $role): void;
+
+    /**
+     * Получение пользователей без прав администратора
+     *
+     * @param int $paginationPerPage
+     *
+     * @return LengthAwarePaginator
+     */
+    public function findAllNotAdminLatest(int $paginationPerPage): LengthAwarePaginator;
 }

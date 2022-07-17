@@ -21,6 +21,7 @@ test('not admin', function () {
     $response->assertDontSee('Add checklist');
     $response->assertDontSee('Manage Pages');
     $response->assertDontSee('New page');
+    $response->assertDontSee('Manage Users');
     $response->assertDontSee($page->title);
 });
 
@@ -39,5 +40,6 @@ test('admin', function () {
     $response->assertSee('Add checklist');
     $response->assertSee('Manage Pages');
     $response->assertSee('New page');
+    $response->assertSee('Manage Users');
     $response->assertSee($page->title);
 });

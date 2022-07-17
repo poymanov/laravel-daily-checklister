@@ -64,6 +64,13 @@
                 <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
                 New page</a>
         </li>
+        <li class="c-sidebar-nav-title">Manage Users</li>
+        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
+            <a class="c-sidebar-nav-link" href="{{ route('admin.users.index') }}">
+                <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
+                List
+            </a>
+        </li>
         @endrole
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

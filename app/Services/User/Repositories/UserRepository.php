@@ -6,6 +6,8 @@ use App\Enums\RoleEnum;
 use App\Models\User;
 use App\Services\User\Contracts\UserRepositoryContract;
 use App\Services\User\Exceptions\UserNotFoundException;
+use App\Services\User\Factories\UserDtoFactory;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserRepository implements UserRepositoryContract
 {
@@ -21,5 +23,18 @@ class UserRepository implements UserRepositoryContract
         }
 
         $user->assignRole($role->value);
+    }
+
+    /**
+     * Получение пользователей без прав администратора
+     *
+     * @param int $paginationPerPage
+     *
+     * @return LengthAwarePaginator
+     */
+    public function findAllNotAdminLatest(int $paginationPerPage): LengthAwarePaginator
+    {
+        return User::doesntHave('roles')->latest()->paginate($paginationPerPage)
+            ->through(fn(User $user) => UserDtoFactory::createFromModel($user));
     }
 }

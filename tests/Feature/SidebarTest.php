@@ -15,14 +15,14 @@ test('not admin', function () {
     $response = $this->get(routeBuilderHelper()->common->home());
 
     $response->assertDontSee('Manage Checklists');
-    $response->assertDontSee($checklistGroup->name);
-    $response->assertDontSee($checklist->name);
     $response->assertDontSee('New checklist group');
     $response->assertDontSee('Add checklist');
     $response->assertDontSee('Manage Pages');
     $response->assertDontSee('New page');
     $response->assertDontSee('Manage Users');
     $response->assertDontSee($page->title);
+    $response->assertSee($checklistGroup->name);
+    $response->assertSee($checklist->name);
 });
 
 /** Успешное посещение авторизованным пользователем */

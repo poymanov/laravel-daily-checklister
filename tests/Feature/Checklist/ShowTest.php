@@ -15,22 +15,11 @@ test('guest', function () {
     $response->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
-/** Попытка просмотра пользователем без прав администратора */
-test('user', function () {
-    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
-    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
-
-    authHelper()->signIn();
-
-    $response = $this->get(routeBuilderHelper()->checklist->view($checklistGroup->id, $checklist->id));
-    $response->assertForbidden();
-});
-
 /** Попытка просмотра с несуществующей группой */
 test('not existed group', function () {
     $checklist = modelBuilderHelper()->checklist->create();
 
-    authHelper()->signInAsAdmin();
+    authHelper()->signIn();
     $response = $this->get(routeBuilderHelper()->checklist->view(999, $checklist->id));
     $response->assertNotFound();
 });
@@ -39,13 +28,29 @@ test('not existed group', function () {
 test('not existed', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
 
-    authHelper()->signInAsAdmin();
+    authHelper()->signIn();
     $response = $this->get(routeBuilderHelper()->checklist->view($checklistGroup->id, 999));
     $response->assertNotFound();
 });
 
-/** Успешное открытие страницы просмотра */
-test('success', function () {
+/** Успешное открытие страницы просмотра пользователем */
+test('user', function () {
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
+
+    authHelper()->signIn();
+
+    $response = $this->get(routeBuilderHelper()->checklist->view($checklistGroup->id, $checklist->id));
+    $response->assertOk();
+
+    $response->assertSee($checklist->name);
+    $response->assertDontSee('Edit');
+    $response->assertDontSee('Delete');
+    $response->assertDontSee('Create Task');
+});
+
+/** Успешное открытие страницы просмотра администратором */
+test('admin', function () {
     $checklistGroup = modelBuilderHelper()->checklistGroup->create();
     $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
 

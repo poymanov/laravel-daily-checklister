@@ -114,8 +114,8 @@ test('success', function () {
 
 /** Успешное изменение задачи с безопасным описанием */
 test('success with safe description', function () {
-    $checklist      = modelBuilderHelper()->checklist->create();
-    $task           = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $checklist = modelBuilderHelper()->checklist->create();
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     $name              = faker()->words(3, true);
     $safeDescription   = faker()->realTextBetween(256, 300);

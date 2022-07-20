@@ -9,7 +9,7 @@ class ChecklistGroupBuilder
      */
     public function common(): string
     {
-        return '/admin/checklist-groups';
+        return '/checklist-groups';
     }
 
     public function create()

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Checklist\StoreRequest;
 use App\Http\Requests\Checklist\UpdateRequest;
 use App\Models\Checklist;
@@ -20,6 +19,7 @@ class ChecklistController extends Controller
 {
     public function __construct(private ChecklistServiceContract $checklistService)
     {
+        $this->middleware('role:admin')->except('show');
     }
 
     /**
@@ -29,7 +29,7 @@ class ChecklistController extends Controller
      */
     public function create(ChecklistGroup $checklistGroup)
     {
-        return view('admin.checklist.create', compact('checklistGroup'));
+        return view('checklist.create', compact('checklistGroup'));
     }
 
     /**
@@ -61,7 +61,7 @@ class ChecklistController extends Controller
      */
     public function edit(ChecklistGroup $checklistGroup, Checklist $checklist)
     {
-        return view('admin.checklist.edit', compact('checklistGroup', 'checklist'));
+        return view('checklist.edit', compact('checklistGroup', 'checklist'));
     }
 
     /**
@@ -77,7 +77,7 @@ class ChecklistController extends Controller
             $this->checklistService->update($checklist->id, $request->get('name'));
 
             return redirect()
-                ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklistGroup, 'checklist' => $checklist])
+                ->route('checklist-groups.checklists.show', ['checklist_group' => $checklistGroup, 'checklist' => $checklist])
                 ->with('alert.success', 'Checklist was updated');
         } catch (ChecklistNotFoundException | ChecklistUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
@@ -120,7 +120,7 @@ class ChecklistController extends Controller
         try {
             $checklistDto = $this->checklistService->findOneById($checklist->id);
 
-            return view('admin.checklist.show', ['checklist' => $checklistDto]);
+            return view('checklist.show', ['checklist' => $checklistDto]);
         } catch (ChecklistNotFoundException $e) {
             return redirect()->route('page.welcome')->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {

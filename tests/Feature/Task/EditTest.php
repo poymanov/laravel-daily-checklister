@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 /** Попытка посещения гостем */
 test('guest', function () {
     $checklist = modelBuilderHelper()->checklist->create();
-    $task = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     $this->get(routeBuilderHelper()->task->edit($task->id, $task->id))->assertRedirect(routeBuilderHelper()->auth->login());
 });
@@ -17,7 +17,7 @@ test('guest', function () {
 /** Попытка посещения пользователем без прав администратора */
 test('user', function () {
     $checklist = modelBuilderHelper()->checklist->create();
-    $task = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     authHelper()->signIn();
     $this->get(routeBuilderHelper()->task->edit($task->id, $task->id))->assertForbidden();
@@ -42,7 +42,7 @@ test('not existed', function () {
 /** Успешное отображение формы редактирования */
 test('success', function () {
     $checklist = modelBuilderHelper()->checklist->create();
-    $task = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+    $task      = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
 
     authHelper()->signInAsAdmin();
     $response = $this->get(routeBuilderHelper()->task->edit($task->id, $task->id));

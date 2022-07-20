@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\StoreRequest;
 use App\Http\Requests\Task\UpdateRequest;
 use App\Models\Checklist;
@@ -33,7 +32,7 @@ class TaskController extends Controller
     {
         $checklist = $this->checklistService->findOneById($checklist->id);
 
-        return view('admin.task.create', compact('checklist'));
+        return view('task.create', compact('checklist'));
     }
 
     /**
@@ -49,7 +48,7 @@ class TaskController extends Controller
 
             return redirect()
                 ->route(
-                    'admin.checklist-groups.checklists.show',
+                    'checklist-groups.checklists.show',
                     ['checklist_group' => $checklist->checklist_group_id, 'checklist' => $checklist->id]
                 )
                 ->with('alert.success', 'Task was created');
@@ -70,7 +69,7 @@ class TaskController extends Controller
      */
     public function edit(Checklist $checklist, Task $task)
     {
-        return view('admin.task.edit', compact('checklist', 'task'));
+        return view('task.edit', compact('checklist', 'task'));
     }
 
     /**
@@ -86,7 +85,7 @@ class TaskController extends Controller
             $this->taskService->update($task->id, $request->get('name'), $request->get('description'));
 
             return redirect()
-                ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
+                ->route('checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
                 ->with('alert.success', 'Task was updated');
         } catch (TaskNotFoundException | TaskUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
@@ -109,7 +108,7 @@ class TaskController extends Controller
             $this->taskService->delete($task->id);
 
             return redirect()
-                ->route('admin.checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
+                ->route('checklist-groups.checklists.show', ['checklist_group' => $checklist->group->id, 'checklist' => $checklist->id])
                 ->with('alert.success', 'Task was deleted');
         } catch (TaskDeleteFailedException | TaskNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());

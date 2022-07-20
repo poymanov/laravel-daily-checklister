@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ChecklistGroup\StoreRequest;
 use App\Http\Requests\ChecklistGroup\UpdateRequest;
 use App\Models\ChecklistGroup;
@@ -25,7 +24,7 @@ class ChecklistGroupController extends Controller
      */
     public function create()
     {
-        return view('admin.checklist-group.create');
+        return view('checklist-group.create');
     }
 
     /**
@@ -55,7 +54,7 @@ class ChecklistGroupController extends Controller
      */
     public function edit(ChecklistGroup $checklistGroup)
     {
-        return view('admin.checklist-group.edit', compact('checklistGroup'));
+        return view('checklist-group.edit', compact('checklistGroup'));
     }
 
     /**

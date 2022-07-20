@@ -11,7 +11,7 @@ class TaskBuilder
      */
     public function create(int $checklistId): string
     {
-        return '/admin/checklists/' . $checklistId . '/tasks/create';
+        return '/checklists/' . $checklistId . '/tasks/create';
     }
 
     /**
@@ -21,7 +21,7 @@ class TaskBuilder
      */
     public function store(int $checklistId): string
     {
-        return '/admin/checklists/' . $checklistId . '/tasks';
+        return '/checklists/' . $checklistId . '/tasks';
     }
 
     /**
@@ -32,7 +32,7 @@ class TaskBuilder
      */
     public function edit(int $checklistId, int $taskId): string
     {
-        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId . '/edit';
+        return '/checklists/' . $checklistId . '/tasks/' . $taskId . '/edit';
     }
 
     /**
@@ -43,7 +43,7 @@ class TaskBuilder
      */
     public function update(int $checklistId, int $taskId): string
     {
-        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId;
+        return '/checklists/' . $checklistId . '/tasks/' . $taskId;
     }
 
     /**
@@ -54,6 +54,6 @@ class TaskBuilder
      */
     public function delete(int $checklistId, int $taskId): string
     {
-        return '/admin/checklists/' . $checklistId . '/tasks/' . $taskId;
+        return '/checklists/' . $checklistId . '/tasks/' . $taskId;
     }
 }

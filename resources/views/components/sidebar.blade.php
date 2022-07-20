@@ -16,36 +16,50 @@
         </li>
         @role('admin')
         <li class="c-sidebar-nav-title">Manage Checklists</li>
+        @endrole
         @foreach ($checklistGroups as $checklistGroup)
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
-                <a class="c-sidebar-nav-link"
-                   href="{{ route('admin.checklist-groups.edit', $checklistGroup->id) }}">
+
+                @role('admin')
+                <a class="c-sidebar-nav-link" href="{{ route('checklist-groups.edit', $checklistGroup->id) }}">
                     <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
                     {{ $checklistGroup->name }}
                 </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @foreach ($checklistGroup->checklists as $checklist)
+                @else
+                    <a class="c-sidebar-nav-link" href="#">
+                        <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
+                        {{ $checklistGroup->name }}
+                    </a>
+                    @endrole
+
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        @foreach ($checklistGroup->checklists as $checklist)
+                            <li class="c-sidebar-nav-item">
+                                <a class="c-sidebar-nav-link" style="padding: .5rem .5rem .5rem 76px"
+                                   href="{{ route('checklist-groups.checklists.show', [$checklistGroup->id, $checklist->id]) }}">
+                                    <x-svg-icon path="/assets/icons/free.svg#cil-list" class="c-sidebar-nav-icon"/>
+                                    {{ $checklist->name }}</a>
+                            </li>
+                        @endforeach
+                        @role('admin')
                         <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" style="padding: .5rem .5rem .5rem 76px"
-                               href="{{ route('admin.checklist-groups.checklists.show', [$checklistGroup->id, $checklist->id]) }}">
-                                <x-svg-icon path="/assets/icons/free.svg#cil-list" class="c-sidebar-nav-icon"/>
-                                {{ $checklist->name }}</a>
+                            <a class="c-sidebar-nav-link" style="padding: 1rem .5rem .5rem 76px"
+                               href="{{ route('checklist-groups.checklists.create', $checklistGroup->id) }}">
+                                <x-svg-icon path="/assets/icons/free.svg#cil-note-add" class="c-sidebar-nav-icon"/>
+                                Add checklist</a>
                         </li>
-                    @endforeach
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" style="padding: 1rem .5rem .5rem 76px"
-                           href="{{ route('admin.checklist-groups.checklists.create', $checklistGroup->id) }}">
-                            <x-svg-icon path="/assets/icons/free.svg#cil-note-add" class="c-sidebar-nav-icon"/>
-                            Add checklist</a>
-                    </li>
-                </ul>
+                        @endrole
+                    </ul>
             </li>
         @endforeach
+        @role('admin')
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-link" href="{{ route('admin.checklist-groups.create') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('checklist-groups.create') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-library-add" class="c-sidebar-nav-icon"/>
                 New checklist group</a>
         </li>
+        @endrole
+        @role('admin')
         <li class="c-sidebar-nav-title">Manage Pages</li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
             <ul class="c-sidebar-nav-dropdown-items">

@@ -1,4 +1,4 @@
-<ul class="list-group mt-4">
+<ul class="list-group">
     @foreach($tasks as $task)
         <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center d-flex">
             <div class="mr-auto">
@@ -19,17 +19,19 @@
                     @endif
                 </div>
 
-                <a href="{{ route('admin.checklists.tasks.edit', ['checklist' => $checklistId, 'task' => $task->id]) }}" class="mr-1">
+                @role('admin')
+                <a href="{{ route('checklists.tasks.edit', ['checklist' => $checklistId, 'task' => $task->id]) }}" class="mr-1">
                     <x-svg-icon path="/assets/icons/free.svg#cil-pencil" class="c-icon"/>
                 </a>
 
-                <form method="post" action="{{ route('admin.checklists.tasks.destroy', ['checklist' => $checklistId, 'task' => $task->id]) }}" onsubmit="return confirm('Are you sure?');">
+                <form method="post" action="{{ route('checklists.tasks.destroy', ['checklist' => $checklistId, 'task' => $task->id]) }}" onsubmit="return confirm('Are you sure?');">
                     @csrf
                     @method('delete')
                     <button class="btn btn-link p-0">
                         <x-svg-icon path="/assets/icons/free.svg#cil-trash" class="c-icon"/>
                     </button>
                 </form>
+                @endrole
             </div>
         </li>
     @endforeach

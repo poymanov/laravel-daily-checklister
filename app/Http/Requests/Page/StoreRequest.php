@@ -5,6 +5,7 @@ namespace App\Http\Requests\Page;
 use App\Enums\PageTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Spatie\LaravelOptions\Options;
 
 class StoreRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class StoreRequest extends FormRequest
         return [
             'title'   => 'required|min:3|max:255',
             'content' => 'required|min:3',
-            'type'    => ['required', 'unique:pages', Rule::in([PageTypeEnum::WELCOME->value, PageTypeEnum::GET_CONSULTATION->value])],
+            'type'    => array_merge(['required', 'unique:pages'], Options::forEnum(PageTypeEnum::class)->toValidationRule()),
         ];
     }
 }

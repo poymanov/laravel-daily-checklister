@@ -24,7 +24,7 @@
                 <div class="card-header">Tasks</div>
                 <div class="card-body">
                     @role('admin')
-                    <div>
+                    <div class="mb-4">
                         <a href="{{ route('checklists.tasks.create', $checklist->id) }}" class="btn btn-sm btn-primary">Create Task</a>
                     </div>
                     @endrole

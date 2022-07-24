@@ -6,6 +6,7 @@ use App\Services\Checklist\Contracts\ChecklistServiceContract;
 use App\Services\Task\Contracts\TaskServiceContract;
 use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
+use App\Services\Task\Exceptions\TaskNotFoundException;
 use Livewire\Component;
 use Throwable;
 
@@ -25,6 +26,9 @@ class Tasks extends Component
 
     /** @var TaskServiceContract */
     private $taskService;
+
+    /** @var array */
+    public $openedTasks = [];
 
     public function __construct(mixed $id = null)
     {
@@ -81,11 +85,25 @@ class Tasks extends Component
      * @param ChangeOrderDirectionEnum $direction
      *
      * @throws Throwable
-     * @throws \App\Services\Task\Exceptions\TaskNotFoundException
+     * @throws TaskNotFoundException
      */
     public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
     {
         $this->taskService->changeOrder($id, $direction);
+
+        $this->getTasks();
+    }
+
+    /**
+     * @param int $taskId
+     */
+    public function toggle(int $taskId): void
+    {
+        if (in_array($taskId, $this->openedTasks)) {
+            $this->openedTasks = array_diff($this->openedTasks, [$taskId]);
+        } else {
+            $this->openedTasks[] = $taskId;
+        }
 
         $this->getTasks();
     }

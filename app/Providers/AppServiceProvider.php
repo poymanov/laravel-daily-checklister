@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryContract::class, UserRepository::class);
         $this->app->bind(
             UserServiceContract::class,
-            fn($app) => new UserService($app->make(UserRepositoryContract::class), (int) config('pagination.admin_users'))
+            fn ($app) => new UserService($app->make(UserRepositoryContract::class), (int) config('pagination.admin_users'))
         );
 
         $this->app->bind(ChecklistGroupRepositoryContract::class, ChecklistGroupRepository::class);

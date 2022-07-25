@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum PageTypeEnum: string
 {
-case WELCOME = 'welcome';
+    case WELCOME = 'welcome';
 
-case GET_CONSULTATION = 'get-consultation';
-    }
+    case GET_CONSULTATION = 'get-consultation';
+}

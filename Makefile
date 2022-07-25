@@ -65,16 +65,16 @@ backend-seed:
 backend-generate-key:
 	docker-compose run --rm php-cli php artisan key:generate
 
-backend-php-codesniffer:
-	docker-compose run --rm php-cli composer phpcs
+backend-pint:
+	docker-compose run --rm php-cli composer pint
 
-backend-php-codesniffer-fix:
-	docker-compose run --rm php-cli composer phpcbf
+backend-pint-fix:
+	docker-compose run --rm php-cli composer pint-fix
 
-backend-phpstan:
+backend-php-stan:
 	docker-compose run --rm php-cli composer phpstan
 
-backend-lint: backend-php-codesniffer backend-phpstan
+backend-lint: backend-pint backend-php-stan
 
 backend-ide-helper-generate:
 	docker-compose run --rm php-cli composer ide-helper-generate

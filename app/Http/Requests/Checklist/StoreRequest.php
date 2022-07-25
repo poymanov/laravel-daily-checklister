@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('checklists')->where(fn($query) => $query->where('name', $name)->where('checklist_group_id', $checklistGroupId)),
+                Rule::unique('checklists')->where(fn ($query) => $query->where('name', $name)->where('checklist_group_id', $checklistGroupId)),
             ],
         ];
     }

@@ -4,7 +4,6 @@ namespace App\Http\Requests\Page;
 
 use App\Enums\PageTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Spatie\LaravelOptions\Options;
 
 class StoreRequest extends FormRequest

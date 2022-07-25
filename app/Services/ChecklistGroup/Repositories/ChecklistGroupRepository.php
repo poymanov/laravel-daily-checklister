@@ -10,7 +10,6 @@ use App\Services\ChecklistGroup\Exceptions\ChecklistGroupDeleteFailedException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupNotFoundException;
 use App\Services\ChecklistGroup\Exceptions\ChecklistGroupUpdateFailedException;
 use App\Services\ChecklistGroup\Factories\ChecklistGroupDtoFactory;
-use Database\Factories\ChecklistGroupFactory;
 
 class ChecklistGroupRepository implements ChecklistGroupRepositoryContract
 {

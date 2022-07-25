@@ -35,6 +35,6 @@ class UserRepository implements UserRepositoryContract
     public function findAllNotAdminLatest(int $paginationPerPage): LengthAwarePaginator
     {
         return User::doesntHave('roles')->latest()->paginate($paginationPerPage)
-            ->through(fn(User $user) => UserDtoFactory::createFromModel($user));
+            ->through(fn (User $user) => UserDtoFactory::createFromModel($user));
     }
 }

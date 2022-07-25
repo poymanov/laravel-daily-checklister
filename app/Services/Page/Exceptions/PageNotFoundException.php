@@ -16,7 +16,7 @@ class PageNotFoundException extends Exception
 
         if ($id) {
             $message = $messageTemplate . ':' . $id;
-        } else if ($type) {
+        } elseif ($type) {
             $message = $messageTemplate . ':' . $type;
         } else {
             $message = $messageTemplate;

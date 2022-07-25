@@ -61,7 +61,6 @@ test('wrong type', function () {
 
 /** Успешное создание страницы */
 test('success', function () {
-
     $page = modelBuilderHelper()->page->make();
 
     authHelper()->signInAsAdmin();

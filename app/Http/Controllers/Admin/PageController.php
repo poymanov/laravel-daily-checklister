@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\PageTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\StoreRequest;
 use App\Http\Requests\Page\UpdateRequest;

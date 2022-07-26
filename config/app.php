@@ -1,5 +1,10 @@
 <?php
 
+use App\Providers\ChecklistGroupServiceProvider;
+use App\Providers\ChecklistServiceProvider;
+use App\Providers\PageServiceProvider;
+use App\Providers\TaskServiceProvider;
+use App\Providers\UserServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -195,7 +200,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
-
+        UserServiceProvider::class,
+        ChecklistGroupServiceProvider::class,
+        ChecklistServiceProvider::class,
+        TaskServiceProvider::class,
+        PageServiceProvider::class,
     ],
 
     /*

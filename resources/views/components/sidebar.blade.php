@@ -26,10 +26,12 @@
                     {{ $checklistGroup->name }}
                 </a>
                 @else
-                    <a class="c-sidebar-nav-link" href="#">
-                        <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
-                        {{ $checklistGroup->name }}
-                    </a>
+                    @if(!empty($checklistGroup->checklists))
+                        <a class="c-sidebar-nav-link" href="#">
+                            <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
+                            {{ $checklistGroup->name }}
+                        </a>
+                    @endif
                     @endrole
 
                     <ul class="c-sidebar-nav-dropdown-items">
@@ -82,7 +84,7 @@
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
             <a class="c-sidebar-nav-link" href="{{ route('admin.users.index') }}">
                 <x-svg-icon path="/assets/icons/free.svg#cil-folder-open" class="c-sidebar-nav-icon"/>
-                List
+                Users List
             </a>
         </li>
         @endrole

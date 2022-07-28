@@ -35,7 +35,7 @@
             </div>
             <div class="@if (in_array($task->id, $openedTasks)) d-block @else d-none @endif">
                 <hr>
-                <div>
+                <div class="task-content">
                     {!! $task->description !!}
                 </div>
             </div>

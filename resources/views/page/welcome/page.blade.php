@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">{{ $page->title }}</div>
             </div>
-            <div class="card">
+            <div class="card page-content">
                 <div class="card-body">{!! $page->content !!}</div>
             </div>
         </div>

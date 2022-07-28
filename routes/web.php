@@ -6,6 +6,7 @@ use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ChecklistGroupController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::resource('pages', AdminPageController::class)->except('index');
     });
+
+    Route::post('/upload-image', [UploadController::class, 'upload'])->name('upload-image');
 });
 
 require __DIR__ . '/auth.php';

@@ -1,2 +1,7 @@
 @import "~@coreui/icons";
 @import "~@coreui/coreui";
+
+.task-content img,
+.page-content img {
+    max-width: 100%;
+}

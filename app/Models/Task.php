@@ -14,11 +14,23 @@ class Task extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $dates = [
+        'completed_at',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function checklist()
     {
         return $this->belongsTo(Checklist::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCompletedAttribute(): bool
+    {
+        return $this->completed_by && $this->completed_at;
     }
 }

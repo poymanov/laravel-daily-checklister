@@ -64,4 +64,25 @@ interface TaskServiceContract
      * @throws Throwable
      */
     public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void;
+
+    /**
+     * Завершение задачи
+     *
+     * @param int $id
+     * @param int $completedBy
+     *
+     * @return void
+     * @throws TaskNotFoundException
+     */
+    public function complete(int $id, int $completedBy): void;
+
+    /**
+     * Отмена завершения задачи
+     *
+     * @param int $id
+     *
+     * @return void
+     * @throws TaskNotFoundException
+     */
+    public function incomplete(int $id): void;
 }

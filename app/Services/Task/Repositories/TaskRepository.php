@@ -5,7 +5,6 @@ namespace App\Services\Task\Repositories;
 use App\Models\Task;
 use App\Services\Task\Contracts\TaskRepositoryContract;
 use App\Services\Task\Dtos\TaskCreateDto;
-use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Dtos\TaskUpdateDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
 use App\Services\Task\Exceptions\TaskCreateFailedException;
@@ -13,6 +12,8 @@ use App\Services\Task\Exceptions\TaskDeleteFailedException;
 use App\Services\Task\Exceptions\TaskNotFoundException;
 use App\Services\Task\Exceptions\TaskUpdateFailedException;
 use App\Services\Task\Factories\TaskDtoFactory;
+use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -65,11 +66,7 @@ class TaskRepository implements TaskRepositoryContract
     }
 
     /**
-     * Получение задач по ID чеклиста
-     *
-     * @param int $checklistId
-     *
-     * @return TaskDto[]
+     * @inheritDoc
      */
     public function findAllByChecklistId(int $checklistId): array
     {
@@ -79,14 +76,7 @@ class TaskRepository implements TaskRepositoryContract
     }
 
     /**
-     * Изменение порядка задачи
-     *
-     * @param int                      $id
-     * @param ChangeOrderDirectionEnum $direction
-     *
-     * @return void
-     * @throws TaskNotFoundException
-     * @throws Throwable
+     * @inheritDoc
      */
     public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
     {
@@ -104,6 +94,34 @@ class TaskRepository implements TaskRepositoryContract
             $task->order = $newOrder;
             $task->save();
         });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function complete(int $id, int $completedBy, string $completedAt): void
+    {
+        $task               = $this->findModelById($id);
+        $task->completed_by = $completedBy;
+        $task->completed_at = Carbon::createFromTimeString($completedAt);
+
+        if (!$task->save()) {
+            throw new Exception('Failed to complete task');
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incomplete(int $id): void
+    {
+        $task               = $this->findModelById($id);
+        $task->completed_by = null;
+        $task->completed_at = null;
+
+        if (!$task->save()) {
+            throw new Exception('Failed to incomplete task');
+        }
     }
 
     /**

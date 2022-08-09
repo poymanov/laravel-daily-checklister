@@ -11,4 +11,6 @@ class TaskDto
     public int $order;
 
     public string $description;
+
+    public bool $completed;
 }

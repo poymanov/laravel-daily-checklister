@@ -70,4 +70,20 @@ class TaskService implements TaskServiceContract
     {
         $this->taskRepository->changeOrder($id, $direction);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function complete(int $id, int $completedBy): void
+    {
+        $this->taskRepository->complete($id, $completedBy, now()->toString());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incomplete(int $id): void
+    {
+        $this->taskRepository->incomplete($id);
+    }
 }

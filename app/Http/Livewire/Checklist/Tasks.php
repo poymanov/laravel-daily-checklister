@@ -8,6 +8,7 @@ use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
 use App\Services\Task\Exceptions\TaskNotFoundException;
 use Livewire\Component;
+use Session;
 use Throwable;
 
 class Tasks extends Component
@@ -106,6 +107,46 @@ class Tasks extends Component
         }
 
         $this->getTasks();
+    }
+
+    /**
+     * Завершение задачи
+     *
+     * @param int $taskId
+     *
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
+    public function complete(int $taskId)
+    {
+        try {
+            $this->taskService->complete($taskId, (int) auth()->id());
+
+            $this->getTasks();
+        } catch (Throwable $e) {
+            Session::flash('alert.error', $e->getMessage());
+
+            return redirect()->to(route('page.welcome'));
+        }
+    }
+
+    /**
+     * Отмена завершения задачи
+     *
+     * @param int $taskId
+     *
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
+    public function incomplete(int $taskId)
+    {
+        try {
+            $this->taskService->incomplete($taskId);
+
+            $this->getTasks();
+        } catch (Throwable $e) {
+            Session::flash('alert.error', $e->getMessage());
+
+            return redirect()->to(route('page.welcome'));
+        }
     }
 
     /**

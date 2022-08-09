@@ -37,6 +37,7 @@ class TaskDtoFactory
         $dto->name        = $task->name;
         $dto->order       = $task->order;
         $dto->description = Purifier::clean($task->description);
+        $dto->completed   = $task->completed;
 
         return $dto;
     }

@@ -2,7 +2,17 @@
     @foreach($tasks as $task)
         <li class="list-group-item list-group-item-action">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="w-75" wire:click.prevent="toggle({{ $task->id }})">{{ $task->name }}</div>
+                <div class="d-flex align-items-center">
+                    <label class="c-switch c-switch-primary mr-2">
+                        @if($task->completed)
+                            <input class="c-switch-input" wire:click.prevent="incomplete({{$task->id }})" type="checkbox" checked=""><span class="c-switch-slider"></span>
+                        @else
+                            <input class="c-switch-input" wire:click.prevent="complete({{$task->id }})" type="checkbox"><span class="c-switch-slider"></span>
+                        @endif
+                    </label>
+
+                    <span wire:click.prevent="toggle({{$task->id }})">{{ $task->name }}</span>
+                </div>
                 <div class="d-flex align-items-center">
                     <div class="mr-2">
                         @if($task->order > 1)

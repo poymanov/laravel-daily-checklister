@@ -63,4 +63,20 @@ class ChecklistService implements ChecklistServiceContract
     {
         return $this->checklistRepository->getTasksLastOrder($id);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function countTasks(int $id): int
+    {
+        return $this->checklistRepository->countTasks($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countCompletedTasks(int $id): int
+    {
+        return $this->checklistRepository->countCompletedTasks($id);
+    }
 }

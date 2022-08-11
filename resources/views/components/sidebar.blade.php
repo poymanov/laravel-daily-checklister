@@ -37,10 +37,7 @@
                     <ul class="c-sidebar-nav-dropdown-items">
                         @foreach ($checklistGroup->checklists as $checklist)
                             <li class="c-sidebar-nav-item">
-                                <a class="c-sidebar-nav-link" style="padding: .5rem .5rem .5rem 76px"
-                                   href="{{ route('checklist-groups.checklists.show', [$checklistGroup->id, $checklist->id]) }}">
-                                    <x-svg-icon path="/assets/icons/free.svg#cil-list" class="c-sidebar-nav-icon"/>
-                                    {{ $checklist->name }}</a>
+                                @livewire('checklist.checklist-menu-item', ['checklistGroupId' => $checklistGroup->id, 'checklistId' => $checklist->id, 'checklistName' => $checklist->name])
                             </li>
                         @endforeach
                         @role('admin')

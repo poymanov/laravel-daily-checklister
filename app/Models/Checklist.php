@@ -29,4 +29,12 @@ class Checklist extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function completedTasks()
+    {
+        return $this->hasMany(Task::class, 'checklist_id', 'id')->whereNotNull(['completed_by', 'completed_at']);
+    }
 }

@@ -29,7 +29,9 @@ test('success', function () {
 
     authHelper()->signIn($user);
 
-    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])->call('incomplete', $task->id);
+    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])
+        ->call('incomplete', $task->id)
+        ->assertEmitted('changeTaskCompleteStatus', $task->checklist->id);
 
     $this->assertDatabaseHas('tasks', [
         'id'           => $task->id,

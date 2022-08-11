@@ -65,4 +65,24 @@ interface ChecklistRepositoryContract
      * @throws ChecklistNotFoundException
      */
     public function getTasksLastOrder(int $id): int;
+
+    /**
+     * Общее количество задач
+     *
+     * @param int $id
+     *
+     * @return int
+     * @throws ChecklistNotFoundException
+     */
+    public function countTasks(int $id): int;
+
+    /**
+     * Общее количество завершенных задач
+     *
+     * @param int $id
+     *
+     * @return int
+     * @throws ChecklistNotFoundException
+     */
+    public function countCompletedTasks(int $id): int;
 }

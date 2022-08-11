@@ -121,6 +121,8 @@ class Tasks extends Component
         try {
             $this->taskService->complete($taskId, (int) auth()->id());
 
+            $this->emit('changeTaskCompleteStatus', $this->checklistId);
+
             $this->getTasks();
         } catch (Throwable $e) {
             Session::flash('alert.error', $e->getMessage());
@@ -140,6 +142,8 @@ class Tasks extends Component
     {
         try {
             $this->taskService->incomplete($taskId);
+
+            $this->emit('changeTaskCompleteStatus', $this->checklistId);
 
             $this->getTasks();
         } catch (Throwable $e) {

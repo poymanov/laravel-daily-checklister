@@ -30,7 +30,9 @@ test('success', function () {
 
     authHelper()->signIn($user);
 
-    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])->call('complete', $task->id);
+    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])
+        ->call('complete', $task->id)
+        ->assertEmitted('changeTaskCompleteStatus', $task->checklist->id);
 
     $this->assertDatabaseHas('tasks', [
         'id'           => $task->id,

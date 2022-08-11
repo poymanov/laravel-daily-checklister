@@ -82,3 +82,17 @@ test('checklist', function () {
 
     $response->assertSee($checklist->name);
 });
+
+/** Отображение счетчиков по чеклисту */
+test('checklist counters', function () {
+    $checklist = modelBuilderHelper()->checklist->create();
+
+    $user = modelBuilderHelper()->user->createAdmin();
+    authHelper()->signIn($user);
+
+    modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'completed_by' => $user->id, 'completed_at' => now()]);
+    modelBuilderHelper()->task->create(['checklist_id' => $checklist->id]);
+
+    $response = $this->get(routeBuilderHelper()->common->home());
+    $response->assertSee('1/2');
+});

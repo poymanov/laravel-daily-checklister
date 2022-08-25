@@ -14,6 +14,10 @@ class Checklist extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $casts = [
+        'is_top' => 'boolean',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

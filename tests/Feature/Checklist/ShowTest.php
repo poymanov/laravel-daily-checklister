@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\Checklist\ChecklistTopItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -64,4 +65,15 @@ test('admin', function () {
     $response->assertSee('Delete');
     $response->assertSee('Tasks');
     $response->assertSee('Create Task');
+});
+
+/** Отображение компонента с топ-чеклистом */
+test('top', function () {
+    $checklistGroup = modelBuilderHelper()->checklistGroup->create();
+    $checklist      = modelBuilderHelper()->checklist->create(['checklist_group_id' => $checklistGroup->id]);
+
+    modelBuilderHelper()->checklist->create(['is_top' => true]);
+
+    authHelper()->signIn();
+    $this->get(routeBuilderHelper()->checklist->view($checklistGroup->id, $checklist->id))->assertSeeLivewire(ChecklistTopItem::class);
 });

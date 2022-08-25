@@ -6,9 +6,13 @@
             @method('put')
             <div class="card-body">
                 <x-validation-errors class="mb-4" :errors="$errors"/>
-                <div class="form-group mb-0">
+                <div class="form-group mb-2">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" type="text" name="name" value="{{ old('name', $checklist->name) }}">
+                </div>
+                <div class="form-group mb-0">
+                    <input id="is_top" type="checkbox" name="is_top" @if (old('is_top', $checklist->is_top)) checked @endif>
+                    <label for="is_top">Is Top?</label>
                 </div>
             </div>
             <div class="card-footer">

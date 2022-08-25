@@ -44,7 +44,7 @@ class ChecklistController extends Controller
             $this->checklistService->create($checklistGroup->id, $request->get('name'));
 
             return redirect()->route('page.welcome')->with('alert.success', 'Checklist was created');
-        } catch (ChecklistCreateFailedException | ChecklistGroupNotFoundException $e) {
+        } catch (ChecklistCreateFailedException|ChecklistGroupNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
@@ -74,12 +74,12 @@ class ChecklistController extends Controller
     public function update(UpdateRequest $request, ChecklistGroup $checklistGroup, Checklist $checklist)
     {
         try {
-            $this->checklistService->update($checklist->id, $request->get('name'));
+            $this->checklistService->update($checklist->id, $request->get('name'), $request->has('is_top'));
 
             return redirect()
                 ->route('checklist-groups.checklists.show', ['checklist_group' => $checklistGroup, 'checklist' => $checklist])
                 ->with('alert.success', 'Checklist was updated');
-        } catch (ChecklistNotFoundException | ChecklistUpdateFailedException $e) {
+        } catch (ChecklistNotFoundException|ChecklistUpdateFailedException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);
@@ -100,7 +100,7 @@ class ChecklistController extends Controller
             $this->checklistService->delete($checklist->id);
 
             return redirect()->route('page.welcome')->with('alert.success', 'Checklist was deleted');
-        } catch (ChecklistDeleteFailedException | ChecklistNotFoundException $e) {
+        } catch (ChecklistDeleteFailedException|ChecklistNotFoundException $e) {
             return redirect()->back()->with('alert.error', $e->getMessage());
         } catch (Throwable $e) {
             Log::error($e);

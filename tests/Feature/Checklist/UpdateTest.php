@@ -72,7 +72,7 @@ test('success', function () {
 
     authHelper()->signInAsAdmin();
 
-    $response = $this->put(routeBuilderHelper()->checklist->update($checklistGroup->id, $checklist->id), ['name' => $name]);
+    $response = $this->put(routeBuilderHelper()->checklist->update($checklistGroup->id, $checklist->id), ['name' => $name, 'is_top' => true]);
     $response->assertSessionHasNoErrors();
     $response->assertSessionHas('alert.success', 'Checklist was updated');
 
@@ -81,7 +81,8 @@ test('success', function () {
     $this->assertDatabaseHas('checklists', [
         'id'                 => $checklist->id,
         'name'               => $name,
-        'checklist_group_id' => $checklist->group->id,
+        'checklist_group_id' => $checklistGroup->id,
+        'is_top'             => true,
     ]);
 });
 

@@ -24,12 +24,13 @@ interface ChecklistServiceContract
     /**
      * @param int    $id
      * @param string $name
+     * @param bool   $isTop
      *
      * @return void
      * @throws ChecklistNotFoundException
      * @throws ChecklistUpdateFailedException
      */
-    public function update(int $id, string $name);
+    public function update(int $id, string $name, bool $isTop);
 
     /**
      * @param int $id
@@ -47,6 +48,13 @@ interface ChecklistServiceContract
      * @throws ChecklistNotFoundException
      */
     public function findOneById(int $id): ChecklistDto;
+
+    /**
+     * Получение списка чеклистов, с признаком Top
+     *
+     * @return ChecklistDto[]
+     */
+    public function findAllTop(): array;
 
     /**
      * Получение порядкового номера для следующей задачи в чеклисте

@@ -30,10 +30,11 @@ class ChecklistRepository implements ChecklistRepositoryContract
     /**
      * @inheritDoc
      */
-    public function update(int $id, string $name): void
+    public function update(int $id, string $name, bool $isTop): void
     {
-        $checklist       = $this->findModelById($id);
-        $checklist->name = $name;
+        $checklist         = $this->findModelById($id);
+        $checklist->name   = $name;
+        $checklist->is_top = $isTop;
 
         if (!$checklist->save()) {
             throw new ChecklistUpdateFailedException($id);
@@ -61,13 +62,23 @@ class ChecklistRepository implements ChecklistRepositoryContract
     }
 
     /**
+     * @return ChecklistDto[]
+     */
+    public function findAllTop(): array
+    {
+        $checklists = Checklist::where('is_top', true)->with('tasks', 'completedTasks')->get();
+
+        return ChecklistDtoFactory::createFromModelsList($checklists);
+    }
+
+    /**
      * @inheritDoc
      */
     public function getNextTaskOrder(int $id): int
     {
         $checklist = $this->findModelById($id);
 
-        $order = (int) $checklist->tasks()->max('order');
+        $order = (int)$checklist->tasks()->max('order');
         $order++;
 
         return $order;
@@ -80,7 +91,7 @@ class ChecklistRepository implements ChecklistRepositoryContract
     {
         $checklist = $this->findModelById($id);
 
-        return (int) $checklist->tasks()->max('order');
+        return (int)$checklist->tasks()->max('order');
     }
 
     /**

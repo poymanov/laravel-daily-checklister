@@ -27,9 +27,9 @@ class ChecklistService implements ChecklistServiceContract
     /**
      * @inheritDoc
      */
-    public function update(int $id, string $name): void
+    public function update(int $id, string $name, bool $isTop): void
     {
-        $this->checklistRepository->update($id, $name);
+        $this->checklistRepository->update($id, $name, $isTop);
     }
 
     /**
@@ -46,6 +46,14 @@ class ChecklistService implements ChecklistServiceContract
     public function findOneById(int $id): ChecklistDto
     {
         return $this->checklistRepository->findOneById($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAllTop(): array
+    {
+        return $this->checklistRepository->findAllTop();
     }
 
     /**

@@ -1,4 +1,8 @@
 <x-app-layout>
+    <div class="mb-1">
+        <h3>Top Checklists</h3>
+        <x-checklist-top/>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">

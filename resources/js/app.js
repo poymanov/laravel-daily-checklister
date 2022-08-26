@@ -26,7 +26,7 @@ class CustomUploadAdapter {
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
 
-        xhr.open('POST', 'http://localhost:8080/upload-image', true);
+        xhr.open('POST', document.querySelector('meta[name="upload-image"]').getAttribute('content'), true);
         xhr.setRequestHeader('x-csrf-token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
         xhr.responseType = 'json';
     }

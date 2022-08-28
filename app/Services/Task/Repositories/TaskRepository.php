@@ -15,7 +15,6 @@ use App\Services\Task\Factories\TaskDtoFactory;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Throwable;
 
 class TaskRepository implements TaskRepositoryContract
 {
@@ -80,11 +79,7 @@ class TaskRepository implements TaskRepositoryContract
      */
     public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
     {
-        try {
-            $task = $this->findModelById($id);
-        } catch (Throwable) {
-            return;
-        }
+        $task = $this->findModelById($id);
 
         $newOrder = $direction == ChangeOrderDirectionEnum::PREV ? $task->order - 1 : $task->order + 1;
 

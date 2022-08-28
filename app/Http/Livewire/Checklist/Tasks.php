@@ -6,7 +6,6 @@ use App\Services\Checklist\Contracts\ChecklistServiceContract;
 use App\Services\Task\Contracts\TaskServiceContract;
 use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
-use App\Services\Task\Exceptions\TaskNotFoundException;
 use Livewire\Component;
 use Session;
 use Throwable;
@@ -85,14 +84,19 @@ class Tasks extends Component
      * @param int                      $id
      * @param ChangeOrderDirectionEnum $direction
      *
-     * @throws Throwable
-     * @throws TaskNotFoundException
+     * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function changeOrder(int $id, ChangeOrderDirectionEnum $direction): void
+    public function changeOrder(int $id, ChangeOrderDirectionEnum $direction)
     {
-        $this->taskService->changeOrder($id, $direction);
+        try {
+            $this->taskService->changeOrder($id, $direction);
 
-        $this->getTasks();
+            $this->getTasks();
+        } catch (Throwable $e) {
+            Session::flash('alert.error', $e->getMessage());
+
+            return redirect()->to(route('page.welcome'));
+        }
     }
 
     /**
@@ -119,7 +123,7 @@ class Tasks extends Component
     public function complete(int $taskId)
     {
         try {
-            $this->taskService->complete($taskId, (int) auth()->id());
+            $this->taskService->complete($taskId, (int)auth()->id());
 
             $this->emit('changeTaskCompleteStatus', $this->checklistId);
 
@@ -158,7 +162,12 @@ class Tasks extends Component
      */
     private function getTasks(): void
     {
-        $this->tasks          = $this->taskService->findAllByChecklistId($this->checklistId);
-        $this->tasksLastOrder = $this->checklistService->getTasksLastOrder($this->checklistId);
+        if ($this->checklistId) {
+            $this->tasks          = $this->taskService->findAllByChecklistId($this->checklistId);
+            $this->tasksLastOrder = $this->checklistService->getTasksLastOrder($this->checklistId);
+        } else {
+            $this->tasks          = [];
+            $this->tasksLastOrder = 0;
+        }
     }
 }

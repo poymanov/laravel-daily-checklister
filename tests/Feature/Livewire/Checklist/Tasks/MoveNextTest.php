@@ -8,28 +8,18 @@ use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
-/** Перемещение на предыдущую позицию в порядке сортировки */
+/** Попытка изменения порядка сортировки несуществующей задачи */
 test('move prev', function () {
     $checklist = modelBuilderHelper()->checklist->create();
 
-    $taskFirst  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);
-    $taskSecond = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
-
-    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])->call('movePrev', $taskSecond->id);
-
-    $this->assertDatabaseHas('tasks', [
-        'id'    => $taskFirst->id,
-        'order' => 2,
-    ]);
-
-    $this->assertDatabaseHas('tasks', [
-        'id'    => $taskSecond->id,
-        'order' => 1,
-    ]);
+    Livewire::test(Tasks::class, ['checklistId' => $checklist->id])
+        ->call('moveNext', 999)
+        ->assertSessionHas('alert.error')
+        ->assertRedirect('/');
 });
 
-/** Перемещение на следующую позицию в порядке сортировки */
-test('move next', function () {
+/** Успешное перемещение на следующую позицию в порядке сортировки */
+test('success', function () {
     $checklist = modelBuilderHelper()->checklist->create();
 
     $taskFirst  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);

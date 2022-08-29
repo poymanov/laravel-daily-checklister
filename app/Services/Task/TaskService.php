@@ -86,4 +86,12 @@ class TaskService implements TaskServiceContract
     {
         $this->taskRepository->incomplete($id);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExists(int $id): bool
+    {
+        return $this->taskRepository->isExists($id);
+    }
 }

@@ -30,4 +30,12 @@ class UserService implements UserServiceContract
     {
         return $this->userRepository->findAllNotAdminLatest($this->paginationPerPage);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExists(int $userId): bool
+    {
+        return $this->userRepository->isExists($userId);
+    }
 }

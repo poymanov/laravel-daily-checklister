@@ -83,4 +83,13 @@ interface TaskRepositoryContract
      * @throws TaskNotFoundException
      */
     public function incomplete(int $id): void;
+
+    /**
+     * Проверка существования задачи по ID
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function isExists(int $id): bool;
 }

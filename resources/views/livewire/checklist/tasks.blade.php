@@ -49,6 +49,9 @@
                     {!! $task->description !!}
                 </div>
             </div>
+            <div class="task-controls">
+                @livewire('task.day', ['taskId' => $task->id], key($task->id))
+            </div>
         </li>
     @endforeach
 </ul>

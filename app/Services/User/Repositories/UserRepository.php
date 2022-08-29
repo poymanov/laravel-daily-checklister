@@ -26,15 +26,19 @@ class UserRepository implements UserRepositoryContract
     }
 
     /**
-     * Получение пользователей без прав администратора
-     *
-     * @param int $paginationPerPage
-     *
-     * @return LengthAwarePaginator
+     * @inheritDoc
      */
     public function findAllNotAdminLatest(int $paginationPerPage): LengthAwarePaginator
     {
         return User::doesntHave('roles')->latest()->paginate($paginationPerPage)
             ->through(fn (User $user) => UserDtoFactory::createFromModel($user));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExists(int $userId): bool
+    {
+        return User::whereId($userId)->exists();
     }
 }

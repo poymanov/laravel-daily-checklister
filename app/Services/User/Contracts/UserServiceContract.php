@@ -25,4 +25,13 @@ interface UserServiceContract
      * @return LengthAwarePaginator
      */
     public function findAllNotAdminLatest(): LengthAwarePaginator;
+
+    /**
+     * Проверка существования пользователя по идентификатору
+     *
+     * @param int $userId
+     *
+     * @return bool
+     */
+    public function isExists(int $userId): bool;
 }

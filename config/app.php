@@ -2,6 +2,7 @@
 
 use App\Providers\ChecklistGroupServiceProvider;
 use App\Providers\ChecklistServiceProvider;
+use App\Providers\DayTaskServiceProvider;
 use App\Providers\PageServiceProvider;
 use App\Providers\TaskServiceProvider;
 use App\Providers\UserServiceProvider;
@@ -46,7 +47,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -205,6 +206,7 @@ return [
         ChecklistServiceProvider::class,
         TaskServiceProvider::class,
         PageServiceProvider::class,
+        DayTaskServiceProvider::class,
     ],
 
     /*

@@ -120,6 +120,14 @@ class TaskRepository implements TaskRepositoryContract
     }
 
     /**
+     * @inheritDoc
+     */
+    public function isExists(int $id): bool
+    {
+        return Task::whereId($id)->exists();
+    }
+
+    /**
      * Получение модели по ID
      *
      * @param int $id

@@ -14,6 +14,9 @@
                 Home
             </a>
         </li>
+        <li class="c-sidebar-nav-item">
+            @livewire('task.day-menu-item')
+        </li>
         @role('admin')
         <li class="c-sidebar-nav-title">Manage Checklists</li>
         @endrole

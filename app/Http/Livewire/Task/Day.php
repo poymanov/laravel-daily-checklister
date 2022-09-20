@@ -36,6 +36,8 @@ class Day extends Component
             $this->dayTaskService->add($this->taskId, (int) auth()->id());
 
             $this->checkAdded();
+
+            $this->emit('updateMyDay');
         } catch (Throwable $e) {
             Session::flash('alert.error', $e->getMessage());
 
@@ -52,6 +54,8 @@ class Day extends Component
             $this->dayTaskService->remove($this->taskId, (int) auth()->id());
 
             $this->checkAdded();
+
+            $this->emit('updateMyDay');
         } catch (Throwable $e) {
             Session::flash('alert.error', $e->getMessage());
 

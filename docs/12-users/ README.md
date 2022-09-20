@@ -12,4 +12,4 @@
 
 ---
 
-Следующее: [WIP](../wip/README.md)
+Следующее: [Список задач "My Day"](../13-day-tasks/README.md)

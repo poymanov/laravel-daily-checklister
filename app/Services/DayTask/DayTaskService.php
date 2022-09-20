@@ -42,6 +42,14 @@ class DayTaskService implements DayTaskServiceContract
     /**
      * @inheritDoc
      */
+    public function findAllByUserId(int $userId): array
+    {
+        return $this->dayTaskRepository->findAllByUserId($userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function remove(int $taskId, int $userId): void
     {
         if (!$this->taskService->isExists($taskId)) {
@@ -61,5 +69,13 @@ class DayTaskService implements DayTaskServiceContract
     public function isExists(int $taskId, int $userId): bool
     {
         return $this->dayTaskRepository->isExists($taskId, $userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return $this->dayTaskRepository->countByUserId($userId);
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ChecklistGroupController;
+use App\Http\Controllers\DayTaskController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UploadController;
@@ -36,6 +37,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::resource('pages', AdminPageController::class)->except('index');
+    });
+
+    Route::group(['prefix' => 'tasks', 'as' => 'tasks.'], function () {
+        Route::group(['prefix' => 'day', 'as' => 'day.'], function () {
+            Route::get('/', [DayTaskController::class, 'index'])->name('index');
+            Route::delete('/{task}', [DayTaskController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::post('/upload-image', [UploadController::class, 'upload'])->name('upload-image');

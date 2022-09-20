@@ -36,7 +36,7 @@ test('success', function () {
 
     authHelper()->signIn($user);
 
-    Livewire::test(Day::class, ['taskId' => $task->id])->call('remove');
+    Livewire::test(Day::class, ['taskId' => $task->id])->call('remove')->assertEmitted('updateMyDay');
 
     $this->assertDatabaseMissing('day_tasks', [
         'id'      => $dayTask->id,

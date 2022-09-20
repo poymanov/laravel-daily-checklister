@@ -7,6 +7,7 @@ use App\Services\DayTask\Contracts\DayTaskRepositoryContract;
 use App\Services\DayTask\Dtos\DayTaskCreateDto;
 use App\Services\DayTask\Exceptions\DayTaskCreateFailedException;
 use App\Services\DayTask\Exceptions\DayTaskNotFoundException;
+use App\Services\DayTask\Factories\DayTaskDtoFactory;
 
 class DayTaskRepository implements DayTaskRepositoryContract
 {
@@ -25,14 +26,17 @@ class DayTaskRepository implements DayTaskRepositoryContract
     }
 
     /**
-     * Удаление задачи
-     *
-     * @param int $taskId
-     * @param int $userId
-     *
-     * @return void
-     * @throws DayTaskCreateFailedException
-     * @throws DayTaskNotFoundException
+     * @inheritDoc
+     */
+    public function findAllByUserId(int $userId): array
+    {
+        $dayTasks = DayTask::with('task', 'task.checklist')->where('user_id', $userId)->get();
+
+        return DayTaskDtoFactory::createFromModelsList($dayTasks);
+    }
+
+    /**
+     * @inheritDoc
      */
     public function delete(int $taskId, int $userId): void
     {
@@ -53,5 +57,13 @@ class DayTaskRepository implements DayTaskRepositoryContract
     public function isExists(int $taskId, int $userId): bool
     {
         return DayTask::where(['task_id' => $taskId, 'user_id' => $userId])->exists();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return DayTask::where('user_id', $userId)->count();
     }
 }

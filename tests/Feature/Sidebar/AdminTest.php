@@ -4,6 +4,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+/** Основные ссылки */
+test('common links', function () {
+    authHelper()->signInAsAdmin();
+
+    $response = $this->get(routeBuilderHelper()->common->home());
+    $response->assertSee('Home');
+    $response->assertSee('My Day');
+});
+
 /** Отображаются элементы управления страницами */
 test('pages management', function () {
     $page = modelBuilderHelper()->page->create();

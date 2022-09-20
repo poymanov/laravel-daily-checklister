@@ -12,3 +12,4 @@
 * [Задачи](10-tasks/README.md)
 * [Страницы](11-pages/README.md)
 * [Пользователи](12-users/README.md)
+* [Список задач "My Day"](13-day-tasks/README.md)

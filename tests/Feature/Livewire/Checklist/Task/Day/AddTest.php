@@ -37,7 +37,7 @@ test('success', function () {
 
     authHelper()->signIn($user);
 
-    Livewire::test(Day::class, ['taskId' => $task->id])->call('add');
+    Livewire::test(Day::class, ['taskId' => $task->id])->call('add')->assertEmitted('updateMyDay');
 
     $this->assertDatabaseHas('day_tasks', [
         'user_id' => $user->id,

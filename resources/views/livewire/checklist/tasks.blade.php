@@ -1,6 +1,6 @@
 <ul class="list-group">
     @foreach($tasks as $task)
-        <li class="list-group-item list-group-item-action">
+        <li class="list-group-item list-group-item-action" :wire:key="$task->id">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <label class="c-switch c-switch-primary mr-2">
@@ -49,8 +49,13 @@
                     {!! $task->description !!}
                 </div>
             </div>
-            <div class="task-controls">
-                @livewire('task.day', ['taskId' => $task->id], key($task->id))
+            <div class="task-controls d-flex">
+                <div class="mr-2">
+                    @livewire('task.day', ['taskId' => $task->id], key($task->id))
+                </div>
+                <div>
+                    @livewire('task.important', ['taskId' => $task->id], key($task->id))
+                </div>
             </div>
         </li>
     @endforeach

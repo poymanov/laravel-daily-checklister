@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(DayTask::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function importantTasks()
+    {
+        return $this->hasMany(ImportantTask::class);
+    }
 }

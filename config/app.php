@@ -3,6 +3,7 @@
 use App\Providers\ChecklistGroupServiceProvider;
 use App\Providers\ChecklistServiceProvider;
 use App\Providers\DayTaskServiceProvider;
+use App\Providers\ImportantTaskServiceProvider;
 use App\Providers\PageServiceProvider;
 use App\Providers\TaskServiceProvider;
 use App\Providers\UserServiceProvider;
@@ -207,6 +208,7 @@ return [
         TaskServiceProvider::class,
         PageServiceProvider::class,
         DayTaskServiceProvider::class,
+        ImportantTaskServiceProvider::class,
     ],
 
     /*

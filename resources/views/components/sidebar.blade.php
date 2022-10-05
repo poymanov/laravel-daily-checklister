@@ -17,6 +17,9 @@
         <li class="c-sidebar-nav-item">
             @livewire('task.day-menu-item')
         </li>
+        <li class="c-sidebar-nav-item">
+            @livewire('task.important-menu-item')
+        </li>
         @role('admin')
         <li class="c-sidebar-nav-title">Manage Checklists</li>
         @endrole

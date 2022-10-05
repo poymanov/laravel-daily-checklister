@@ -58,8 +58,24 @@ class ImportantTaskService implements ImportantTaskServiceContract
     /**
      * @inheritDoc
      */
+    public function findAllByUserId(int $userId): array
+    {
+        return $this->importantTaskRepository->findAllByUserId($userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function isExists(int $taskId, int $userId): bool
     {
         return $this->importantTaskRepository->isExists($taskId, $userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return $this->importantTaskRepository->countByUserId($userId);
     }
 }

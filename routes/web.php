@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ChecklistGroupController;
 use App\Http\Controllers\DayTaskController;
+use App\Http\Controllers\ImportantTaskController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UploadController;
@@ -43,6 +44,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'day', 'as' => 'day.'], function () {
             Route::get('/', [DayTaskController::class, 'index'])->name('index');
             Route::delete('/{task}', [DayTaskController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::group(['prefix' => 'important', 'as' => 'important.'], function () {
+            Route::get('/', [ImportantTaskController::class, 'index'])->name('index');
+            Route::delete('/{task}', [ImportantTaskController::class, 'destroy'])->name('destroy');
         });
     });
 

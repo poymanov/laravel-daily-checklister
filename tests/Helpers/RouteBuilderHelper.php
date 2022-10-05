@@ -7,6 +7,7 @@ use Tests\Helpers\RouteBuilder\ChecklistBuilder;
 use Tests\Helpers\RouteBuilder\ChecklistGroupBuilder;
 use Tests\Helpers\RouteBuilder\CommonBuilder;
 use Tests\Helpers\RouteBuilder\DayTaskBuilder;
+use Tests\Helpers\RouteBuilder\ImportantTaskBuilder;
 use Tests\Helpers\RouteBuilder\PageBuilder;
 use Tests\Helpers\RouteBuilder\TaskBuilder;
 use Tests\Helpers\RouteBuilder\UserBuilder;
@@ -23,6 +24,7 @@ class RouteBuilderHelper
     public PageBuilder           $page;
     public UserBuilder           $user;
     public DayTaskBuilder        $dayTask;
+    public ImportantTaskBuilder  $importantTask;
 
     private function __construct()
     {
@@ -34,6 +36,7 @@ class RouteBuilderHelper
         $this->page           = new PageBuilder();
         $this->user           = new UserBuilder();
         $this->dayTask        = new DayTaskBuilder();
+        $this->importantTask  = new ImportantTaskBuilder();
     }
 
     public static function getInstance(): RouteBuilderHelper

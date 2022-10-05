@@ -32,6 +32,15 @@ interface ImportantTaskRepositoryContract
     public function delete(int $taskId, int $userId): void;
 
     /**
+     * Получение всех важных задач
+     *
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function findAllByUserId(int $userId): array;
+
+    /**
      * Проверка существования записи о задаче для пользователя
      *
      * @param int $taskId
@@ -40,4 +49,13 @@ interface ImportantTaskRepositoryContract
      * @return bool
      */
     public function isExists(int $taskId, int $userId): bool;
+
+    /**
+     * Получение количества важных задач для пользователя
+     *
+     * @param int $userId
+     *
+     * @return int
+     */
+    public function countByUserId(int $userId): int;
 }

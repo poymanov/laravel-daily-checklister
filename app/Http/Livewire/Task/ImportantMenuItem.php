@@ -3,21 +3,21 @@
 namespace App\Http\Livewire\Task;
 
 use App\Models\User;
-use App\Services\DayTask\Contracts\DayTaskServiceContract;
+use App\Services\ImportantTask\Contracts\ImportantTaskServiceContract;
 use Livewire\Component;
 
-class DayMenuItem extends Component
+class ImportantMenuItem extends Component
 {
     public int $tasksCount = 0;
 
     /** @phpstan-ignore-next-line */
-    protected $listeners = ['updateMyDay' => 'countTasks'];
+    protected $listeners = ['updateImportant' => 'countTasks'];
 
-    private DayTaskServiceContract $dayTaskService;
+    private ImportantTaskServiceContract $importantTaskService;
 
     public function __construct(mixed $id = null)
     {
-        $this->dayTaskService = app(DayTaskServiceContract::class);
+        $this->importantTaskService = app(ImportantTaskServiceContract::class);
 
         parent::__construct($id);
     }
@@ -32,7 +32,7 @@ class DayMenuItem extends Component
      */
     public function render()
     {
-        return view('livewire.task.day-menu-item');
+        return view('livewire.task.important-menu-item');
     }
 
     /**
@@ -47,6 +47,6 @@ class DayMenuItem extends Component
             return;
         }
 
-        $this->tasksCount = $this->dayTaskService->countByUserId($user->id);
+        $this->tasksCount = $this->importantTaskService->countByUserId($user->id);
     }
 }

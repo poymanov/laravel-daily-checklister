@@ -8,6 +8,7 @@ use App\Services\ImportantTask\Dtos\ImportantTaskCreateDto;
 use App\Services\ImportantTask\Exceptions\ImportantTaskCreateFailedException;
 use App\Services\ImportantTask\Exceptions\ImportantTaskDeleteFailedException;
 use App\Services\ImportantTask\Exceptions\ImportantTaskNotFoundException;
+use App\Services\ImportantTask\Factories\ImportantTaskDtoFactory;
 
 class ImportantTaskRepository implements ImportantTaskRepositoryContract
 {
@@ -44,8 +45,26 @@ class ImportantTaskRepository implements ImportantTaskRepositoryContract
     /**
      * @inheritDoc
      */
+    public function findAllByUserId(int $userId): array
+    {
+        $importantTasks = ImportantTask::with('task', 'task.checklist')->where('user_id', $userId)->get();
+
+        return ImportantTaskDtoFactory::createFromModelsList($importantTasks);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function isExists(int $taskId, int $userId): bool
     {
         return ImportantTask::where(['task_id' => $taskId, 'user_id' => $userId])->exists();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return ImportantTask::where('user_id', $userId)->count();
     }
 }

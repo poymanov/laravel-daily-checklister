@@ -5,6 +5,7 @@ use App\Providers\ChecklistServiceProvider;
 use App\Providers\DayTaskServiceProvider;
 use App\Providers\ImportantTaskServiceProvider;
 use App\Providers\PageServiceProvider;
+use App\Providers\PlanTaskServiceProvider;
 use App\Providers\TaskServiceProvider;
 use App\Providers\UserServiceProvider;
 use Illuminate\Support\Facades\Facade;
@@ -209,6 +210,7 @@ return [
         PageServiceProvider::class,
         DayTaskServiceProvider::class,
         ImportantTaskServiceProvider::class,
+        PlanTaskServiceProvider::class
     ],
 
     /*

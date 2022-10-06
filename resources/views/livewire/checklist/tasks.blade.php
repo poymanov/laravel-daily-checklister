@@ -53,8 +53,11 @@
                 <div class="mr-2">
                     @livewire('task.day', ['taskId' => $task->id], key($task->id))
                 </div>
-                <div>
+                <div class="mr-2">
                     @livewire('task.important', ['taskId' => $task->id], key($task->id))
+                </div>
+                <div class="task-controls d-flex">
+                    @livewire('task.plan', ['taskId' => $task->id], key($task->id))
                 </div>
             </div>
         </li>

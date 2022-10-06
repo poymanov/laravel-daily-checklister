@@ -64,4 +64,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(ImportantTask::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function planTasks()
+    {
+        return $this->hasMany(PlanTask::class);
+    }
 }

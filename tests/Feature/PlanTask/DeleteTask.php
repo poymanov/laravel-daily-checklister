@@ -8,19 +8,19 @@ uses(RefreshDatabase::class);
 
 /** Попытка удаления гостем */
 test('guest', function () {
-    $importantTask = modelBuilderHelper()->importantTask->create();
+    $planTask = modelBuilderHelper()->planTask->create();
 
-    $response = $this->delete(routeBuilderHelper()->importantTask->delete($importantTask->task_id));
+    $response = $this->delete(routeBuilderHelper()->planTask->delete($planTask->task_id));
     $response->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
 /** Попытка удаления задачи из списка другого пользователя */
 test('another user', function () {
-    $importantTask = modelBuilderHelper()->importantTask->create();
+    $planTask = modelBuilderHelper()->planTask->create();
 
     authHelper()->signIn();
 
-    $response = $this->delete(routeBuilderHelper()->importantTask->delete($importantTask->task_id));
+    $response = $this->delete(routeBuilderHelper()->planTask->delete($planTask->task_id));
     $response->assertNotFound();
 });
 
@@ -28,17 +28,17 @@ test('another user', function () {
 test('not existed task', function () {
     authHelper()->signIn();
 
-    $response = $this->delete(routeBuilderHelper()->importantTask->delete(999));
+    $response = $this->delete(routeBuilderHelper()->planTask->delete(999));
     $response->assertNotFound();
 });
 
 /** Попытка удаления задачи, которая не была добавлена в список */
-test('not important task', function () {
+test('not plan task', function () {
     $task = modelBuilderHelper()->task->create();
 
     authHelper()->signIn();
 
-    $response = $this->delete(routeBuilderHelper()->importantTask->delete($task->id));
+    $response = $this->delete(routeBuilderHelper()->planTask->delete($task->id));
     $response->assertNotFound();
 });
 
@@ -46,15 +46,15 @@ test('not important task', function () {
 test('success', function () {
     $user = modelBuilderHelper()->user->create();
 
-    $importantTask = modelBuilderHelper()->importantTask->create(['user_id' => $user->id]);
+    $planTask = modelBuilderHelper()->planTask->create(['user_id' => $user->id]);
 
     authHelper()->signIn($user);
 
-    $response = $this->delete(routeBuilderHelper()->importantTask->delete($importantTask->task_id));
-    $response->assertRedirect('/tasks/important');
-    $response->assertSessionHas('alert.success', 'Task was deleted from important list');
+    $response = $this->delete(routeBuilderHelper()->planTask->delete($planTask->task_id));
+    $response->assertRedirect('/tasks/plan');
+    $response->assertSessionHas('alert.success', 'Task was deleted from plan list');
 
-    $this->assertDatabaseMissing('day_tasks', [
-        'id' => $importantTask->id,
+    $this->assertDatabaseMissing('plan_tasks', [
+        'id' => $planTask->id,
     ]);
 });

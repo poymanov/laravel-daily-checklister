@@ -61,8 +61,32 @@ class PlanTaskService implements PlanTaskServiceContract
     /**
      * @inheritDoc
      */
-    public function findOneByTaskId(int $taskId): ?PlanTaskDto
+    public function findAllByUserId(int $userId): array
     {
-        return $this->planTaskRepository->findOneByTaskId($taskId);
+        return $this->planTaskRepository->findAllByUserId($userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneByTaskIdAndUserId(int $taskId, int $userId): ?PlanTaskDto
+    {
+        return $this->planTaskRepository->findOneByTaskIdAndUserId($taskId, $userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExists(int $taskId, int $userId): bool
+    {
+        return $this->planTaskRepository->isExists($taskId, $userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return $this->planTaskRepository->countByUserId($userId);
     }
 }

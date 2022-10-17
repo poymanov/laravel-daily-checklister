@@ -8,7 +8,7 @@ uses(RefreshDatabase::class);
 
 /** Попытка посещения гостем */
 test('guest', function () {
-    $response = $this->get(routeBuilderHelper()->importantTask->index());
+    $response = $this->get(routeBuilderHelper()->planTask->index());
     $response->assertRedirect(routeBuilderHelper()->auth->login());
 });
 
@@ -16,11 +16,11 @@ test('guest', function () {
 test('another user', function () {
     $task = modelBuilderHelper()->task->create();
 
-    modelBuilderHelper()->importantTask->create(['task_id' => $task->id]);
+    modelBuilderHelper()->planTask->create(['task_id' => $task->id]);
 
     authHelper()->signIn();
 
-    $response = $this->get(routeBuilderHelper()->importantTask->index());
+    $response = $this->get(routeBuilderHelper()->planTask->index());
     $response->assertOk();
 
     $response->assertDontSee($task->name);
@@ -31,14 +31,14 @@ test('success', function () {
     $task = modelBuilderHelper()->task->create();
     $user = modelBuilderHelper()->user->create();
 
-    modelBuilderHelper()->importantTask->create(['task_id' => $task->id, 'user_id' => $user->id]);
+    modelBuilderHelper()->planTask->create(['task_id' => $task->id, 'user_id' => $user->id]);
 
     authHelper()->signIn($user);
 
-    $response = $this->get(routeBuilderHelper()->importantTask->index());
+    $response = $this->get(routeBuilderHelper()->planTask->index());
     $response->assertOk();
 
-    $response->assertSee('Important');
+    $response->assertSee('Plan');
     $response->assertSee($task->name);
     $response->assertSee($task->checklist->name);
 });

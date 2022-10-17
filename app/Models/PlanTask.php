@@ -15,4 +15,12 @@ class PlanTask extends Model
     protected $dates = [
         'date',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

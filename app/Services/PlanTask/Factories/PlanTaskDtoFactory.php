@@ -3,7 +3,9 @@
 namespace App\Services\PlanTask\Factories;
 
 use App\Models\PlanTask;
+use App\Services\Checklist\Factories\ChecklistShortDtoFactory;
 use App\Services\PlanTask\Dtos\PlanTaskDto;
+use App\Services\Task\Factories\TaskDtoFactory;
 use Illuminate\Database\Eloquent\Collection;
 
 class PlanTaskDtoFactory
@@ -15,10 +17,12 @@ class PlanTaskDtoFactory
      */
     public static function createFromModel(PlanTask $planTask): PlanTaskDto
     {
-        $dto         = new PlanTaskDto();
-        $dto->id     = $planTask->id;
-        $dto->userId = $planTask->user_id;
-        $dto->date   = $planTask->date;
+        $dto            = new PlanTaskDto();
+        $dto->id        = $planTask->id;
+        $dto->userId    = $planTask->user_id;
+        $dto->date      = $planTask->date;
+        $dto->task      = TaskDtoFactory::createFromModel($planTask->task);
+        $dto->checklist = ChecklistShortDtoFactory::createFromModel($planTask->task->checklist);
 
         return $dto;
     }

@@ -48,7 +48,7 @@ class Plan extends Component
         }
 
         try {
-            $this->planTaskService->add($this->taskId, (int) auth()->id(), $this->plannedDate);
+            $this->planTaskService->add($this->taskId, (int)auth()->id(), $this->plannedDate);
 
             $this->checkPlannedDate();
 
@@ -66,7 +66,7 @@ class Plan extends Component
     public function remove()
     {
         try {
-            $this->planTaskService->remove($this->taskId, (int) auth()->id());
+            $this->planTaskService->remove($this->taskId, (int)auth()->id());
 
             $this->checkPlannedDate();
 
@@ -131,7 +131,7 @@ class Plan extends Component
         }
 
         /** @var PlanTaskDto|null $planTask */
-        $planTask = $this->planTaskService->findOneByTaskId($this->taskId);
+        $planTask = $this->planTaskService->findOneByTaskIdAndUserId($this->taskId, $user->id);
 
         if ($planTask) {
             $this->plannedDate = $planTask->date;

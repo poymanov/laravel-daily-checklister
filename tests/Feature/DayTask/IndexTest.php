@@ -38,6 +38,7 @@ test('success', function () {
     $response = $this->get(routeBuilderHelper()->dayTask->index());
     $response->assertOk();
 
+    $response->assertSee('My day');
     $response->assertSee($task->name);
     $response->assertSee($task->checklist->name);
 });

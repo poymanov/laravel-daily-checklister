@@ -48,14 +48,41 @@ class PlanTaskRepository implements PlanTaskRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findOneByTaskId(int $taskId): ?PlanTaskDto
+    public function findAllByUserId(int $userId): array
     {
-        $planTask = PlanTask::where('task_id', $taskId)->first();
+        $planTasks = PlanTask::with('task', 'task.checklist')
+            ->where('user_id', $userId)->get();
+
+        return PlanTaskDtoFactory::createFromModelsList($planTasks);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneByTaskIdAndUserId(int $taskId, int $userId): ?PlanTaskDto
+    {
+        $planTask = PlanTask::where(['task_id' => $taskId, 'user_id' => $userId])->first();
 
         if (!$planTask) {
             return null;
         }
 
         return PlanTaskDtoFactory::createFromModel($planTask);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExists(int $taskId, int $userId): bool
+    {
+        return PlanTask::where(['task_id' => $taskId, 'user_id' => $userId])->exists();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function countByUserId(int $userId): int
+    {
+        return PlanTask::where('user_id', $userId)->count();
     }
 }

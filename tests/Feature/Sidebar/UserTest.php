@@ -12,6 +12,7 @@ test('common links', function () {
     $response->assertSee('Home');
     $response->assertSee('My Day');
     $response->assertSee('Important');
+    $response->assertSee('Planned');
 });
 
 /** Не отображаются элементы управления страницами */

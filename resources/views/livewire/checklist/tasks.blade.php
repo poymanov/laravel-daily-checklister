@@ -49,16 +49,19 @@
                     {!! $task->description !!}
                 </div>
             </div>
+            <div class="task-controls mb-2 d-flex">
+                <div class="mr-2">
+                    @livewire('task.day', ['taskId' => $task->id], key($task->id . rand()))
+                </div>
+                <div class="mr-2">
+                    @livewire('task.important', ['taskId' => $task->id], key($task->id . rand()))
+                </div>
+            </div>
+            <div class="task-controls mb-2 d-flex">
+                @livewire('task.plan', ['taskId' => $task->id], key($task->id . rand()))
+            </div>
             <div class="task-controls d-flex">
-                <div class="mr-2">
-                    @livewire('task.day', ['taskId' => $task->id], key($task->id))
-                </div>
-                <div class="mr-2">
-                    @livewire('task.important', ['taskId' => $task->id], key($task->id))
-                </div>
-                <div class="task-controls d-flex">
-                    @livewire('task.plan', ['taskId' => $task->id], key($task->id))
-                </div>
+                @livewire('task.note', ['taskId' => $task->id], key($task->id . rand()))
             </div>
         </li>
     @endforeach

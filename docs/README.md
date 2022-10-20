@@ -15,3 +15,4 @@
 * [Список задач "My Day"](13-day-tasks/README.md)
 * [Список задач "Important"](14-important-tasks/README.md)
 * [Список задач "Planned"](15-planned-tasks/README.md)
+* [Напоминания о задачах](16-remind-task/README.md)

@@ -3,6 +3,7 @@
 namespace App\Services\User\Contracts;
 
 use App\Enums\RoleEnum;
+use App\Models\User;
 use App\Services\User\Exceptions\UserNotFoundException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -36,4 +37,14 @@ interface UserRepositoryContract
      * @return bool
      */
     public function isExists(int $userId): bool;
+
+    /**
+     * Получение модели пользователя по ID
+     *
+     * @param int $id
+     *
+     * @return User
+     * @throws UserNotFoundException
+     */
+    public function findOneByIdAsModel(int $id): User;
 }

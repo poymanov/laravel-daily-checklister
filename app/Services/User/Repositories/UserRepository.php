@@ -41,4 +41,18 @@ class UserRepository implements UserRepositoryContract
     {
         return User::whereId($userId)->exists();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneByIdAsModel(int $id): User
+    {
+        $user = User::firstWhere('id', $id);
+
+        if (!$user) {
+            throw new UserNotFoundException([$id]);
+        }
+
+        return $user;
+    }
 }

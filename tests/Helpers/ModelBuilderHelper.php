@@ -8,6 +8,7 @@ use Tests\Helpers\ModelBuilder\DayTaskBuilder;
 use Tests\Helpers\ModelBuilder\ImportantTaskBuilder;
 use Tests\Helpers\ModelBuilder\PageBuilder;
 use Tests\Helpers\ModelBuilder\PlanTaskBuilder;
+use Tests\Helpers\ModelBuilder\RemindTaskBuilder;
 use Tests\Helpers\ModelBuilder\TaskBuilder;
 use Tests\Helpers\ModelBuilder\TaskNoteBuilder;
 use Tests\Helpers\ModelBuilder\UserBuilder;
@@ -25,6 +26,7 @@ class ModelBuilderHelper
     public ImportantTaskBuilder  $importantTask;
     public PlanTaskBuilder       $planTask;
     public TaskNoteBuilder       $taskNote;
+    public RemindTaskBuilder     $remindTask;
 
     private function __construct()
     {
@@ -37,6 +39,7 @@ class ModelBuilderHelper
         $this->importantTask  = new ImportantTaskBuilder();
         $this->planTask       = new PlanTaskBuilder();
         $this->taskNote       = new TaskNoteBuilder();
+        $this->remindTask     = new RemindTaskBuilder();
     }
 
     /**

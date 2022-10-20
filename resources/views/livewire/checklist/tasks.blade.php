@@ -60,8 +60,11 @@
             <div class="task-controls mb-2 d-flex">
                 @livewire('task.plan', ['taskId' => $task->id], key($task->id . rand()))
             </div>
-            <div class="task-controls d-flex">
+            <div class="task-controls mb-2 d-flex">
                 @livewire('task.note', ['taskId' => $task->id], key($task->id . rand()))
+            </div>
+            <div class="task-controls d-flex">
+                @livewire('task.remind', ['taskId' => $task->id], key($task->id . rand()))
             </div>
         </li>
     @endforeach

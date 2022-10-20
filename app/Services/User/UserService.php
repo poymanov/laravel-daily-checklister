@@ -3,6 +3,7 @@
 namespace App\Services\User;
 
 use App\Enums\RoleEnum;
+use App\Models\User;
 use App\Services\User\Contracts\UserRepositoryContract;
 use App\Services\User\Contracts\UserServiceContract;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -37,5 +38,13 @@ class UserService implements UserServiceContract
     public function isExists(int $userId): bool
     {
         return $this->userRepository->isExists($userId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findOneByIdAsModel(int $id): User
+    {
+        return $this->userRepository->findOneByIdAsModel($id);
     }
 }

@@ -27,6 +27,15 @@ services:
             - .:/app
         depends_on:
             - db
+    php-cli-schedule:
+        build:
+            context: ./docker/php
+            dockerfile: php-cli.docker
+        volumes:
+                - .:/app
+        depends_on:
+                - db
+        command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && php artisan schedule:work"
     db:
         image: postgres:14.2-alpine
         volumes:

@@ -8,6 +8,7 @@ use App\Http\Controllers\DayTaskController;
 use App\Http\Controllers\ImportantTaskController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlanTaskController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::resource('pages', AdminPageController::class)->except('index');
+    });
+
+    Route::group(['prefix' => 'subscription', 'as' => 'subscription.', 'middleware' => ['role.not:admin']], function () {
+        Route::get('', [SubscriptionController::class, 'index'])->name('index');
+        Route::post('', [SubscriptionController::class, 'store'])->name('store');
+        Route::delete('', [SubscriptionController::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => 'tasks', 'as' => 'tasks.'], function () {

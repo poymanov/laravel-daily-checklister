@@ -10,6 +10,7 @@ use Tests\Helpers\RouteBuilder\DayTaskBuilder;
 use Tests\Helpers\RouteBuilder\ImportantTaskBuilder;
 use Tests\Helpers\RouteBuilder\PageBuilder;
 use Tests\Helpers\RouteBuilder\PlanTaskBuilder;
+use Tests\Helpers\RouteBuilder\SubscriptionBuilder;
 use Tests\Helpers\RouteBuilder\TaskBuilder;
 use Tests\Helpers\RouteBuilder\UserBuilder;
 
@@ -27,6 +28,7 @@ class RouteBuilderHelper
     public DayTaskBuilder        $dayTask;
     public ImportantTaskBuilder  $importantTask;
     public PlanTaskBuilder       $planTask;
+    public SubscriptionBuilder   $subscription;
 
     private function __construct()
     {
@@ -40,6 +42,7 @@ class RouteBuilderHelper
         $this->dayTask        = new DayTaskBuilder();
         $this->importantTask  = new ImportantTaskBuilder();
         $this->planTask       = new PlanTaskBuilder();
+        $this->subscription   = new SubscriptionBuilder();
     }
 
     public static function getInstance(): RouteBuilderHelper

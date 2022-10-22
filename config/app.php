@@ -7,6 +7,7 @@ use App\Providers\ImportantTaskServiceProvider;
 use App\Providers\PageServiceProvider;
 use App\Providers\PlanTaskServiceProvider;
 use App\Providers\RemindTaskServiceProvider;
+use App\Providers\SubscriptionServiceProvider;
 use App\Providers\TaskNoteServiceProvider;
 use App\Providers\TaskServiceProvider;
 use App\Providers\UserServiceProvider;
@@ -215,6 +216,7 @@ return [
         PlanTaskServiceProvider::class,
         TaskNoteServiceProvider::class,
         RemindTaskServiceProvider::class,
+        SubscriptionServiceProvider::class,
     ],
 
     /*

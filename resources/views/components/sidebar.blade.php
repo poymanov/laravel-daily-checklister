@@ -14,6 +14,14 @@
                 Home
             </a>
         </li>
+        @unlessrole('admin')
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="{{ route('subscription.index') }}">
+                <x-svg-icon path="/assets/icons/free.svg#cil-money" class="c-sidebar-nav-icon"/>
+                Subscription
+            </a>
+        </li>
+        @endunlessrole
         <li class="c-sidebar-nav-item">
             @livewire('task.day-menu-item')
         </li>

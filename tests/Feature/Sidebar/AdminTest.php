@@ -10,6 +10,7 @@ test('common links', function () {
 
     $response = $this->get(routeBuilderHelper()->common->home());
     $response->assertSee('Home');
+    $response->assertDontSee('Subscription');
     $response->assertSee('My Day');
     $response->assertSee('Important');
     $response->assertSee('Planned');

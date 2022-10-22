@@ -20,6 +20,7 @@
         "@coreui/coreui": "^3.4.0",
         "@coreui/icons": "^2.0.1",
         "@popperjs/core": "^2.10.1",
+        "@stripe/stripe-js": "^1.42.0",
         "perfect-scrollbar": "^1.5.2"
     }
 }

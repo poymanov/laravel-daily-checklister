@@ -5,7 +5,7 @@ ENV XDEBUG_VERSION 3.1.4
 RUN apk update && apk add --no-cache git unzip php-intl icu-dev bash freetype-dev libjpeg-turbo-dev libpng-dev postgresql-dev \
     && git clone --branch $XDEBUG_VERSION --depth 1 https://github.com/xdebug/xdebug.git /usr/src/php/ext/xdebug \
     && docker-php-ext-configure xdebug --enable-xdebug-dev \
-    && docker-php-ext-install mysqli pdo pdo_pgsql intl xdebug \
+    && docker-php-ext-install mysqli pdo pdo_pgsql intl xdebug bcmath \
     && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
     && apk del git
 

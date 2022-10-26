@@ -19,4 +19,12 @@ class SubscriptionBuilder
     {
         return '/subscription';
     }
+
+    /**
+     * @return string
+     */
+    public function delete(): string
+    {
+        return '/subscription';
+    }
 }

@@ -9,8 +9,10 @@ use Livewire\Livewire;
 uses(RefreshDatabase::class);
 
 /** Попытка изменения порядка сортировки несуществующей задачи */
-test('move prev', function () {
+test('not existed', function () {
     $checklist = modelBuilderHelper()->checklist->create();
+
+    authHelper()->signIn();
 
     Livewire::test(Tasks::class, ['checklistId' => $checklist->id])
         ->call('moveNext', 999)
@@ -24,6 +26,8 @@ test('success', function () {
 
     $taskFirst  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);
     $taskSecond = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
+
+    authHelper()->signIn();
 
     Livewire::test(Tasks::class, ['checklistId' => $checklist->id])->call('moveNext', $taskFirst->id);
 

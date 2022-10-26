@@ -12,6 +12,8 @@ uses(RefreshDatabase::class);
 test('not existed', function () {
     $checklist = modelBuilderHelper()->checklist->create();
 
+    authHelper()->signIn();
+
     Livewire::test(Tasks::class, ['checklistId' => $checklist->id])
         ->call('movePrev', 999)
         ->assertSessionHas('alert.error')
@@ -24,6 +26,8 @@ test('success', function () {
 
     $taskFirst  = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 1]);
     $taskSecond = modelBuilderHelper()->task->create(['checklist_id' => $checklist->id, 'order' => 2]);
+
+    authHelper()->signIn();
 
     Livewire::test(Tasks::class, ['checklistId' => $checklist->id])->call('movePrev', $taskSecond->id);
 

@@ -16,4 +16,4 @@
 
 ---
 
-Следующее: [WIP](../wip/README.md)
+Следующее: [Подписка](../17-subscription/README.md)

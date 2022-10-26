@@ -45,13 +45,14 @@ interface TaskServiceContract
     public function delete(int $id): void;
 
     /**
-     * Получение задач по ID чеклиста
+     * Получение задач по ID чеклиста с ограничением количества
      *
      * @param int $checklistId
+     * @param int $limit
      *
      * @return TaskDto[]
      */
-    public function findAllByChecklistId(int $checklistId): array;
+    public function findAllByChecklistId(int $checklistId, ?int $limit = null): array;
 
     /**
      * Изменение порядка задачи

@@ -58,9 +58,9 @@ class TaskService implements TaskServiceContract
     /**
      * @inheritDoc
      */
-    public function findAllByChecklistId(int $checklistId): array
+    public function findAllByChecklistId(int $checklistId, ?int $limit = null): array
     {
-        return $this->taskRepository->findAllByChecklistId($checklistId);
+        return $this->taskRepository->findAllByChecklistId($checklistId, $limit);
     }
 
     /**

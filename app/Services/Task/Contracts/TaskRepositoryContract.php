@@ -44,11 +44,12 @@ interface TaskRepositoryContract
     /**
      * Получение задач по ID чеклиста
      *
-     * @param int $checklistId
+     * @param int      $checklistId
+     * @param int|null $limit
      *
      * @return TaskDto[]
      */
-    public function findAllByChecklistId(int $checklistId): array;
+    public function findAllByChecklistId(int $checklistId, ?int $limit = null): array;
 
     /**
      * Изменение порядка задачи

@@ -2,10 +2,14 @@
 
 namespace App\Http\Livewire\Checklist;
 
+use App\Enums\RoleEnum;
+use App\Models\User;
 use App\Services\Checklist\Contracts\ChecklistServiceContract;
+use App\Services\Subscription\Contract\SubscriptionServiceContract;
 use App\Services\Task\Contracts\TaskServiceContract;
 use App\Services\Task\Dtos\TaskDto;
 use App\Services\Task\Enums\ChangeOrderDirectionEnum;
+use Illuminate\Http\Response;
 use Livewire\Component;
 use Session;
 use Throwable;
@@ -27,22 +31,47 @@ class Tasks extends Component
     /** @var TaskServiceContract */
     private $taskService;
 
+    /** @var SubscriptionServiceContract */
+    private $subscriptionService;
+
     /** @var array */
     public $openedTasks = [];
 
+    /** @var bool */
+    public $userHasSubscription;
+
+    /** @var bool */
+    public $userIsAdmin;
+
+    /** @var int */
+    public $totalTasks;
+
+    /** @var int */
+    public $maxTasksWithoutSubscription = 5;
+
     public function __construct(mixed $id = null)
     {
-        $this->checklistService = app(ChecklistServiceContract::class);
-        $this->taskService      = app(TaskServiceContract::class);
+        $this->checklistService    = app(ChecklistServiceContract::class);
+        $this->taskService         = app(TaskServiceContract::class);
+        $this->subscriptionService = app(SubscriptionServiceContract::class);
 
         parent::__construct($id);
     }
 
     /**
      * @return void
+     * @throws \App\Services\User\Exceptions\UserNotFoundException
      */
     public function mount(): void
     {
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        abort_if(!$user, Response::HTTP_FORBIDDEN);
+
+        $this->userHasSubscription = $this->subscriptionService->isUserHasSubscription($user->id);
+        $this->userIsAdmin         = $user->hasRole(RoleEnum::ADMIN->value);
+
         $this->getTasks();
     }
 
@@ -162,12 +191,21 @@ class Tasks extends Component
      */
     private function getTasks(): void
     {
-        if ($this->checklistId) {
-            $this->tasks          = $this->taskService->findAllByChecklistId($this->checklistId);
-            $this->tasksLastOrder = $this->checklistService->getTasksLastOrder($this->checklistId);
-        } else {
+        if (!$this->checklistId) {
             $this->tasks          = [];
             $this->tasksLastOrder = 0;
+            $this->totalTasks     = 0;
+
+            return;
         }
+
+        if (!$this->userIsAdmin && !$this->userHasSubscription) {
+            $this->tasks = $this->taskService->findAllByChecklistId($this->checklistId, $this->maxTasksWithoutSubscription);
+        } else {
+            $this->tasks = $this->taskService->findAllByChecklistId($this->checklistId);
+        }
+
+        $this->tasksLastOrder = $this->checklistService->getTasksLastOrder($this->checklistId);
+        $this->totalTasks     = $this->checklistService->countTasks($this->checklistId);
     }
 }

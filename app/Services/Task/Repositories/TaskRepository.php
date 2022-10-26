@@ -67,9 +67,15 @@ class TaskRepository implements TaskRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findAllByChecklistId(int $checklistId): array
+    public function findAllByChecklistId(int $checklistId, ?int $limit = null): array
     {
-        $tasks = Task::whereChecklistId($checklistId)->orderBy('order')->get();
+        $query = Task::whereChecklistId($checklistId)->orderBy('order');
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        $tasks = $query->get();
 
         return TaskDtoFactory::createFromModelsList($tasks);
     }

@@ -13,6 +13,7 @@
 
                     <span wire:click.prevent="toggle({{$task->id }})">{{ $task->name }}</span>
                 </div>
+                @role('admin')
                 <div class="d-flex align-items-center">
                     <div class="mr-2">
                         @if($task->order > 1)
@@ -28,7 +29,7 @@
                         @endif
                     </div>
 
-                    @role('admin')
+
                     <a href="{{ route('checklists.tasks.edit', ['checklist' => $checklistId, 'task' => $task->id]) }}" class="mr-1">
                         <x-svg-icon path="/assets/icons/free.svg#cil-pencil" class="c-icon"/>
                     </a>
@@ -40,8 +41,8 @@
                             <x-svg-icon path="/assets/icons/free.svg#cil-trash" class="c-icon"/>
                         </button>
                     </form>
-                    @endrole
                 </div>
+                @endrole
             </div>
             <div class="@if (in_array($task->id, $openedTasks)) d-block @else d-none @endif">
                 <hr>
@@ -69,3 +70,13 @@
         </li>
     @endforeach
 </ul>
+
+@unlessrole('admin')
+@if($totalTasks > $maxTasksWithoutSubscription && !$userHasSubscription)
+    <div class="text-center mt-3">
+        <h2 class="mb-2">Want to see all tasks?</h2>
+
+        <a class="btn btn-lg btn-success btn-block" href="{{ route('subscription.index') }}">Subscribe</a>
+    </div>
+@endif
+@endunlessrole
